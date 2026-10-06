@@ -1,0 +1,3658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Event Experience</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Vector Icons Background -->
+    <div class="floating-icons-container">
+        <svg class="float-icon icon-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        <svg class="float-icon icon-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <svg class="float-icon icon-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <svg class="float-icon icon-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <svg class="float-icon icon-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+
+    <!-- Preloader Overlay View -->
+    <div class="preloader-overlay" id="preloaderOverlay">
+        <div class="loader-content">
+            <div class="brand-wrapper">
+                <div class="brand-logo-loader">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFB294" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h1 class="brand-name-loader">Stackly</h1>
+            </div>
+            <p class="loading-status">Preparing the conference experience...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="percentage" id="percentageText">0%</div>
+        </div>
+    </div>
+
+    <!-- Main Workspace (Hidden Initially, Revealed Post-Load) -->
+    <div class="app-workspace" id="appWorkspace">
+        <!-- Floating Transparent Header -->
+        <header class="main-header">
+            <div class="header-inner">
+                <!-- Brand Logo (Img tag references the page loop) -->
+                <a href="#" class="logo-link" onclick="window.location.reload(); return false;">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="brand-img">
+                    <span class="brand-logo-text">Stackly</span>
+                </a>
+
+                <!-- Responsive Navigation Drawer -->
+                <nav class="nav-menu-container" id="navMenuContainer">
+                    <ul class="nav-list">
+                        <li><a href="#home" class="nav-item active">Home</a></li>
+                        <li><a href="#schedule" class="nav-item">Schedule</a></li>
+                        <li><a href="#speakers" class="nav-item">Speakers</a></li>
+                        <li><a href="#pricing" class="nav-item">Tickets</a></li>
+                        <li><a href="#venue" class="nav-item">Venue</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Auth Action Workspace -->
+                <div class="auth-wrapper">
+                    <button class="auth-btn">Register Pass</button>
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation Menu">
+                        <span class="bar bar-top"></span>
+                        <span class="bar bar-mid"></span>
+                        <span class="bar bar-bot"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+       
+   
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =========================================================
+    // 0. PRELOADER SCROLL LOCK
+    // =========================================================
+    // Prevent scrolling while the preloader is visible
+    document.body.classList.add("preloader-active");
+
+
+    // =========================================================
+    // 1. DOM Elements Mapping
+    // =========================================================
+    const progressFill = document.getElementById("progressFill");
+    const percentageText = document.getElementById("percentageText");
+    const preloaderOverlay = document.getElementById("preloaderOverlay");
+    const appWorkspace = document.getElementById("appWorkspace");
+
+
+    // =========================================================
+    // 2. Timeline Variables (2 Seconds)
+    // =========================================================
+    const duration = 2000;
+    const intervalTime = 20;
+    const totalSteps = duration / intervalTime;
+    let currentStep = 0;
+
+
+    // =========================================================
+    // 3. Preloader Progress Loop Execution
+    // =========================================================
+    const loadingInterval = setInterval(() => {
+
+        currentStep++;
+
+        const progress = Math.min(
+            (currentStep / totalSteps) * 100,
+            100
+        );
+
+
+        // Update progress bar
+        if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+        }
+
+
+        // Update percentage
+        if (percentageText) {
+            percentageText.textContent = `${Math.floor(progress)}%`;
+        }
+
+
+        // =====================================================
+        // Loading Complete
+        // =====================================================
+        if (currentStep >= totalSteps) {
+
+            clearInterval(loadingInterval);
+
+
+            // Small delay before starting exit animation
+            setTimeout(() => {
+
+                // Fade and slightly scale the preloader
+                if (preloaderOverlay) {
+
+                    preloaderOverlay.style.opacity = "0";
+                    preloaderOverlay.style.transform = "scale(1.03)";
+                }
+
+
+                // Wait for fade animation to complete
+                setTimeout(() => {
+
+                    // Remove preloader from display
+                    if (preloaderOverlay) {
+                        preloaderOverlay.style.display = "none";
+                    }
+
+
+                    // =================================================
+                    // ENABLE PAGE SCROLLING
+                    // =================================================
+                    document.body.classList.remove("preloader-active");
+                    document.body.classList.add("preloader-finished");
+
+
+                    // =================================================
+                    // REVEAL MAIN WORKSPACE
+                    // =================================================
+                    if (appWorkspace) {
+
+                        appWorkspace.style.opacity = "1";
+
+                        // Trigger feature card reveal animation
+                        initializeHeroFeatures();
+                    }
+
+                }, 500);
+
+            }, 150);
+        }
+
+    }, intervalTime);
+
+
+    // =========================================================
+    // 4. Staggered Feature Entry Sequence
+    // =========================================================
+    function initializeHeroFeatures() {
+
+        const cards = document.querySelectorAll(".feature-card");
+
+
+        cards.forEach((card, index) => {
+
+            setTimeout(() => {
+
+                card.classList.add("reveal");
+
+            }, (index + 1) * 200);
+
+        });
+    }
+
+
+    // =========================================================
+    // 5. Navigation Menu Active & Mobile Toggle Logic
+    // =========================================================
+    const navItems = document.querySelectorAll(".nav-item");
+    const hamburgerToggle = document.getElementById("hamburgerToggle");
+    const navMenuContainer = document.getElementById("navMenuContainer");
+
+
+    // =========================================================
+    // Navigation Item Click
+    // =========================================================
+    navItems.forEach(item => {
+
+        item.addEventListener("click", (e) => {
+
+            // Remove active state from current item
+            document
+                .querySelector(".nav-item.active")
+                ?.classList.remove("active");
+
+
+            // Add active state to clicked item
+            e.currentTarget.classList.add("active");
+
+
+            // Close mobile navigation
+            if (hamburgerToggle && navMenuContainer) {
+
+                hamburgerToggle.classList.remove("open");
+                navMenuContainer.classList.remove("open");
+            }
+
+        });
+
+    });
+
+
+    // =========================================================
+    // 6. Mobile Hamburger Toggle
+    // =========================================================
+    if (hamburgerToggle && navMenuContainer) {
+
+        hamburgerToggle.addEventListener("click", () => {
+
+            hamburgerToggle.classList.toggle("open");
+            navMenuContainer.classList.toggle("open");
+
+        });
+
+    }
+
+});
+    </script>
+
+    
+
+   <section class="hero-section">
+    <div class="hero-container">
+        <!-- Left Column: Word-by-word title and paragraph -->
+        <div class="hero-text-content">
+            <h1 class="hero-title">
+                <span>Shifting</span> <span>Perspectives,</span> <span>Building</span> <span>Tomorrow</span>
+            </h1>
+            <p class="hero-paragraph">
+                Join global engineering minds at Stackly 2026. Discover modern visual ecosystems, next-generation development lifecycles, and scalable design architectures built for tomorrow's open web.
+            </p>
+            <div class="hero-cta-group">
+                <a href="#tickets" class="cta-btn cta-primary">Secure Access</a>
+                <a href="#schedule" class="cta-btn cta-secondary">Explore Tracks</a>
+            </div>
+        </div>
+
+        <!-- Right Column: Video Tag Showcase -->
+        <div class="hero-visual-content">
+            <div class="video-card-wrapper">
+                <video class="hero-showcase-video" autoplay loop muted playsinline>
+                    <source src="https://mixkit.co" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Features Grid (Vector Icons Reveal One-by-One) -->
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3 class="feature-title">3 Days of Keynotes</h3>
+            <p class="feature-desc">40+ speaker sessions spanning critical stack transformations.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="feature-title">Global Networking</h3>
+            <p class="feature-desc">Connect directly with 5,000+ enterprise software architects.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3 class="feature-title">Interactive Labs</h3>
+            <p class="feature-desc">Hands-on diagnostic hackathons led by production engineers.</p>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Core Styling Rules (Ensure parent container font-family is 'Inter') */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 150px 0;
+}
+
+.hero-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Word-by-word bottom stagger animation setup */
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    overflow: hidden;
+}
+
+.hero-title span {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: wordReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-title span:nth-child(1) { animation-delay: 0.1s; }
+.hero-title span:nth-child(2) { animation-delay: 0.2s; }
+.hero-title span:nth-child(3) { animation-delay: 0.3s; }
+.hero-title span:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes wordReveal {
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Paragraph Hover Slide Transformation */
+.hero-paragraph {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 2.5rem;
+    max-width: 560px;
+    cursor: default;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.hero-paragraph:hover {
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+/* Floating Actions Area */
+.hero-cta-group {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.cta-btn {
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: subtleFloat 4s ease-in-out infinite alternate;
+}
+
+.cta-primary {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 8px 24px rgba(255, 178, 148, 0.2);
+}
+
+.cta-primary:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(255, 178, 148, 0.4);
+}
+
+.cta-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation-delay: 0.5s;
+}
+
+.cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #ffb294;
+    transform: translateY(-4px);
+}
+
+@keyframes subtleFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-6px); }
+}
+
+/* Video Wrapper Card */
+.hero-visual-content {
+    width: 100%;
+}
+
+.video-card-wrapper {
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    aspect-ratio: 4 / 3;
+    display: flex;
+}
+
+.hero-showcase-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Features Staggered Grid Setup */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.feature-card.reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.feature-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 178, 148, 0.2);
+    transform: translateY(-4px);
+}
+
+.feature-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 178, 148, 0.1);
+    color: #ffb294;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    padding: 10px;
+}
+
+.feature-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+}
+
+.feature-desc {
+    font-size: 0.95rem;
+    color: #b5a4ba;
+    line-height: 1.5;
+}
+
+/* Responsive Structural Breakpoints */
+@media (max-width: 992px) {
+    .hero-container { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-title { font-size: 3rem; }
+    .hero-text-content { align-items: center; text-align: center; }
+    .hero-paragraph { margin-left: auto; margin-right: auto; }
+    .hero-cta-group { justify-content: center; }
+}
+
+@media (max-width: 768px) {
+    .features-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero-title { font-size: 2.3rem; }
+}
+
+</style>
+
+<script>
+    // Execute card reveal trigger logic
+function initializeHeroFeatures() {
+    const cards = document.querySelectorAll('.feature-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('reveal');
+        }, (index + 1) * 200); // 200ms consecutive element delay
+    });
+}
+
+// Call this function when the host layout container mounts or when the window loads
+window.addEventListener("load", initializeHeroFeatures);
+
+</script>
+
+<section class="carousel-section">
+    <!-- Letter-by-Letter Scroll Triggered Title -->
+    <h2 class="scroll-title" id="scrollTitle">Featured Events</h2>
+
+    <!-- Infinite Scrolling Viewport Container -->
+    <div class="carousel-viewport">
+        <div class="carousel-track">
+            <!-- Set 1 of Images -->
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Event Open">
+                <div class="item-overlay"><span>STK 2026</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Keynote Arena">
+                <div class="item-overlay"><span>DEV CON</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Panel Discussion">
+                <div class="item-overlay"><span>WEB STACK</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Workshop Session">
+                <div class="item-overlay"><span>AI SUMMIT</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Cyber Security">
+                <div class="item-overlay"><span>CYBER LAB</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Afterparty Concert">
+                <div class="item-overlay"><span>NET GLOW</span></div>
+            </div>
+
+            <!-- Set 2 (Duplicate clone set for perfect zero-gap infinite looping loop) -->
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Event Open">
+                <div class="item-overlay"><span>STK 2026</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Keynote Arena">
+                <div class="item-overlay"><span>DEV CON</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Panel Discussion">
+                <div class="item-overlay"><span>WEB STACK</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Workshop Session">
+                <div class="item-overlay"><span>AI SUMMIT</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Cyber Security">
+                <div class="item-overlay"><span>CYBER LAB</span></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://unsplash.com" alt="Afterparty Concert">
+                <div class="item-overlay"><span>NET GLOW</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    /* Container Spacing Configurations */
+.carousel-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 0 30px 0; /* Exact padding requested */
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    overflow: hidden;
+}
+
+/* Scroll Animated Title Baseline */
+.scroll-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 2px;
+}
+
+.scroll-title span {
+    display: inline-block;
+    opacity: 0.1;
+    transform: translateY(10px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.scroll-title span.active {
+    opacity: 1;
+    transform: translateY(0);
+    text-shadow: 0 0 15px rgba(255, 178, 148, 0.4);
+}
+
+/* Outer Shell Viewport Boundary Mask */
+.carousel-viewport {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 0;
+}
+
+/* Continuous Horizontal Linear Track Loop Animation */
+.carousel-track {
+    display: flex;
+    width: max-content;
+    gap: 2rem;
+    animation: infiniteScrollLoop 30s linear infinite;
+}
+
+@keyframes infiniteScrollLoop {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); } /* Seamless duplicate shift transition */
+}
+
+/* Pauses continuous scroll completely on mouse container hover */
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+/* Individual Circular Capsule Items */
+.carousel-item {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    cursor: pointer;
+    background-color: #1a0f1d;
+    border: 3px solid rgba(255, 178, 148, 0.15);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, border-color 0.4s ease;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    transition: filter 0.4s ease;
+    filter: brightness(0.5) grayscale(0.3);
+}
+
+/* Centered Text Overlay Shell */
+.item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.item-overlay span {
+    color: #ffb294; /* Peach Accent Family */
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-align: center;
+    padding: 0 10px;
+    white-space: normal;
+    word-break: break-word;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* Dimming Mask Applied Across Global Track Siblings */
+.carousel-track:hover .carousel-item {
+    opacity: 0.3;
+}
+
+/* Highlighting Active Hover Target Entity */
+.carousel-track .carousel-item:hover {
+    opacity: 1 !important;
+    transform: scale(1.15);
+    border-color: #ffb294;
+    box-shadow: 0 0 25px rgba(255, 178, 148, 0.6);
+}
+
+.carousel-track .carousel-item:hover img {
+    filter: brightness(0.9) grayscale(0);
+}
+
+.carousel-track .carousel-item:hover .item-overlay span {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Responsive Scaling Breakpoints */
+@media (max-width: 768px) {
+    .carousel-section { padding: 40px 0 20px 0; }
+    .carousel-item { width: 100px; height: 100px; }
+    .item-overlay span { font-size: 0.75rem; }
+    .scroll-title { font-size: 1.8rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Staggered Character Parsing Engine
+    const titleElement = document.getElementById("scrollTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; // Clear plain text block
+        
+        words.forEach((word, wIdx) => {
+            const wordContainer = document.createElement("div");
+            wordContainer.style.display = "inline-block";
+            wordContainer.style.whiteSpace = "nowrap";
+            
+            [...word].forEach(char => {
+                const span = document.createElement("span");
+                span.textContent = char;
+                wordContainer.appendChild(span);
+            });
+            
+            titleElement.appendChild(wordContainer);
+            
+            // Append visual spaces between individual words
+            if (wIdx < words.length - 1) {
+                const space = document.createElement("span");
+                space.innerHTML = "&nbsp;";
+                titleElement.appendChild(space);
+            }
+        });
+    }
+
+    // 2. Window Scroll Position Intersection Evaluator
+    const scrollContainer = document.querySelector(".content-body") || window;
+    const targetSpans = document.querySelectorAll(".scroll-title span");
+
+    function evaluateScrollReveal() {
+        targetSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            // Triggers transition state once elements clear bottom border bounds
+            if (rect.top < window.innerHeight * 0.9) {
+                setTimeout(() => {
+                    span.classList.add("active");
+                }, index * 35); // Constant speed animation index delay stepping
+            }
+        });
+    }
+
+    // Listener registrations across viewport scroll boundaries
+    scrollContainer.addEventListener("scroll", evaluateScrollReveal);
+    // Safety check execution pass to check for viewport items arriving initialized
+    setTimeout(evaluateScrollReveal, 400);
+});
+
+</script>
+
+<section class="services-section">
+    <!-- Word-by-word Scroll Triggered Title -->
+    <h2 class="services-title" id="servicesTitle">Our Event Formats</h2>
+
+    <!-- Mosaic Grid Matrix (7 Cards, No Gaps) -->
+    <div class="services-grid" id="servicesGrid">
+        
+        <!-- Card 1: Left Top -->
+        <div class="service-card fly-left">
+            <div class="card-image-wrapper">
+                <img src="https://unsplash.com" alt="Tech Conferences">
+                <div class="card-hover-overlay">
+                    <a href="404.html" class="book-event-btn">Book Pass</a>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Flagship Conferences</h3>
+            </div>
+        </div>
+
+        <!-- Card 2: Center Top -->
+        <div class="service-card fly-top">
+            <div class="card-image-wrapper">
+                <img src="https://unsplash.com" alt="Deep-Dive Seminars">
+                <div class="card-hover-overlay">
+                    <a href="404.html" class="book-event-btn">Book Pass</a>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Technical Seminars</h3>
+            </div>
+        </div>
+
+        <!-- Card 3: Right Top -->
+        <div class="service-card fly-right">
+            <div class="card-image-wrapper">
+                <img src="https://unsplash.com" alt="Product Keynotes">
+                <div class="card-hover-overlay">
+                    <a href="404.html" class="book-event-btn">Book Pass</a>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Product Keynotes</h3>
+            </div>
+        </div>
+
+        <!-- Card 4: Left Mid -->
+        <div class="service-card fly-left">
+            <div class="card-image-wrapper">
+                <img src="https://unsplash.com" alt="Networking Gala">
+                <div class="card-hover-overlay">
+                    <a href="404.html" class="book-event-btn">Book Pass</a>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Networking Galas</h3>
+            </div>
+        </div>
+
+        <!-- Card 5: Right Long Card -->
+        <div class="service-card fly-right">
+            <div class="card-image-wrapper">
+                <img src="https://unsplash.com" alt="Hybrid Virtual Tracks">
+                <div class="card-hover-overlay">
+                    <a href="404.html" class="book-event-btn">Book Pass</a>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Hybrid Global Tracks</h3>
+            </div>
+        </div>
+
+        <!-- Card 6: Left Bottom -->
+        <div class="service-card fly-bottom">
+            <div class="card-image-wrapper">
+                <img src="https://unsplash.com" alt="Custom Hackathons">
+                <div class="card-hover-overlay">
+                    <a href="404.html" class="book-event-btn">Book Pass</a>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Custom Hackathons</h3>
+            </div>
+        </div>
+
+        <!-- Card 7: Center Bottom (Fills the gap perfectly) -->
+        <div class="service-card fly-bottom">
+            <div class="card-image-wrapper">
+                <img src="https://unsplash.com" alt="Enterprise Summits">
+                <div class="card-hover-overlay">
+                    <a href="404.html" class="book-event-btn">Book Pass</a>
+                </div>
+            </div>
+            <div class="card-info">
+                <h3>Enterprise Summits</h3>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Section Base Container Styling */
+.services-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 2rem 30px 2rem; /* Strict 50px top, 30px bottom padding constraints */
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    overflow: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Word-by-word Reveal Header Style */
+.services-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+}
+
+.services-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    background: linear-gradient(135deg, #ffffff 40%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.services-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Tight Continuous Grid Layout Framework */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(220px, auto);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* Grid Cell Geometry Balancing Layout Formats */
+.services-grid .service-card:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.services-grid .service-card:nth-child(2) { grid-column: span 2; grid-row: span 1; }
+.services-grid .service-card:nth-child(3) { grid-column: span 2; grid-row: span 1; }
+.services-grid .service-card:nth-child(4) { grid-column: span 2; grid-row: span 1; }
+.services-grid .service-card:nth-child(5) { grid-column: span 2; grid-row: span 2; }
+.services-grid .service-card:nth-child(6) { grid-column: span 2; grid-row: span 1; }
+.services-grid .service-card:nth-child(7) { grid-column: span 2; grid-row: span 1; } /* Locks centered perfectly in row 3 */
+
+/* Card Element System Blueprint */
+.service-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    opacity: 0; /* Hidden initially for entrance scripts */
+}
+
+.card-image-wrapper {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    height: 100%;
+    min-height: 160px;
+    overflow: hidden;
+    background: #190f1d;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    filter: brightness(0.7);
+}
+
+.card-info {
+    padding: 1.2rem;
+    background: rgba(33, 20, 37, 0.95);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    text-align: center;
+}
+
+.card-info h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+/* Hover Actions & Glow Matrix Rules */
+.service-card:hover {
+    transform: translateY(-5px);
+    border-color: #ffb294; /* Peach Family Accent Glow Border */
+    box-shadow: 0 0 30px rgba(255, 178, 148, 0.25);
+}
+
+.service-card:hover .card-image-wrapper img {
+    transform: scale(1.06);
+    filter: brightness(0.5);
+}
+
+.service-card:hover .card-info h3 {
+    color: #ffb294;
+}
+
+/* Book Event CTA Button Overlay Structure */
+.card-hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(33, 20, 37, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    z-index: 5;
+}
+
+.book-event-btn {
+    text-decoration: none;
+    background: #ffb294;
+    color: #211425;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transform: translateY(15px) scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgba(255, 178, 148, 0.3);
+}
+
+.book-event-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.4);
+    transform: translateY(15px) scale(1);
+}
+
+.service-card:hover .card-hover-overlay { opacity: 1; }
+.service-card:hover .book-event-btn { transform: translateY(0) scale(1); }
+
+/* Scroll Fly-In Transition Directives */
+.service-card.animate-in {
+    opacity: 1 !important;
+    transform: translate(0, 0) scale(1) !important;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fly-left { transform: translateX(-80px); }
+.fly-right { transform: translateX(80px); }
+.fly-top { transform: translateY(-80px); }
+.fly-bottom { transform: translateY(80px); }
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .services-grid { grid-template-columns: repeat(4, 1fr); }
+    .services-grid .service-card:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    .services-grid .service-card:nth-child(5) { grid-column: span 2; grid-row: span 1; }
+    .services-grid .service-card:nth-child(7) { grid-column: span 4; grid-row: span 1; }
+}
+
+@media (max-width: 768px) {
+    .services-section { padding: 40px 1.5rem 20px 1.5rem; }
+    .services-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .services-title { font-size: 2rem; }
+    .card-image-wrapper { min-height: 180px; }
+    .fly-left, .fly-right, .fly-top, .fly-bottom { transform: translateY(40px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Split Title string array into animatable words 
+    const titleElement = document.getElementById("servicesTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleElement.appendChild(span);
+        });
+    }
+
+    // Set scroll target wrapper context defaults (falls back to viewport if frame is window object)
+    const scrollContainer = document.querySelector(".content-body") || window;
+    const titleSpans = document.querySelectorAll(".services-title span");
+    const serviceCards = document.querySelectorAll(".service-card");
+
+    function executeScrollAnimations() {
+        const triggerPoint = window.innerHeight * 0.88;
+
+        // Word-by-word title expansion loop
+        titleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerPoint) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 120);
+            }
+        });
+
+        // Multi-directional grid fly-in cascade loop (processes Cards 1 through 7)
+        serviceCards.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < triggerPoint) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 100); // 100ms offset delay steps
+            }
+        });
+    }
+
+    // Bind scroll execution tracking loops
+    scrollContainer.addEventListener("scroll", executeScrollAnimations);
+    
+    // Initial runtime evaluation pass checking if section renders in bounds immediately
+    setTimeout(executeScrollAnimations, 300);
+});
+
+</script>
+
+<section class="about-section">
+    <div class="about-container">
+        
+        <!-- Left Column: Image Glides In From Left -->
+        <div class="about-visual-side slide-from-left" id="aboutVisualSide">
+            <div class="circular-accent-ring">
+                <div class="about-image-mask">
+                    <img src="https://unsplash.com" alt="About Stackly Conference Speaker">
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Content Matrix -->
+        <div class="about-content-side">
+            <span class="about-tagline">ABOUT THE ECOSYSTEM</span>
+            
+            <!-- Title Words Fly in from Left/Right Sides Alternately -->
+            <h2 class="about-title" id="aboutTitle">Organize Quality Technical Conventions</h2>
+            
+            <!-- Paragraphs Rise Up from the Bottom -->
+            <p class="about-paragraph rise-from-bottom">
+                Stackly is global infrastructure built to unify software engineers, tech pioneers, and design architects. We construct comprehensive physical and digital learning pipelines that enable organizations to exchange production concepts, solve scaling limitations, and deploy stable application structures.
+            </p>
+            
+            <p class="about-paragraph rise-from-bottom">
+                Whether you look to scale localized developer clusters or manage multi-track product announcements, our integrated event architecture ensures accessibility, deep interaction analytics, and immersive learning states.
+            </p>
+
+            <!-- Floating CTA Actions -->
+            <div class="about-cta-group" id="aboutCtaGroup">
+                <a href="#explore" class="about-btn btn-filled">Learn more</a>
+                <a href="404.html" class="about-btn btn-outlined">Buy Ticket</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Section Base Container Settings */
+.about-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, and 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+}
+
+.about-container {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 3.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Visual Column Architecture */
+.about-visual-side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    opacity: 0;
+}
+
+/* Image Glides In From Left Side */
+.about-visual-side.slide-from-left {
+    transform: translateX(-100px);
+}
+
+.about-visual-side.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Layered glowing circular accent matching reference image structure */
+.circular-accent-ring {
+    position: relative;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.about-image-mask {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 178, 148, 0.15);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    background: #1a0f1d;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.about-image-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85) contrast(1.05);
+    transition: transform 0.5s ease;
+}
+
+/* Visual Glow Hover Hooks */
+.about-image-mask:hover {
+    transform: scale(1.03);
+    border-color: #ffb294; 
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.4);
+}
+
+.about-image-mask:hover img {
+    transform: scale(1.04);
+}
+
+/* Right Content Column Architecture */
+.about-content-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.about-tagline {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+}
+
+/* Word-by-word Title Reveal From Alternating Left/Right Sides */
+.about-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    overflow: hidden;
+}
+
+.about-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Stagger initial direction frames */
+.about-title span.fly-from-left { transform: translateX(-60px); }
+.about-title span.fly-from-right { transform: translateX(60px); }
+
+.about-title span.reveal {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Paragraphs Rise Up from the Bottom */
+.about-paragraph {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.25rem;
+    max-width: 540px;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Interactive Glow Hover Effect to the Paragraph Text */
+.about-paragraph:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+}
+
+.about-paragraph.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Floating Action CTA Button Groups */
+.about-cta-group {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.about-cta-group.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    animation: constantFloating 4s ease-in-out infinite alternate;
+}
+
+@keyframes constantFloating {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-6px); }
+}
+
+.about-btn {
+    text-decoration: none;
+    padding: 0.85rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-filled {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 6px 20px rgba(255, 178, 148, 0.15);
+}
+
+.btn-filled:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+}
+
+.btn-outlined {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-outlined:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.15);
+}
+
+/* Responsive Adaptive Viewports with Strict 20px Padding Preservation */
+@media (max-width: 992px) {
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+    .about-visual-side { order: 2; } 
+    .about-content-side { order: 1; align-items: center; }
+    .about-title { justify-content: center; font-size: 2.3rem; }
+    .about-cta-group { justify-content: center; }
+    .circular-accent-ring { width: 320px; height: 320px; }
+}
+
+@media (max-width: 576px) {
+    .about-section { padding: 40px 20px 20px 20px; }
+    .about-title { font-size: 1.9rem; }
+    .circular-accent-ring { width: 270px; height: 270px; }
+    .about-cta-group { width: 100%; flex-direction: column; gap: 0.8rem; }
+    .about-btn { text-align: center; width: 100%; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Split Title string into alternating directional word spans
+    const aboutTitle = document.getElementById("aboutTitle");
+    if (aboutTitle) {
+        const words = aboutTitle.textContent.split(" ");
+        aboutTitle.textContent = ""; 
+        
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            
+            // Alternates sides word-by-word
+            if (index % 2 === 0) {
+                span.classList.add("fly-from-left");
+            } else {
+                span.classList.add("fly-from-right");
+            }
+            
+            aboutTitle.appendChild(span);
+        });
+    }
+
+    // Scroll targets
+    const scrollContainer = document.querySelector(".content-body") || window;
+    const visualSide = document.getElementById("aboutVisualSide");
+    const titleSpans = document.querySelectorAll(".about-title span");
+    const paragraphs = document.querySelectorAll(".about-paragraph");
+    const ctaGroup = document.getElementById("aboutCtaGroup");
+
+    function executeAboutScrollAnimations() {
+        const triggerBounds = window.innerHeight * 0.92;
+
+        // Image glides in from side trigger
+        if (visualSide) {
+            const rect = visualSide.getBoundingClientRect();
+            if (rect.top < triggerBounds) {
+                visualSide.classList.add("animate-in");
+            }
+        }
+
+        // Title expansion words slide in from alternating sides
+        titleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBounds) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 100);
+            }
+        });
+
+        // Paragraphs rise up from bottom trigger
+        paragraphs.forEach((para, index) => {
+            const rect = para.getBoundingClientRect();
+            if (rect.top < triggerBounds) {
+                setTimeout(() => {
+                    para.classList.add("animate-in");
+                }, 150 * (index + 1));
+            }
+        });
+
+        // CTA group reveal trigger
+        if (ctaGroup) {
+            const rect = ctaGroup.getBoundingClientRect();
+            if (rect.top < triggerBounds || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    ctaGroup.classList.add("animate-in");
+                }, 450);
+            }
+        }
+    }
+
+    // Attach tracking scroll handles
+    scrollContainer.addEventListener("scroll", executeAboutScrollAnimations);
+    window.addEventListener("scroll", executeAboutScrollAnimations);
+    
+    // Fallback runner check pass
+    setTimeout(executeAboutScrollAnimations, 400);
+});
+
+</script>
+
+<section class="countdown-section-fullwidth">
+    <!-- Abstract Tech Mesh Background Canvas Overlay -->
+    <div class="countdown-bg-overlay"></div>
+
+    <div class="countdown-container">
+        <!-- Left Side: Context Meta Data -->
+        <div class="countdown-info-side">
+            <span class="event-badge">UPCOMING EVENT</span>
+            <h2 class="countdown-title" id="countdownTitle">Business Meets Innovation</h2>
+            <div class="event-location">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Grand Conference Hall – 881 7th Ave New York, NY</span>
+            </div>
+        </div>
+
+        <!-- Right Side: Real-Time Active Ticking Grid Widget -->
+        <div class="countdown-digits-side" id="countdownTimer">
+            <div class="time-block">
+                <span class="time-num" id="daysBox">00</span>
+                <span class="time-label">DAYS</span>
+            </div>
+            <div class="time-block">
+                <span class="time-num" id="hoursBox">00</span>
+                <span class="time-label">HOURS</span>
+            </div>
+            <div class="time-block">
+                <span class="time-num" id="minsBox">00</span>
+                <span class="time-label">MINUTES</span>
+            </div>
+            <div class="time-block">
+                <span class="time-num" id="secsBox">00</span>
+                <span class="time-label">SECONDS</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Section Shell Wrapper */
+.countdown-section-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with generous side edge clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #2d1933 0%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Moving Tech Mesh Canvas Layer */
+.countdown-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 80% 20%, rgba(255, 178, 148, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Centered Layout Layout Alignment Shield */
+.countdown-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px; 
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Metadata Layouts */
+.countdown-info-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.event-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+}
+
+/* Word-by-Word Title Reveal Spaces */
+.countdown-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+.countdown-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.countdown-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.countdown-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.35);
+}
+
+.event-location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #b5a4ba;
+    font-size: 0.95rem;
+}
+
+.event-location svg {
+    color: #ffb294;
+    flex-shrink: 0;
+}
+
+/* Right Side Counters Matrix Grid */
+.countdown-digits-side {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.countdown-digits-side.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.time-num {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.time-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    letter-spacing: 0.1em;
+}
+
+.time-block:hover .time-num {
+    color: #ffb294;
+    text-shadow: 0 0 25px rgba(255, 178, 148, 0.6);
+}
+
+/* Mobile Scaling Configurations preserving full viewport alignments */
+@media (max-width: 992px) {
+    .countdown-container {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+        text-align: center;
+    }
+    .countdown-info-side { align-items: center; }
+    .countdown-title { justify-content: center; font-size: 2.4rem; }
+    .time-num { font-size: 3.2rem; }
+}
+
+@media (max-width: 576px) {
+    .countdown-section-fullwidth { padding: 40px 20px 25px 20px; }
+    .countdown-title { font-size: 2rem; }
+    .countdown-digits-side { gap: 0.75rem; }
+    .time-num { font-size: 2.2rem; }
+    .time-label { font-size: 0.65rem; letter-spacing: 0.05em; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Structure into Discrete Stagger Spans
+    const titleBlock = document.getElementById("countdownTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = "";
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // 2. Real-Time Active Ticking Countdown Clock Loop Logic
+    // Setting event targets out into the future (e.g. 10 days out from current baseline timestamp)
+    const eventTimeDate = new Date().getTime() + (10 * 24 * 60 * 60 * 1000) + (21 * 60 * 60 * 1000);
+
+    const daysBox = document.getElementById("daysBox");
+    const hoursBox = document.getElementById("hoursBox");
+    const minsBox = document.getElementById("minsBox");
+    const secsBox = document.getElementById("secsBox");
+
+    function updateTickingClock() {
+        const now = new Date().getTime();
+        const difference = eventTimeDate - now;
+
+        if (difference <= 0) {
+            clearInterval(clockInterval);
+            if(daysBox) daysBox.textContent = "00";
+            if(hoursBox) hoursBox.textContent = "00";
+            if(minsBox) minsBox.textContent = "00";
+            if(secsBox) secsBox.textContent = "00";
+            return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        if (daysBox) daysBox.textContent = days < 10 ? "0" + days : days;
+        if (hoursBox) hoursBox.textContent = hours < 10 ? "0" + hours : hours;
+        if (minsBox) minsBox.textContent = minutes < 10 ? "0" + minutes : minutes;
+        if (secsBox) secsBox.textContent = seconds < 10 ? "0" + seconds : seconds;
+    }
+
+    updateTickingClock();
+    const clockInterval = setInterval(updateTickingClock, 1000);
+
+    // 3. Scroll Intersection Reveal Observer Trackers
+    const hostContainer = document.querySelector(".content-body") || window;
+    const splitTitleSpans = document.querySelectorAll(".countdown-title span");
+    const timerWrapper = document.getElementById("countdownTimer");
+
+    function processScrollTriggerActions() {
+        const viewportTriggerHeight = window.innerHeight * 0.92;
+
+        splitTitleSpans.forEach((span, index) => {
+            const boundaryRect = span.getBoundingClientRect();
+            if (boundaryRect.top < viewportTriggerHeight) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 100);
+            }
+        });
+
+        if (timerWrapper) {
+            const boundaryRect = timerWrapper.getBoundingClientRect();
+            if (boundaryRect.top < viewportTriggerHeight || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    timerWrapper.classList.add("animate-in");
+                }, 200);
+            }
+        }
+    }
+
+    hostContainer.addEventListener("scroll", processScrollTriggerActions);
+    window.addEventListener("scroll", processScrollTriggerActions);
+    setTimeout(processScrollTriggerActions, 400);
+});
+
+</script>
+
+<section class="speakers-section">
+    <!-- Letter-by-Letter Scroll Triggered Title -->
+    <h2 class="speakers-main-title" id="speakersMainTitle">Featured Speakers</h2>
+
+    <!-- Dynamic Speakers Card Matrix Container -->
+    <div class="speakers-grid">
+        
+        <!-- Speaker Card 1 -->
+        <div class="speaker-capsule-card">
+            <div class="speaker-image-frame">
+                <img src="https://unsplash.com" alt="Sarah Jenkins">
+            </div>
+            <div class="speaker-meta-content">
+                <h3 class="speaker-name">Sarah Jenkins</h3>
+                <p class="speaker-role">Lead Web Architect</p>
+                
+                <!-- Social Vector Links pointing to 404 tracking -->
+                <div class="speaker-social-channels">
+                    <a href="404.html" aria-label="Facebook Profile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                    <a href="404.html" aria-label="Instagram Profile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                    <a href="404.html" aria-label="Twitter X Profile">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                    </a>
+                    <a href="404.html" aria-label="WhatsApp Contact">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    </a>
+                </div>
+                <a href="#follow" class="speaker-follow-link">Follow</a>
+            </div>
+        </div>
+
+        <!-- Speaker Card 2 -->
+        <div class="speaker-capsule-card">
+            <div class="speaker-image-frame">
+                <img src="https://unsplash.com" alt="Marcus Chen">
+            </div>
+            <div class="speaker-meta-content">
+                <h3 class="speaker-name">Marcus Chen</h3>
+                <p class="speaker-role">Principal Devops Engineer</p>
+                <div class="speaker-social-channels">
+                    <a href="404.html" aria-label="Facebook Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                    <a href="404.html" aria-label="Instagram Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                    <a href="404.html" aria-label="Twitter Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
+                    <a href="404.html" aria-label="WhatsApp Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+                </div>
+                <a href="#follow" class="speaker-follow-link">Follow</a>
+            </div>
+        </div>
+
+        <!-- Speaker Card 3 -->
+        <div class="speaker-capsule-card">
+            <div class="speaker-image-frame">
+                <img src="https://unsplash.com" alt="Elena Rostova">
+            </div>
+            <div class="speaker-meta-content">
+                <h3 class="speaker-name">Elena Rostova</h3>
+                <p class="speaker-role">AI Research Specialist</p>
+                <div class="speaker-social-channels">
+                    <a href="404.html" aria-label="Facebook Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+                    <a href="404.html" aria-label="Instagram Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+                    <a href="404.html" aria-label="Twitter Profile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
+                    <a href="404.html" aria-label="WhatsApp Contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+                </div>
+                <a href="#follow" class="speaker-follow-link">Follow</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Layout Base Shell Setup */
+.speakers-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, and 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+}
+
+/* Staggered Letter-by-Letter Header Styling */
+.speakers-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 2px;
+    margin-bottom: 3.5rem;
+}
+
+.speakers-main-title div {
+    display: flex;
+}
+
+.speakers-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.speakers-main-title span.active {
+    opacity: 1;
+    transform: translateY(0);
+    text-shadow: 0 0 15px rgba(255, 178, 148, 0.3);
+}
+
+/* Speaker Matrix Layout Rules */
+.speakers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    width: 100%;
+}
+
+/* Capsule Card Outline Architecture Matching Reference Image */
+.speaker-capsule-card {
+    background: rgba(43, 23, 51, 0.6); /* Slightly lighter nested deep purple */
+    border: 1.5px solid rgba(255, 178, 148, 0.05);
+    border-radius: 200px 200px 40px 40px; /* Precise deep round capsule curves */
+    padding: 25px 25px 35px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    
+    /* Scroll Trigger Initialization Hooks */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.5s ease;
+}
+
+/* Speaker Card Fly-In Entrance */
+.speaker-capsule-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Circular Portrait Frame Architecture */
+.speaker-image-frame {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 3px solid rgba(255, 178, 148, 0.1);
+    background: #190f1d;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+
+.speaker-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9) contrast(1.05);
+    transition: transform 0.6s ease;
+}
+
+/* Metadata Text Elements Layout */
+.speaker-meta-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.speaker-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+}
+
+.speaker-role {
+    font-size: 0.95rem;
+    color: #b5a4ba;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+/* Vector Vector Icons Layout Frame */
+.speaker-social-channels {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1.8rem;
+}
+
+.speaker-social-channels a {
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.speaker-social-channels svg {
+    width: 18px;
+    height: 18px;
+}
+
+.speaker-social-channels a:hover {
+    color: #ffb294; /* Vivid Peach family focus marker */
+    transform: translateY(-2px);
+}
+
+/* Bottom Follow CTA Framework */
+.speaker-follow-link {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 6px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.speaker-follow-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: #ffb294;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.speaker-follow-link:hover {
+    color: #ffb294;
+}
+
+.speaker-follow-link:hover::after {
+    width: 100%;
+}
+
+/* Active Card Hover Glow Extensions */
+.speaker-capsule-card:hover {
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.25);
+}
+
+.speaker-capsule-card:hover .speaker-image-frame {
+    border-color: #ffb294;
+    transform: scale(1.03);
+}
+
+.speaker-capsule-card:hover .speaker-image-frame img {
+    transform: scale(1.05);
+}
+
+.speaker-capsule-card:hover .speaker-name {
+    color: #ffb294;
+}
+
+/* Robust Layout Responsive Adaptations */
+@media (max-width: 992px) {
+    .speakers-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .speakers-section {
+        padding: 40px 20px 20px 20px;
+    }
+    .speakers-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 360px;
+        margin: 0 auto;
+    }
+    .speakers-main-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+    }
+    .speaker-capsule-card {
+        padding: 20px 20px 30px 20px;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Segmentation Parsing into Letter Stagger Token Sets
+    const targetTitle = document.getElementById("speakersMainTitle");
+    if (targetTitle) {
+        const words = targetTitle.textContent.split(" ");
+        targetTitle.textContent = ""; 
+        
+        words.forEach((word, wIdx) => {
+            const wordShell = document.createElement("div");
+            
+            [...word].forEach(char => {
+                const span = document.createElement("span");
+                span.textContent = char;
+                wordShell.appendChild(span);
+            });
+            
+            targetTitle.appendChild(wordShell);
+            
+            // Append explicit blank spacing boundaries
+            if (wIdx < words.length - 1) {
+                const spacingSpan = document.createElement("span");
+                spacingSpan.innerHTML = "&nbsp;";
+                targetTitle.appendChild(spacingSpan);
+            }
+        });
+    }
+
+    // Identify layout context scroll frames
+    const scrollWrapper = document.querySelector(".content-body") || window;
+    const characterSpans = document.querySelectorAll(".speakers-main-title span");
+    const capsuleCards = document.querySelectorAll(".speaker-capsule-card");
+
+    function evaluateSpeakersScroll() {
+        const structuralTriggerPoint = window.innerHeight * 0.90;
+
+        // Title character array incremental roll-in reveal
+        characterSpans.forEach((span, index) => {
+            const boundaries = span.getBoundingClientRect();
+            if (boundaries.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    span.classList.add("active");
+                }, index * 30); // Compact sequential frame stepping delay
+            }
+        });
+
+        // Capsule Cards sequential arrival entry sequence (one-by-one check triggers)
+        capsuleCards.forEach((card, index) => {
+            const boundaries = card.getBoundingClientRect();
+            if (boundaries.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 120); // 120ms execution stagger pace
+            }
+        });
+    }
+
+    // Bind execution observing loops
+    scrollWrapper.addEventListener("scroll", evaluateSpeakersScroll);
+    window.addEventListener("scroll", evaluateSpeakersScroll);
+    
+    // Safety check sequence passes
+    setTimeout(evaluateSpeakersScroll, 400);
+});
+
+</script>
+
+<section class="whoweare-section">
+    <div class="whoweare-container">
+        
+        <!-- Left Column: Asymmetric Creative Image Layering -->
+        <div class="whoweare-visual-cluster">
+            <div class="visual-glow-backdrop"></div>
+            <div class="main-image-frame photo-reveal-left">
+                <img src="https://unsplash.com" alt="Tech Synergy Team">
+            </div>
+            <div class="accent-image-frame photo-reveal-right">
+                <img src="https://unsplash.com" alt="Creative Collaborative Workspace">
+            </div>
+        </div>
+
+        <!-- Right Column: Context Narratives & Directed Entrances -->
+        <div class="whoweare-content-side">
+            <span class="whoweare-tagline">THE FORCE BEHIND THE ARCHITECTURE</span>
+            
+            <!-- Title Words Appear Word-by-Word from Bottom -->
+            <h2 class="whoweare-title" id="whoweareTitle">Architects of Connected Technical Intelligence</h2>
+            
+            <!-- Paragraph Content Appears from the Side with Hover Text-Glow -->
+            <div class="whoweare-body-wrapper text-slide-left">
+                <p class="whoweare-paragraph">
+                    We are a collective of systems engineers, experience designers, and tech community pioneers who believe professional learning should be fully immersive. At Stackly, we build frameworks that destroy traditional conference barriers, transforming static lectures into live technical exchanges.
+                </p>
+                <p class="whoweare-paragraph">
+                    Our platform empowers leading enterprise development teams to gather safely, explore production constraints transparently, and build application architectures designed for next-generation scalability.
+                </p>
+            </div>
+
+            <!-- CTA Buttons Appear from the Right Side -->
+            <div class="whoweare-cta-group cta-slide-right" id="whoweareCtaGroup">
+                <a href="#manifesto" class="whoweare-btn fill-accent">Our Manifesto</a>
+                <a href="404.html" class="whoweare-btn outline-accent">Meet the Team</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Section Core Canvas Context */
+.whoweare-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+.whoweare-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Creative Left Column Image Cluster Architecture */
+.whoweare-visual-cluster {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    display: flex;
+    align-items: center;
+}
+
+.visual-glow-backdrop {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.15) 0%, rgba(33, 20, 37, 0) 70%);
+    top: 15%;
+    left: 10%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.main-image-frame {
+    position: relative;
+    width: 70%;
+    height: 340px;
+    border-radius: 24px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: translateX(-60px);
+}
+
+.accent-image-frame {
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+    width: 45%;
+    height: 220px;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 3;
+    border: 2px solid rgba(255, 178, 148, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateX(60px);
+}
+
+.main-image-frame img,
+.accent-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.05);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+/* Image Frames Entrance Active Trigger Rules */
+.main-image-frame.animate-ready,
+.accent-image-frame.animate-ready {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Interactive Visual Hover Glow Actions */
+.main-image-frame:hover,
+.accent-image-frame:hover {
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.35);
+}
+
+.main-image-frame:hover img,
+.accent-image-frame:hover img {
+    transform: scale(1.04);
+    filter: brightness(0.95) contrast(1.05);
+}
+
+/* Right Content Structure Configuration */
+.whoweare-content-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.whoweare-tagline {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffb294;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Title Stagger Setup: Appears word-by-word from bottom */
+.whoweare-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    overflow: hidden;
+}
+
+.whoweare-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.whoweare-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Description Block Sliding Entrances from the Left Side */
+.whoweare-body-wrapper {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.whoweare-body-wrapper.animate-ready {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.whoweare-paragraph {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #b5a4ba;
+    margin-bottom: 1.25rem;
+    max-width: 540px;
+    cursor: default;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Interactive Text Glow Hover Effect to Paragraphs */
+.whoweare-paragraph:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+/* Action CTA Elements Entrance from Right Side */
+.whoweare-cta-group {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.whoweare-cta-group.animate-ready {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.whoweare-btn {
+    text-decoration: none;
+    padding: 0.85rem 2.2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fill-accent {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 6px 20px rgba(255, 178, 148, 0.15);
+}
+
+.fill-accent:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.outline-accent {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.outline-accent:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Adaptive Layout Systems Matrix (Strict 20px side margin preservation) */
+@media (max-width: 992px) {
+    .whoweare-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+    }
+    .whoweare-visual-cluster {
+        justify-content: center;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .whoweare-content-side {
+        align-items: center;
+    }
+    .whoweare-title {
+        justify-content: center;
+        font-size: 2.3rem;
+    }
+    .whoweare-cta-group {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .whoweare-section { padding: 40px 20px 20px 20px; }
+    .whoweare-title { font-size: 1.9rem; }
+    .whoweare-visual-cluster { height: 320px; }
+    .main-image-frame { height: 260px; }
+    .accent-image-frame { height: 160px; bottom: 10px; }
+    .whoweare-cta-group { width: 100%; flex-direction: column; gap: 0.8rem; }
+    .whoweare-btn { text-align: center; width: 100%; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Splitter Engine (Word-by-word rising up from bottom)
+    const titleBlock = document.getElementById("whoweareTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // Identify dynamic page scroll wrappers
+    const scrollMonitor = document.querySelector(".content-body") || window;
+    const titleSpans = document.querySelectorAll(".whoweare-title span");
+    const mainImg = document.querySelector(".main-image-frame");
+    const accentImg = document.querySelector(".accent-image-frame");
+    const paragraphWrapper = document.querySelector(".whoweare-body-wrapper");
+    const ctaWrapper = document.getElementById("whoweareCtaGroup");
+
+    function executeWhoWeAreScrollAnimations() {
+        const intersectionLine = window.innerHeight * 0.92;
+
+        // Image frames glide in from opposing directions
+        if (mainImg && mainImg.getBoundingClientRect().top < intersectionLine) {
+            mainImg.classList.add("animate-ready");
+        }
+        if (accentImg && accentImg.getBoundingClientRect().top < intersectionLine) {
+            accentImg.classList.add("animate-ready");
+        }
+
+        // Title word-by-word reveal stagger
+        titleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < intersectionLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Description body wrapper slides in from the left side
+        if (paragraphWrapper && paragraphWrapper.getBoundingClientRect().top < intersectionLine) {
+            setTimeout(() => {
+                paragraphWrapper.classList.add("animate-ready");
+            }, 250);
+        }
+
+        // Action CTA buttons cluster slides in from the right side
+        if (ctaWrapper) {
+            const rect = ctaWrapper.getBoundingClientRect();
+            if (rect.top < intersectionLine || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    ctaWrapper.classList.add("animate-ready");
+                }, 400);
+            }
+        }
+    }
+
+    // Attach listener streams
+    scrollMonitor.addEventListener("scroll", executeWhoWeAreScrollAnimations);
+    window.addEventListener("scroll", executeWhoWeAreScrollAnimations);
+    
+    // Safety verification check pass
+    setTimeout(executeWhoWeAreScrollAnimations, 450);
+});
+
+</script>
+
+<section class="testimonial-section">
+    <!-- Scroll Triggered Section Header -->
+    <h2 class="testimonial-main-title" id="testimonialTitle">What Attendees Say</h2>
+
+    <!-- Asymmetric Creative Review Matrix Container -->
+    <div class="testimonial-grid">
+        
+        <!-- Review Capsule 1: Shifts up from Left -->
+        <div class="review-capsule shift-left">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Elena Rostova">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Elena Rostova</h3>
+                    <p class="reviewer-org">AI Systems Lead at Nexus</p>
+                </div>
+            </div>
+            
+            <!-- Glowing Ratings Bar -->
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "Stackly completely changed my view on technical keynotes. The multi-track environment loaded instantly, and being able to drop straight into interactive dev code sandboxes with speakers felt like the future."
+            </p>
+        </div>
+
+        <!-- Review Capsule 2: Shifts up from Center -->
+        <div class="review-capsule shift-center">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Marcus Chen">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Marcus Chen</h3>
+                    <p class="reviewer-org">Principal Infrastructure Engineer</p>
+                </div>
+            </div>
+            
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "The focus on production constraints and architectural scalability is what sets this network apart. I've walked away with active deployment fixes that solved three scaling bottlenecks this quarter."
+            </p>
+        </div>
+
+        <!-- Review Capsule 3: Shifts up from Right -->
+        <div class="review-capsule shift-right">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Sarah Jenkins">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Sarah Jenkins</h3>
+                    <p class="reviewer-org">VP Engineering at CloudFlow</p>
+                </div>
+            </div>
+            
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9734;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "The physical venues and fluid visual layout are incredible. Stackly provides an elite networking arena. Being able to connect directly with 5000+ enterprise software architects was invaluable."
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Core Section Layout Frame */
+.testimonial-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+}
+
+/* Scroll Activated Title Styles */
+.testimonial-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+}
+
+.testimonial-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.testimonial-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Asymmetric Creative Grid Matrix */
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    width: 100%;
+    padding-top: 20px;
+}
+
+/* Individual Review Capsule Card Architectures */
+.review-capsule {
+    position: relative;
+    background: rgba(33, 20, 37, 0.7);
+    border: 1.5px solid rgba(255, 178, 148, 0.04);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll Trigger Setup: Hidden by default */
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
+}
+
+/* Dynamic Entrance Directions on Scroll Trigger */
+.review-capsule.shift-left { transform: translate(-40px, 30px); }
+.review-capsule.shift-center { transform: translate(0, 50px); }
+.review-capsule.shift-right { transform: translate(40px, 30px); }
+
+.review-capsule.animate-in {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Background Ambient Glow Layer */
+.review-glow-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    background: radial-gradient(circle at 10% 10%, rgba(255, 178, 148, 0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Header Avatar Frameworks */
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    z-index: 2;
+}
+
+.reviewer-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    background: #1a0f1d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.reviewer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.reviewer-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewer-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+.reviewer-org {
+    font-size: 0.85rem;
+    color: #b5a4ba;
+    margin-top: 0.1rem;
+}
+
+/* Rating Vectors */
+.star-rating-bar {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 1.25rem;
+    z-index: 2;
+}
+
+.star-vector {
+    color: rgba(255, 178, 148, 0.2); /* Default empty star color base */
+    font-size: 1.1rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Fill logic color selection matching Peach */
+.star-rating-bar .star-vector:not(:last-child),
+.star-rating-bar .star-vector {
+    color: #ffb294;
+}
+.star-rating-bar span:contains('&#9734;') {
+    color: rgba(255, 178, 148, 0.2) !important;
+}
+
+/* Review Block Text Layout */
+.review-body-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    cursor: default;
+    z-index: 2;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Card Hover Actions & Glowing Overlays */
+.review-capsule:hover {
+    border-color: #ffb294;
+    box-shadow: 0 0 30px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px) !important;
+}
+
+.review-capsule:hover .review-glow-layer {
+    opacity: 0.8;
+    background: radial-gradient(circle at 10% 10%, rgba(255, 178, 148, 0.08) 0%, transparent 60%);
+}
+
+.review-capsule:hover .reviewer-name {
+    color: #ffb294;
+}
+
+.review-capsule:hover .review-body-text {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.review-capsule:hover .star-vector {
+    text-shadow: 0 0 8px rgba(255, 178, 148, 0.8);
+}
+
+/* Responsive Structural Breakpoints Layout Matrix */
+@media (max-width: 992px) {
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 580px;
+        margin: 0 auto;
+    }
+    .review-capsule {
+        transform: translateY(40px) !important; /* Converts desktop offsets into simple vertical checks for mobile viewports */
+    }
+    .testimonial-main-title {
+        font-size: 2.2rem;
+        margin-bottom: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-section { padding: 40px 20px 20px 20px; }
+    .testimonial-main-title { font-size: 1.8rem; }
+    .review-capsule { padding: 1.5rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header string into animatable words
+    const headerBlock = document.getElementById("testimonialTitle");
+    if (headerBlock) {
+        const words = headerBlock.textContent.split(" ");
+        headerBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            headerBlock.appendChild(span);
+        });
+    }
+
+    // Identify current active template scroll wrappers
+    const scrollTracker = document.querySelector(".content-body") || window;
+    const titleWords = document.querySelectorAll(".testimonial-main-title span");
+    const reviewCards = document.querySelectorAll(".review-capsule");
+
+    function executeTestimonialScrollAnimations() {
+        const structuralTriggerPoint = window.innerHeight * 0.92;
+
+        // Word-by-word title expand fade reveal step
+        titleWords.forEach((span, index) => {
+            const boundaryBox = span.getBoundingClientRect();
+            if (boundaryBox.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 110);
+            }
+        });
+
+        // Review card multi-directional slide matrix arrival stagger
+        reviewCards.forEach((card, index) => {
+            const boundaryBox = card.getBoundingClientRect();
+            if (boundaryBox.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 150); // 150ms incremental stepping offset execution loops
+            }
+        });
+    }
+
+    // Hook logic streams to main viewport containers
+    scrollTracker.addEventListener("scroll", executeTestimonialScrollAnimations);
+    window.addEventListener("scroll", executeTestimonialScrollAnimations);
+    
+    // Initial load verify tracking checks pass execution loop
+    setTimeout(executeTestimonialScrollAnimations, 450);
+});
+
+</script>
+
+<section class="faq-section">
+    <div class="faq-container">
+        
+        <!-- Left Column: FAQ Accordion Content Matrix -->
+        <div class="faq-content-side">
+            <!-- Word-by-Word Scroll Triggered Title -->
+            <h2 class="faq-main-title" id="faqTitle">Frequently Asked Questions</h2>
+            
+            <div class="faq-accordion-group" id="faqAccordionGroup">
+                
+                <!-- FAQ Item 1 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">How do I access the virtual track sandboxes?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>All virtual pass holders will receive a personal secure login link via email 48 hours prior to the keynote launch. This gives you instant access to the Stackly cloud sandbox instances directly through your browser dashboard framework.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Can I switch my registration tier after purchasing?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>Yes, you can upgrade your attendance access tier at any point up to 7 days before the conference begins. Simply navigate to your dashboard workspace or reach out to registration support to process the tier adjustment variance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Are the technical labs record sessions available on-demand?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>Absolutely. Every diagnostic hackathon, technical lab track, and main arena keynote is recorded. The digital video assets and associated codebase repositories will be archived inside the workspace dashboard for 12 months post-event.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">What are the local venue parking guidelines?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>Complimentary subterranean parking is available at the Grand Arena structure for all VIP and General Admission ticket holders. Present your digital entry badge matrix to the gate attendant for seamless access loops.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Column: Image Slides in from the Right Side -->
+        <div class="faq-visual-side slide-from-right" id="faqVisualSide">
+            <div class="faq-visual-glow"></div>
+            <div class="faq-image-mask">
+                <img src="https://unsplash.com" alt="Stackly Support Help Desk Matrix">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Core Section Layout Framework */
+.faq-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+.faq-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Column Content Layout */
+.faq-content-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Word-by-Word Reveal Header Styling */
+.faq-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+}
+
+.faq-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.faq-accordion-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+/* Interactive Accordion Card Structures */
+.faq-card {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+    
+    /* Scroll animation hooks */
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Trigger Button Configuration */
+.faq-trigger {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+.faq-question {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    padding-right: 1.5rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Vector Toggle Indicator Icon */
+.faq-icon-marker {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-icon-marker::before,
+.faq-icon-marker::after {
+    content: '';
+    position: absolute;
+    background-color: #b5a4ba;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+/* Horizontal line component */
+.faq-icon-marker::before {
+    top: 8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+}
+
+/* Vertical line component */
+.faq-icon-marker::after {
+    top: 0;
+    left: 8px;
+    width: 2px;
+    height: 100%;
+}
+
+/* Interactive Accordion Panel Content Panels */
+.faq-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-panel-inner {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+}
+
+/* Hover Actions & Active Glow Filters */
+.faq-card:hover {
+    border-color: #ffb294; /* Peach Family Accent focus border */
+    box-shadow: 0 0 25px rgba(255, 178, 148, 0.15);
+}
+
+.faq-card:hover .faq-question {
+    color: #ffb294;
+    text-shadow: 0 0 8px rgba(255, 178, 148, 0.2);
+}
+
+.faq-card:hover .faq-icon-marker::before,
+.faq-card:hover .faq-icon-marker::after {
+    background-color: #ffb294;
+}
+
+/* Open Panel Active Layout Transformations */
+.faq-card.open {
+    border-color: rgba(255, 178, 148, 0.4);
+    background: rgba(255, 178, 148, 0.02);
+}
+
+.faq-card.open .faq-icon-marker {
+    transform: rotate(45deg); /* Flips icon mapping plus sign into close X format */
+}
+
+.faq-card.open .faq-icon-marker::before,
+.faq-card.open .faq-icon-marker::after {
+    background-color: #ffb294;
+}
+
+/* Right Column Image Shell Architecture */
+.faq-visual-side {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+/* Right Side Entrance Transition Directive */
+.faq-visual-side.slide-from-right {
+    transform: translateX(80px);
+}
+
+.faq-visual-side.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-visual-glow {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.faq-image-mask {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    background: #1a0f1d;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.faq-image-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Image Cluster Hover Transform Framework */
+.faq-image-mask:hover {
+    transform: scale(1.02) translateY(-4px);
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.3);
+}
+
+.faq-image-mask:hover img {
+    transform: scale(1.04);
+}
+
+/* Global Media Responsive Adjustments (Strict 20px Side Margins) */
+@media (max-width: 992px) {
+    .faq-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    .faq-visual-side {
+        order: 2; /* Shifts support graphic down underneath card rows on mobile display views */
+    }
+    .faq-content-side {
+        order: 1;
+        align-items: center;
+    }
+    .faq-main-title {
+        justify-content: center;
+        font-size: 2.3rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .faq-section { padding: 40px 20px 20px 20px; }
+    .faq-main-title { font-size: 1.9rem; }
+    .faq-trigger { padding: 1.25rem; }
+    .faq-question { font-size: 1rem; }
+    .faq-panel-inner { padding: 0 1.25rem 1.25rem 1.25rem; font-size: 0.92rem; }
+    .fly-from-right { transform: translateY(40px); } /* Reconvert to clean structural layout vertical shift for layout stacks */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Split FAQ Header title string into individual animatable words
+    const titleElement = document.getElementById("faqTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleElement.appendChild(span);
+        });
+    }
+
+    // 2. Interactive Toggle Accordion Expansion Logic
+    const faqTriggers = document.querySelectorAll(".faq-trigger");
+
+    faqTriggers.forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            const currentCard = trigger.closest(".faq-card");
+            const currentPanel = currentCard.querySelector(".faq-panel");
+            const isCurrentlyOpen = currentCard.classList.contains("open");
+
+            // Close all other sibling items across grid contexts for accordion behavior
+            document.querySelectorAll(".faq-card.open").forEach(openCard => {
+                if (openCard !== currentCard) {
+                    openCard.classList.remove("open");
+                    openCard.querySelector(".faq-panel").style.maxHeight = "0";
+                    openCard.querySelector(".faq-trigger").setAttribute("aria-expanded", "false");
+                }
+            });
+
+            // Toggle expansion metrics on target entry item
+            if (isCurrentlyOpen) {
+                currentCard.classList.remove("open");
+                currentPanel.style.maxHeight = "0";
+                trigger.setAttribute("aria-expanded", "false");
+            } else {
+                currentCard.classList.add("open");
+                currentPanel.style.maxHeight = currentPanel.scrollHeight + "px"; // Sets to full layout bounding container requirements dynamically
+                trigger.setAttribute("aria-expanded", "true");
+            }
+        });
+    });
+
+    // 3. Scroll Intersection Entrance Animators
+    const scrollHost = document.querySelector(".content-body") || window;
+    const titleSpans = document.querySelectorAll(".faq-main-title span");
+    const faqItems = document.querySelectorAll(".faq-card");
+    const rightVisualSide = document.getElementById("faqVisualSide");
+
+    function executeFaqScrollObserver() {
+        const structuralTriggerBounds = window.innerHeight * 0.92;
+
+        // Word-by-word title expand reveal
+        titleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerBounds) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // FAQ accordion item grid rows fly-in stagger (one-by-one sequential display)
+        faqItems.forEach((item, index) => {
+            const rect = item.getBoundingClientRect();
+            if (rect.top < structuralTriggerBounds) {
+                setTimeout(() => {
+                    item.classList.add("animate-in");
+                }, index * 120); // 120ms execution gaps
+            }
+        });
+
+        // Support image framework slide entry
+        if (rightVisualSide) {
+            const rect = rightVisualSide.getBoundingClientRect();
+            if (rect.top < structuralTriggerBounds) {
+                setTimeout(() => {
+                    rightVisualSide.classList.add("animate-in");
+                }, 200);
+            }
+        }
+    }
+
+    // Attach listener triggers
+    scrollHost.addEventListener("scroll", executeFaqScrollObserver);
+    window.addEventListener("scroll", executeFaqScrollObserver);
+    
+    // Safety verification check pass
+    setTimeout(executeFaqScrollObserver, 450);
+});
+
+</script>
+
+<section class="blog-section">
+    <!-- Word-by-Word Scroll Triggered Title -->
+    <h2 class="blog-main-title" id="blogTitle">Latest Insights & News</h2>
+
+    <!-- Responsive Staggered Card Grid Matrix -->
+    <div class="blog-grid" id="blogGrid">
+        
+        <!-- Blog Card 1 -->
+        <div class="blog-card reveal-card">
+            <div class="blog-image-wrapper">
+                <img src="https://unsplash.com" alt="Next-Gen Architecture Frameworks">
+                <span class="blog-category">ARCHITECTURE</span>
+            </div>
+            <div class="blog-info-wrapper">
+                <div class="blog-meta-date">October 5, 2026 • 5 Min Read</div>
+                <h3 class="blog-card-title">Scaling Edge Deployments with Digital Micro-Frontends</h3>
+                <p class="blog-summary">Explore how modern application frameworks leverage progressive web hydration to achieve sub-millisecond paint thresholds globally.</p>
+                <a href="404.html" class="blog-cta-btn">Read Article</a>
+            </div>
+        </div>
+
+        <!-- Blog Card 2 -->
+        <div class="blog-card reveal-card">
+            <div class="blog-image-wrapper">
+                <img src="https://unsplash.com" alt="Cyber Security Protocols">
+                <span class="blog-category">SECURITY</span>
+            </div>
+            <div class="blog-info-wrapper">
+                <div class="blog-meta-date">September 28, 2026 • 8 Min Read</div>
+                <h3 class="blog-card-title">Zero-Trust Isolation in Multi-Tenant Web Sandboxes</h3>
+                <p class="blog-summary">A diagnostic breakdown of kernel isolation protocols required to run untrusted runtime script clusters securely in production environments.</p>
+                <a href="404.html" class="blog-cta-btn">Read Article</a>
+            </div>
+        </div>
+
+        <!-- Blog Card 3 -->
+        <div class="blog-card reveal-card">
+            <div class="blog-image-wrapper">
+                <img src="https://unsplash.com" alt="AI Workspace Collaboration">
+                <span class="blog-category">AI SUMMIT</span>
+            </div>
+            <div class="blog-info-wrapper">
+                <div class="blog-meta-date">September 14, 2026 • 4 Min Read</div>
+                <h3 class="blog-card-title">Generative Layout Compilation in Design Workspaces</h3>
+                <p class="blog-summary">How engineering teams deploy context-aware semantic tools to dynamically build accessible user screens based on prompt streams.</p>
+                <a href="404.html" class="blog-cta-btn">Read Article</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Core Section Layout Framework */
+.blog-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+/* Word-by-Word Reveal Header Styling */
+.blog-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 3.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+}
+
+.blog-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blog-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered Card Grid Alignment Matrix */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Base Card Shell Structure */
+.blog-card {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    
+    /* Scroll Trigger Initialization Hooks */
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.blog-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Thumbnail Visual Architecture */
+.blog-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #190f1d;
+}
+
+.blog-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.75) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+/* Fluid Absolute Tag Badge Layout */
+.blog-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(33, 20, 37, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    color: #ffb294; /* Peach Focus Family */
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    letter-spacing: 0.06em;
+    z-index: 3;
+}
+
+/* Info Summary Panel Framework */
+.blog-info-wrapper {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.blog-meta-date {
+    font-size: 0.8rem;
+    color: #b5a4ba;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+}
+
+.blog-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+}
+
+.blog-summary {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #b5a4ba;
+    margin-bottom: 1.5rem;
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+/* Action CTA Link Formatting */
+.blog-cta-btn {
+    text-decoration: none;
+    align-self: flex-start;
+    color: #ffb294;
+    font-size: 0.92rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.blog-cta-btn::after {
+    content: '→';
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Card Hover Actions & Vivid Peach Glowing Overlays */
+.blog-card:hover {
+    border-color: #ffb294;
+    box-shadow: 0 0 30px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px);
+}
+
+.blog-card:hover .blog-image-wrapper img {
+    transform: scale(1.04);
+    filter: brightness(0.9) contrast(1.02);
+}
+
+.blog-card:hover .blog-card-title {
+    color: #ffb294;
+}
+
+.blog-card:hover .blog-summary {
+    color: #ffffff;
+}
+
+.blog-card:hover .blog-cta-btn {
+    color: #ffffff;
+    transform: translateX(2px);
+}
+
+.blog-card:hover .blog-cta-btn::after {
+    transform: translateX(3px);
+}
+
+/* Comprehensive Grid Scaling Breakpoints Matrix */
+@media (max-width: 992px) {
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 680px) {
+    .blog-section { padding: 40px 20px 20px 20px; }
+    .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .blog-main-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+    }
+    .blog-card-title { font-size: 1.15rem; }
+    .blog-summary { font-size: 0.9rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Title Processing Splitter (Word-by-word reveal sequence)
+    const titleBlock = document.getElementById("blogTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // Identify localized scrolling host structures
+    const scrollContainer = document.querySelector(".content-body") || window;
+    const titleSpans = document.querySelectorAll(".blog-main-title span");
+    const newsCards = document.querySelectorAll(".blog-card");
+
+    function executeBlogScrollObserver() {
+        const structuralTriggerPoint = window.innerHeight * 0.92;
+
+        // Word-by-word title expand reveal
+        titleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 100);
+            }
+        });
+
+        // Cards sequential arrival entry loop stagger (one-by-one loading)
+        newsCards.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 150); // 150ms structural pace delay slots
+            }
+        });
+    }
+
+    // Attach tracking scroll frames
+    scrollContainer.addEventListener("scroll", executeBlogScrollObserver);
+    window.addEventListener("scroll", executeBlogScrollObserver);
+    
+    // Safety check execution pass call
+    setTimeout(executeBlogScrollObserver, 450);
+});
+
+</script>
