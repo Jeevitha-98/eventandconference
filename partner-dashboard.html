@@ -1,0 +1,1932 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly – Partner Control Terminal Workspace</title>
+    <link rel="stylesheet" href="partner-dashboard.css">
+</head>
+<body class="dashboard-root-body">
+
+    <!-- Central Master Grid Application Shell -->
+    <div class="dashboard-shell-container">
+        
+        <!-- Left Sidebar: Professional Navigation Control Console -->
+        <aside class="dashboard-sidebar-console" id="sidebarConsole">
+            <div class="sidebar-brand-wrapper">
+                <!-- Branding logo with localized view refresh function pass -->
+                <a href="#" class="sidebar-brand-link" id="dashboardRefreshTrigger" aria-label="Refresh Dashboard Matrix State">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Terminal Core Logo" class="brand-vector-logo">
+                    <span class="brand-title-text">STACKLY</span>
+                </a>
+            </div>
+
+            <!-- Staggered Functional Sidebar Menus Stack -->
+            <nav class="sidebar-navigation-stack">
+                <button class="nav-segment-item active" data-target-section="overview">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                    <span>Overview metrics</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="tracks">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+                    </svg>
+                    <span>Manage track labs</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="registrations">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Attendee lists</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="proposals">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>Talk abstract files</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>System parameters</span>
+                </button>
+            </nav>
+
+            <!-- Logout action button linked right back to login.html path rules -->
+            <div class="sidebar-footer-block">
+                <button class="sidebar-logout-btn" id="logoutActionTrigger">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span>Logout Terminal</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Right Side: Main Application Canvas Frame Box -->
+        <main class="dashboard-main-canvas">
+            
+            <!-- Global Action Bar Header Matrix -->
+            <header class="dashboard-global-header">
+                <!-- Hamburger responsive view toggle button -->
+                <button class="hamburger-menu-toggle-btn" id="hamburgerMenuToggle" aria-label="Toggle Navigation Console Drawer">
+                    <span class="hamburger-bar-line"></span>
+                    <span class="hamburger-bar-line"></span>
+                    <span class="hamburger-bar-line"></span>
+                </button>
+
+                <!-- Localized greeting row parsing user first name strings -->
+                <div class="header-greeting-wrapper">
+                    <h2>Hello, <span class="session-user-firstname" id="headerUsernameDisplay">Partner</span>!</h2>
+                    <p class="header-subtext-date">Stackly Convention Terminal Context Workspace</p>
+                </div>
+
+                <!-- Right Action Arrays (Bell, Notifications & Profile Avatar) -->
+                <div class="header-utilities-row">
+                    <!-- Notification Bell Anchor trigger with glowing vector layer -->
+                    <button class="utility-bell-btn" id="notificationBellTrigger" aria-label="View Active Notification Streams">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <div class="notification-ping-dot"></div>
+                    </button>
+
+                    <!-- Interactive User Settings Thumbnail -->
+                    <div class="utility-user-profile-avatar">
+                        <img src="https://unsplash.com" alt="Active Account Session Profile">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Workspace Content Hub Viewport Wrapper Links -->
+            <div class="workspace-dynamic-viewport" id="workspaceViewport">
+                
+                <!-- Section Frame 1: Overview Metrics Content Base -->
+               <!-- Section Frame 1: Elaborate Analytics Overview Workspace Content -->
+<div class="workspace-section-view active-view" id="section-overview">
+    
+    <!-- Workspace Context Summary Ribbon -->
+    <div class="overview-summary-ribbon">
+        <div class="ribbon-text-block">
+            <span class="ribbon-badge">CORE CONSOLE MATRICES</span>
+            <h3 class="ribbon-headline">Ecosystem Runtime Analytics</h3>
+        </div>
+        <div class="live-status-pulse-chip">
+            <span class="pulse-glow-dot"></span>
+            <span class="status-label-text">LIVE PRODUCTION TRACKING ACTIVATED</span>
+        </div>
+    </div>
+
+    <!-- Tier 1: Staggered High-Fidelity Statistics Cards Matrix Grid -->
+    <div class="elaborate-metric-cards-grid">
+        
+        <!-- Stat Card 1: Attendance Track -->
+        <div class="analytics-metric-card core-peach-glow">
+            <div class="card-header-meta">
+                <div class="icon-frame bg-peach-opaque">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <span class="trend-percentage-chip trend-up">+14.2%</span>
+            </div>
+            <div class="card-numeric-display">
+                <h4 class="metric-title-label">Active Attendees Capacity</h4>
+                <p class="big-metric-counter">5,740 <span class="counter-max-cap">/ 6,000</span></p>
+            </div>
+            <div class="card-progress-bar-pipeline">
+                <div class="progress-fill-line" style="width: 95.6%;"></div>
+            </div>
+        </div>
+
+        <!-- Stat Card 2: Sanboxes Run -->
+        <div class="analytics-metric-card">
+            <div class="card-header-meta">
+                <div class="icon-frame">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                </div>
+                <span class="trend-percentage-chip trend-up">+8.4%</span>
+            </div>
+            <div class="card-numeric-display">
+                <h4 class="metric-title-label">Sandbox Pod Instances Hydrated</h4>
+                <p class="big-metric-counter">1,245 <span class="counter-max-cap">Units</span></p>
+            </div>
+            <div class="card-progress-bar-pipeline">
+                <div class="progress-fill-line" style="width: 74.5%;"></div>
+            </div>
+        </div>
+
+        <!-- Stat Card 3: Traction Cap -->
+        <div class="analytics-metric-card">
+            <div class="card-header-meta">
+                <div class="icon-frame">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <span class="trend-percentage-chip trend-neutral">STABLE</span>
+            </div>
+            <div class="card-numeric-display">
+                <h4 class="metric-title-label">Sponsorship Runway Traction</h4>
+                <p class="big-metric-counter">94.8% <span class="counter-max-cap">Cap</span></p>
+            </div>
+            <div class="card-progress-bar-pipeline">
+                <div class="progress-fill-line" style="width: 94.8%;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tier 2: Asymmetric Layout Split - Operational Log Stream & Quick Actions -->
+    <div class="overview-asymmetric-split-row">
+        
+        <!-- Left Sub-Block: Real-Time Stream Log Monitor Console -->
+        <div class="dashboard-data-table-panel">
+            <div class="panel-header-row">
+                <h3>Live Execution Log Tracks</h3>
+                <a href="404.html" class="panel-header-action-link">View Full Logs &rarr;</a>
+            </div>
+            <div class="table-scroll-mask">
+                <table class="dashboard-custom-data-table">
+                    <thead>
+                        <tr>
+                            <th>NODE ID</th>
+                            <th>TRACK SEGMENT</th>
+                            <th>HYDRATION STATUS</th>
+                            <th>LATENCY TIMESTAMP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="bold-white-code">#ND-9482</td>
+                            <td>Edge Micro-Frontends</td>
+                            <td><span class="status-pill status-success">COMPILED</span></td>
+                            <td class="tabular-time">18:04:22:12ms</td>
+                        </tr>
+                        <tr>
+                            <td class="bold-white-code">#ND-1049</td>
+                            <td>Zero-Trust Isolation</td>
+                            <td><span class="status-pill status-success">COMPILED</span></td>
+                            <td class="tabular-time">18:02:11:45ms</td>
+                        </tr>
+                        <tr>
+                            <td class="bold-white-code">#ND-8823</td>
+                            <td>Generative Layout Systems</td>
+                            <td><span class="status-pill status-warning">HYDRATING</span></td>
+                            <td class="tabular-time">17:59:48:92ms</td>
+                        </tr>
+                        <tr>
+                            <td class="bold-white-code">#ND-3401</td>
+                            <td>Cloud Native Sandboxes</td>
+                            <td><span class="status-pill status-success">COMPILED</span></td>
+                            <td class="tabular-time">17:54:10:04ms</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Right Sub-Block: Quick Command Execution Actions Console -->
+        <div class="dashboard-actions-panel-box">
+            <h3>Quick Control Hub Commands</h3>
+            <p class="panel-brief-text">Execute centralized pipeline updates across all active conference segments instantly.</p>
+            <div class="quick-actions-buttons-stack">
+                <a href="404.html" class="action-trigger-link filled-peach-trigger">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    <span>Edit Track Abstracts</span>
+                </a>
+                <a href="404.html" class="action-trigger-link hollow-trans-trigger">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Download Roster .CSV</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* -------------------------------------------------------------
+   ELABORATE OVERVIEW MONITOR STYLING
+   ------------------------------------------------------------- */
+.workspace-section-view.active-view {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Header Context Summary Ribbon Elements */
+.overview-summary-ribbon {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    margin-bottom: 2rem;
+}
+
+.ribbon-badge {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #ffb294; /* Vivid Peach theme branding token color */
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 0.4rem;
+}
+
+.ribbon-headline {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+/* Streaming Pulse Indicator Node */
+.live-status-pulse-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(0, 170, 108, 0.06);
+    border: 1px solid rgba(0, 170, 108, 0.15);
+    padding: 0.5rem 1.25rem;
+    border-radius: 30px;
+}
+
+.pulse-glow-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #00aa6c; /* Pure emerald green pulsing tracking dot */
+    border-radius: 50%;
+    box-shadow: 0 0 8px #00aa6c;
+    animation: liveNodePulse 2s infinite alternate;
+}
+
+@keyframes liveNodePulse {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 12px #00aa6c; }
+}
+
+.status-label-text {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #00aa6c;
+    letter-spacing: 0.05em;
+}
+
+/* Tier 1: Three-Column Statistics Matrix Grid */
+.elaborate-metric-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.analytics-metric-card {
+    background-color: rgba(33, 20, 37, 0.5); /* Deep translucent plum layout backdrop variable */
+    border: 1px solid rgba(255, 178, 148, 0.05);
+    border-radius: 16px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.analytics-metric-card:hover {
+    border-color: rgba(255, 178, 148, 0.25);
+    background-color: rgba(49, 24, 54, 0.6);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Forced Highlight Overlay State for Primary card instance */
+.core-peach-glow {
+    border-color: rgba(255, 178, 148, 0.2);
+    box-shadow: 0 0 25px rgba(255, 178, 148, 0.05), 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.card-header-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.icon-frame {
+    width: 38px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b5a4ba;
+    padding: 10px;
+}
+
+.icon-frame svg { width: 100%; height: 100%; }
+
+.bg-peach-opaque {
+    background-color: rgba(255, 178, 148, 0.08) !important;
+    border-color: rgba(255, 178, 148, 0.2) !important;
+    color: #ffb294 !important;
+}
+
+/* Interactive Status Trend Chips */
+.trend-percentage-chip {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 30px;
+}
+
+.trend-up { background-color: rgba(0, 170, 108, 0.08); color: #00aa6c; }
+.trend-neutral { background-color: rgba(255, 255, 255, 0.04); color: #b5a4ba; letter-spacing: 0.02em; }
+
+.card-numeric-display {
+    text-align: left;
+    margin-bottom: 1.25rem;
+}
+
+.metric-title-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.big-metric-counter {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.counter-max-cap {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Visual Micro Progress Bar Lines Pipelines */
+.card-progress-bar-pipeline {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill-line {
+    height: 100%;
+    background: linear-gradient(90deg, #ff9b73 0%, #ffb294 100%); /* Signature Vivid Peach progress gradients */
+    border-radius: 4px;
+}
+
+/* Tier 2: Asymmetric Layout Double-Column Rows Split */
+.overview-asymmetric-split-row {
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Left Sub-Block: Log Monitor Panels */
+.dashboard-data-table-panel {
+    background-color: rgba(33, 20, 37, 0.3);
+    border: 1px solid rgba(255, 178, 148, 0.04);
+    border-radius: 16px;
+    padding: 1.8rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.panel-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.panel-header-row h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+}
+
+.panel-header-action-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.panel-header-action-link:hover { color: #ffffff; }
+
+/* Custom Analytics Log Tables Architecture */
+.table-scroll-mask {
+    width: 100%;
+    overflow-x: auto; /* Gracefully scroll table boundaries on compact horizontal displays */
+}
+
+.dashboard-custom-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.dashboard-custom-data-table th {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #b5a4ba;
+    letter-spacing: 0.05em;
+    padding: 0.85rem 1rem;
+    border-bottom: 1.5px solid rgba(255, 178, 148, 0.08);
+}
+
+.dashboard-custom-data-table td {
+    padding: 1.1rem 1rem;
+    font-size: 0.92rem;
+    color: #b5a4ba;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    white-space: nowrap;
+}
+
+.bold-white-code {
+    font-weight: 700;
+    color: #ffffff !important;
+    font-family: monospace; /* Technical coordinate indexing monospace layout fonts */
+    letter-spacing: 0.02em;
+}
+
+.tabular-time {
+    font-family: monospace;
+    font-size: 0.85rem;
+}
+
+/* Translucent Status Chips Tags */
+.status-pill {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 0.3rem 0.75rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    display: inline-block;
+}
+
+.status-success { background-color: rgba(0, 170, 108, 0.06); border: 1px solid rgba(0, 170, 108, 0.15); color: #00aa6c; }
+.status-warning { background-color: rgba(255, 178, 148, 0.06); border: 1px solid rgba(255, 178, 148, 0.15); color: #ffb294; }
+
+/* Right Sub-Block: Action Console Controls Box */
+.dashboard-actions-panel-box {
+    background-color: rgba(33, 20, 37, 0.3);
+    border: 1px solid rgba(255, 178, 148, 0.04);
+    border-radius: 16px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-actions-panel-box h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+.panel-brief-text {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    margin-bottom: 2rem;
+}
+
+.quick-actions-buttons-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    width: 100%;
+}
+
+.action-trigger-link {
+    text-decoration: none;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.action-trigger-link svg { width: 15px; height: 16px; }
+
+.filled-peach-trigger {
+    background-color: #ffb294;
+    color: #211425;
+    box-shadow: 0 4px 12px rgba(255, 178, 148, 0.15);
+}
+
+.filled-peach-trigger:hover {
+    background-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.hollow-trans-trigger {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.hollow-trans-trigger:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.15);
+    transform: translateY(-2px);
+}
+
+/* -------------------------------------------------------------
+   COMPREHENSIVE RESPONSIVE GRID BREAKPOINT MATRIX 
+   ------------------------------------------------------------- */
+@media (max-width: 1200px) {
+    /* Converts asymmetric side row splits into uniform stacked blocks fields on smaller windows screens */
+    .overview-asymmetric-split-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .elaborate-metric-cards-grid {
+        grid-template-columns: repeat(2, 1fr); /* Splits cards grid evenly into two cells columns on tablet screens */
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 680px) {
+    .overview-summary-ribbon {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .elaborate-metric-cards-grid {
+        grid-template-columns: 1fr; /* Compresses statistics grid lines into flat single columns rows on mobiles */
+        gap: 1rem;
+    }
+    .analytics-metric-card { padding: 1.5rem; }
+    .big-metric-counter { font-size: 1.85rem; }
+    .dashboard-data-table-panel, .dashboard-actions-panel-box { padding: 1.25rem; border-radius: 12px; }
+    .dashboard-custom-data-table th, .dashboard-custom-data-table td { padding: 0.85rem 0.5rem; font-size: 0.85rem; }
+}
+
+</style>
+
+                <!-- Section Frame 2: Manage Track Labs Panel -->
+                <div class="workspace-section-view" id="section-tracks">
+                    <div class="section-title-label">SECTION CONTENT VIEW: MANAGE TRACK LABS</div>
+                </div>
+
+              <!-- Section Frame 3: Elaborate Attendee Lists Participant Console -->
+<div class="workspace-section-view" id="section-registrations">
+    
+    <!-- Attendee Metrics Overview Ribbon -->
+    <div class="attendee-summary-ribbon">
+        <div class="ribbon-text-block">
+            <span class="ribbon-badge">REGISTRATION CONTROLS</span>
+            <h3 class="ribbon-headline">Attendee Roster Matrix</h3>
+        </div>
+        <div class="roster-quick-stats">
+            <div class="stat-pill-box">
+                <span class="pill-number">5,740</span>
+                <span class="pill-label">Verified Badges</span>
+            </div>
+            <div class="stat-pill-box border-left-divider">
+                <span class="pill-number">95.6%</span>
+                <span class="pill-label">Attendance Cap</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Search & Filtering Sub-Action Control Row -->
+    <div class="roster-filter-actions-row">
+        <div class="search-input-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="attendeeSearchInput" placeholder="Search by name, node token, or registration code...">
+        </div>
+        <div class="filter-actions-buttons-stack">
+            <a href="404.html" class="filter-util-btn btn-hollow-gray">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+                <span>Filter</span>
+            </a>
+            <a href="404.html" class="filter-util-btn btn-peach-filled">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Export CSV</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Master Roster Data Table Container -->
+    <div class="roster-data-table-panel">
+        <div class="table-scroll-mask">
+            <table class="roster-custom-data-table">
+                <thead>
+                    <tr>
+                        <th>ATTENDEE METRIC PROFILE</th>
+                        <th>REGISTRATION CODE</th>
+                        <th>ACCESS ACCESS TIER</th>
+                        <th>POD SEAT ASSIGNMENT</th>
+                        <th>TERMINAL GATE MATRIX</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="attendee-profile-cell">
+                                <img src="https://unsplash.com" alt="Sarah Jenkins Avatar" class="table-user-avatar">
+                                <div class="profile-cell-meta">
+                                    <h4>Sarah Jenkins</h4>
+                                    <p>sarah.j@framework.io</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tabular-mono-code">#STK-9482-X</td>
+                        <td><span class="badge-level badge-premium">ENTERPRISE PASS</span></td>
+                        <td class="tabular-mono-code">Row A / Pod 04</td>
+                        <td><a href="404.html" class="table-row-action-trigger">Manage &rarr;</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="attendee-profile-cell">
+                                <img src="https://unsplash.com" alt="Marcus Chen Avatar" class="table-user-avatar">
+                                <div class="profile-cell-meta">
+                                    <h4>Marcus Chen</h4>
+                                    <p>marcus.devops@stack.com</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tabular-mono-code">#STK-1049-Y</td>
+                        <td><span class="badge-level badge-vip">VIP KEYNOTE PASS</span></td>
+                        <td class="tabular-mono-code">Row B / Pod 12</td>
+                        <td><a href="404.html" class="table-row-action-trigger">Manage &rarr;</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="attendee-profile-cell">
+                                <img src="https://unsplash.com" alt="Elena Rostova Avatar" class="table-user-avatar">
+                                <div class="profile-cell-meta">
+                                    <h4>Elena Rostova</h4>
+                                    <p>elena.r@neural.net</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tabular-mono-code">#STK-8823-A</td>
+                        <td><span class="badge-level badge-standard">ATTENDEE PASS</span></td>
+                        <td class="tabular-mono-code">Row D / Pod 02</td>
+                        <td><a href="404.html" class="table-row-action-trigger">Manage &rarr;</a></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="contact-profile-cell, attendee-profile-cell">
+                                <img src="https://unsplash.com" alt="David Vance Avatar" class="table-user-avatar">
+                                <div class="profile-cell-meta">
+                                    <h4>David Vance</h4>
+                                    <p>vance.architect@edge.com</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tabular-mono-code">#STK-3401-K</td>
+                        <td><span class="badge-level badge-premium">ENTERPRISE PASS</span></td>
+                        <td class="tabular-mono-code">Row A / Pod 09</td>
+                        <td><a href="404.html" class="table-row-action-trigger">Manage &rarr;</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    /* -------------------------------------------------------------
+   ELABORATE ATTENDEE LIST MATRIX CONSOLE STYLING
+   ------------------------------------------------------------- */
+.attendee-summary-ribbon {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    margin-bottom: 2rem;
+}
+
+.roster-quick-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+}
+
+.stat-pill-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.pill-number {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+
+.pill-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #b5a4ba;
+    letter-spacing: 0.02em;
+}
+
+/* Action Search & Filtration Controls Line */
+.roster-filter-actions-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.8rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 480px;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrapper svg {
+    position: absolute;
+    left: 1.1rem;
+    width: 16px;
+    height: 16px;
+    color: #b5a4ba;
+    pointer-events: none;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    background-color: rgba(33, 20, 37, 0.3);
+    border: 1px solid rgba(255, 178, 148, 0.1);
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem 0.8rem 2.8rem;
+    font-size: 0.92rem;
+    color: #ffffff;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.search-input-wrapper input:focus {
+    border-color: #ffb294;
+    background-color: rgba(49, 24, 54, 0.4);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.15);
+}
+
+.filter-actions-buttons-stack {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.filter-util-btn {
+    text-decoration: none;
+    padding: 0.75rem 1.35rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.filter-util-btn svg { width: 14px; height: 14px; }
+
+.btn-hollow-gray {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.btn-hollow-gray:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.02);
+    transform: translateY(-1px);
+}
+
+.btn-peach-filled {
+    background-color: #ffb294;
+    color: #211425;
+    box-shadow: 0 4px 12px rgba(255, 178, 148, 0.15);
+}
+
+.btn-peach-filled:hover {
+    background-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+/* Master Grid Table Blueprint Panel */
+.roster-data-table-panel {
+    background-color: rgba(33, 20, 37, 0.4); /* Translucent plum cell backdrop */
+    border: 1px solid rgba(255, 178, 148, 0.05);
+    border-radius: 16px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    box-sizing: border-box;
+}
+
+.roster-custom-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.roster-custom-data-table th {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #b5a4ba;
+    letter-spacing: 0.05em;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1.5px solid rgba(255, 178, 148, 0.08);
+    background-color: rgba(12, 7, 16, 0.2);
+}
+
+.roster-custom-data-table td {
+    padding: 1rem 1.5rem;
+    font-size: 0.94rem;
+    color: #b5a4ba;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    white-space: nowrap;
+}
+
+/* Complex Column Shells (Avatars combined with metadata text) */
+.attendee-profile-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.table-user-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    object-fit: cover;
+}
+
+.profile-cell-meta h4 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 0.15rem;
+}
+
+.profile-cell-meta p {
+    font-size: 0.8rem;
+    color: #b5a4ba;
+    margin: 0;
+}
+
+.tabular-mono-code {
+    font-family: monospace;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+}
+
+/* Multi-Tier Badge Levels formatting */
+.badge-level {
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 0.35rem 0.8rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    display: inline-block;
+}
+
+.badge-premium { background-color: rgba(255, 178, 148, 0.06); border: 1px solid rgba(255, 178, 148, 0.15); color: #ffb294; }
+.badge-vip { background-color: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.2); color: #c084fc; }
+.badge-standard { background-color: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+.table-row-action-trigger {
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+}
+
+.table-row-action-trigger:hover {
+    color: #ffb294;
+    transform: translateX(3px);
+}
+
+.roster-custom-data-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.roster-custom-data-table tbody tr:hover {
+    background-color: rgba(255, 178, 148, 0.02);
+}
+
+/* -------------------------------------------------------------
+   FLUID RESPONSIVE MATRIX CONSTRAINTS (Strict 20px safety bounds)
+   ------------------------------------------------------------- */
+@media (max-width: 840px) {
+    .roster-filter-actions-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+    .search-input-wrapper { width: 100%; max-width: 100%; }
+    .filter-actions-buttons-stack { width: 100%; }
+    .filter-util-btn { flex: 1; text-align: center; justify-content: center; }
+}
+
+@media (max-width: 600px) {
+    .attendee-summary-ribbon { flex-direction: column; align-items: flex-start; gap: 1rem; padding-bottom: 1.25rem; }
+    .roster-custom-data-table th, .roster-custom-data-table td { padding: 0.9rem 1rem; }
+    .roster-data-table-panel { border-radius: 12px; }
+}
+
+</style>
+
+
+
+                <!-- Section Frame 5: Elaborate System Parameters Configuration Console -->
+<div class="workspace-section-view" id="section-settings">
+    
+    <!-- Settings Summary Ribbon -->
+    <div class="settings-summary-ribbon">
+        <div class="ribbon-text-block">
+            <span class="ribbon-badge-tag">SYSTEM PARAMETERS</span>
+            <h3 class="ribbon-headline">Ecosystem Configuration Console</h3>
+        </div>
+        <div class="settings-save-actions">
+            <a href="404.html" class="settings-util-btn btn-hollow-gray">Reset Framework</a>
+            <a href="404.html" class="settings-util-btn btn-peach-filled">Save Parameters</a>
+        </div>
+    </div>
+
+    <!-- Grouped Settings Configuration Shell -->
+    <div class="settings-parameter-wrapper-grid">
+        
+        <!-- Parameter Block 1: Node Core Settings -->
+        <div class="settings-group-card">
+            <div class="group-card-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <h4>Ecosystem Node Operations</h4>
+            </div>
+            <p class="group-card-description">Configure baseline thresholds, proxy clusters, and sandbox container lifecycle properties.</p>
+            
+            <div class="settings-inputs-stack">
+                <div class="setting-input-item">
+                    <label for="paramNodeCluster">Primary Proxy Cluster Node</label>
+                    <input type="text" id="paramNodeCluster" class="settings-txt-input" value="cluster-alpha.stackly.io" placeholder="e.g. ://domain.com">
+                </div>
+                <div class="setting-input-item">
+                    <label for="paramSandboxLimit">Max Sandbox Concurrency Ceiling</label>
+                    <select id="paramSandboxLimit" class="settings-select-input">
+                        <option value="50">50 Concurrent Isolated Pods</option>
+                        <option value="150" selected>150 Concurrent Isolated Pods</option>
+                        <option value="500">500 Concurrent Isolated Pods</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parameter Block 2: Telemetry & Notification Switches -->
+        <div class="settings-group-card">
+            <div class="group-card-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <h4>Telemetry Filters & Signals</h4>
+            </div>
+            <p class="group-card-description">Manage automated notification triggers, status ping intervals, and background logging streams.</p>
+            
+            <div class="settings-toggles-stack">
+                <div class="setting-toggle-row">
+                    <div class="toggle-text-meta">
+                        <h5>Live Stream Status Audio Pings</h5>
+                        <p>Receive sound cues when sub-millisecond hydration scripts execute completely.</p>
+                    </div>
+                    <label class="custom-switch-slider">
+                        <input type="checkbox" checked>
+                        <span class="slider-round-knob"></span>
+                    </label>
+                </div>
+                <div class="setting-toggle-row">
+                    <div class="toggle-text-meta">
+                        <h5>Verbose Hydration Failure Traps</h5>
+                        <p>Log comprehensive component token tree snapshots on cumulative layout shifts.</p>
+                    </div>
+                    <label class="custom-switch-slider">
+                        <input type="checkbox">
+                        <span class="slider-round-knob"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parameter Block 3: API Credentials Sandbox Token Keys -->
+        <div class="settings-group-card fullwidth-card">
+            <div class="group-card-header">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <h4>Framework Access Token Primitives</h4>
+            </div>
+            <p class="group-card-description">API credentials required to synchronize external presentation models with live streaming abstract layers.</p>
+            
+            <div class="settings-inputs-stack credential-row-flex">
+                <div class="setting-input-item flex-expanded">
+                    <label for="paramApiKey">Live Production Webhook Key</label>
+                    <div class="masked-input-wrapper">
+                        <input type="password" id="paramApiKey" class="settings-txt-input font-mono" value="stk_live_9482745a31bc1049ef8823" readonly>
+                        <a href="404.html" class="key-reveal-mock-btn">Reveal</a>
+                    </div>
+                </div>
+                <a href="404.html" class="settings-action-trigger-btn">Rotate Framework Tokens</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    /* -------------------------------------------------------------
+   SYSTEM PARAMETERS CONFIGURATION TERMINAL STYLING
+   ------------------------------------------------------------- */
+.settings-summary-ribbon {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    margin-bottom: 2rem;
+}
+
+.settings-save-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.settings-util-btn {
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.settings-save-actions .btn-hollow-gray {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.settings-save-actions .btn-hollow-gray:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.settings-save-actions .btn-peach-filled {
+    background-color: #ffb294;
+    color: #211425;
+    box-shadow: 0 4px 12px rgba(255, 178, 148, 0.15);
+}
+
+.settings-save-actions .btn-peach-filled:hover {
+    background-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+/* Parameters Configuration Layout Matrix Grid */
+.settings-parameter-wrapper-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+.fullwidth-card {
+    grid-column: span 2;
+}
+
+.settings-group-card {
+    background-color: rgba(33, 20, 37, 0.4); /* Translucent Plum container */
+    border: 1px solid rgba(255, 178, 148, 0.05);
+    border-radius: 16px;
+    padding: 2rem;
+    box-sizing: border-box;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.group-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 0.6rem;
+}
+
+.group-icon {
+    width: 20px;
+    height: 20px;
+    color: #ffb294;
+}
+
+.group-card-header h4 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+}
+
+.group-card-description {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+/* Standard Inputs Stack Layouts */
+.settings-inputs-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+.setting-input-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.setting-input-item label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+}
+
+.settings-txt-input,
+.settings-select-input {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    border-radius: 8px;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.95rem;
+    color: #ffffff;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.settings-select-input {
+    cursor: pointer;
+}
+
+.settings-txt-input:focus,
+.settings-select-input:focus {
+    border-color: #ffb294;
+    box-shadow: 0 0 12px rgba(255, 178, 148, 0.15);
+}
+
+/* Masked Input Layers Wrapper */
+.masked-input-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.font-mono {
+    font-family: monospace;
+    letter-spacing: 0.04em;
+    padding-right: 5rem !important;
+}
+
+.key-reveal-mock-btn {
+    position: absolute;
+    right: 1.2rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ffb294;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.key-reveal-mock-btn:hover { color: #ffffff; }
+
+.credential-row-flex {
+    flex-direction: row !important;
+    align-items: flex-end;
+    gap: 1.5rem;
+}
+
+.flex-expanded {
+    flex: 1;
+}
+
+.settings-action-trigger-btn {
+    text-decoration: none;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.settings-action-trigger-btn:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.15);
+}
+
+/* Toggles Stack Custom Toggle Switches Styles */
+.settings-toggles-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.setting-toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+
+.toggle-text-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding-right: 1.5rem;
+}
+
+.toggle-text-meta h5 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.toggle-text-meta p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: #b5a4ba;
+}
+
+/* High-End IOS Style Custom Switches Sliders */
+.custom-switch-slider {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.custom-switch-slider input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider-round-knob {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.12);
+    transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 34px;
+}
+
+.slider-round-knob:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #ffffff;
+    transition: .3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 50%;
+}
+
+.custom-switch-slider input:checked + .slider-round-knob {
+    background-color: #ffb294; /* Vivid Peach selection fill */
+}
+
+.custom-switch-slider input:checked + .slider-round-knob:before {
+    transform: translateX(20px);
+    background-color: #211425;
+}
+
+/* -------------------------------------------------------------
+   RESPONSIVE MATRIX ADAPTATION CONSTRAINTS (20px Side Margins)
+   ------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .settings-parameter-wrapper-grid {
+        grid-template-columns: 1fr; /* Stacks cards into full width single column blocks rows */
+        gap: 1.5rem;
+    }
+    .fullwidth-card { grid-column: span 1; }
+    .credential-row-flex { flex-direction: column !important; align-items: flex-start; }
+    .settings-action-trigger-btn { width: 100%; text-align: center; }
+}
+
+@media (max-width: 650px) {
+    .settings-summary-ribbon { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+    .settings-save-actions { width: 100%; }
+    .settings-util-btn { flex: 1; text-align: center; justify-content: center; }
+    .settings-group-card { padding: 1.5rem 20px; border-radius: 12px; } /* Safety layout padding boundaries */
+    .setting-toggle-row { flex-direction: column; align-items: flex-start; gap: 1.25rem; padding: 1rem; }
+    .toggle-text-meta { padding-right: 0; }
+}
+
+</style>
+
+            </div>
+        </main>
+
+    </div>
+
+   
+    <style>
+        /* Core Layout Box Variables Resets */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-root-body {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #08040a; /* Premium Stackly background plum black shade variable */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Master Grid Structure Layout Wrap */
+.dashboard-shell-container {
+    display: grid;
+    grid-template-columns: 260px 1fr; /* Lock persistent sidebar dimensions */
+    width: 100vw;
+    min-height: 100vh;
+}
+
+/* -------------------------------------------------------------
+   LEFT CONSOLE SIDEBAR STYLING
+   ------------------------------------------------------------- */
+.dashboard-sidebar-console {
+    background-color: #0e0813; /* Rich dark plum panel context block */
+    border-right: 1px solid rgba(255, 178, 148, 0.05); /* Soft peach border rules line */
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.sidebar-brand-wrapper {
+    margin-bottom: 3.5rem;
+    padding-left: 0.5rem;
+}
+
+.sidebar-brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.brand-vector-logo {
+    width: 26px;
+    height: 26px;
+    transition: transform 0.4s ease;
+}
+
+.brand-title-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.06em;
+}
+
+/* Navigation Segment Items Arrays */
+.sidebar-navigation-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+}
+
+.nav-segment-item {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    color: #b5a4ba;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-segment-item svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.nav-segment-item:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Active Highlight Menu Row State */
+.nav-segment-item.active {
+    background-color: rgba(255, 178, 148, 0.04);
+    border-color: rgba(255, 178, 148, 0.15);
+    color: #ffb294; /* Vivid Peach focus identity accent */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Logout Actions Block */
+.sidebar-footer-block {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-logout-btn {
+    background: transparent;
+    border: none;
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    color: #b5a4ba;
+    font-size: 0.92rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.25s ease;
+}
+
+.sidebar-logout-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #ff7b7b; /* Alert red highlight sign out indicator vector icon */
+}
+
+.sidebar-logout-btn:hover {
+    background-color: rgba(255, 123, 123, 0.05);
+    color: #ff7b7b;
+}
+
+/* -------------------------------------------------------------
+   RIGHT MAIN PANEL WORKSPACE VIEWPORT
+   ------------------------------------------------------------- */
+.dashboard-main-canvas {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #070308;
+}
+
+/* Global Top Bar Action Header Row System */
+.dashboard-global-header {
+    background-color: #0c0710;
+    border-bottom: 1px solid rgba(255, 178, 148, 0.04);
+    padding: 1.5rem 2rem; /* Retains 20px / 2rem layout safety tracking boundaries */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header-greeting-wrapper h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.session-user-firstname {
+    color: #ffb294; /* Highlights Calculated prefix nickname string */
+    text-transform: capitalize;
+}
+
+.header-subtext-date {
+    font-size: 0.85rem;
+    color: #b5a4ba;
+    font-weight: 500;
+}
+
+/* Utility Tray (Bell and Profile Avatar) */
+.header-utilities-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.utility-bell-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #b5a4ba;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.utility-bell-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.notification-ping-dot {
+    position: absolute;
+    top: 10px;
+    right: 11px;
+    width: 7px;
+    height: 7px;
+    background-color: #ffb294; /* Glowing active alert ping indicator */
+    border-radius: 50%;
+    box-shadow: 0 0 6px #ffb294;
+}
+
+.utility-bell-btn:hover {
+    color: #ffb294;
+    border-color: rgba(255, 178, 148, 0.3);
+    box-shadow: 0 0 12px rgba(255, 178, 148, 0.15);
+}
+
+.utility-user-profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.utility-user-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hamburger View Control Trigger (Suppressed on large browser windows grids) */
+.hamburger-menu-toggle-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    z-index: 200;
+}
+
+.hamburger-bar-line {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dynamic Content Section Architecture Frames Wrapper */
+.workspace-dynamic-viewport {
+    padding: 2.5rem 2rem;
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.workspace-section-view {
+    display: none; /* Collapsed out of view unless marked active */
+    animation: viewportFadeIn 0.4s ease-out forwards;
+}
+
+.workspace-section-view.active-view {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+@keyframes viewportFadeIn {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.section-title-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffb294;
+    background-color: rgba(255, 178, 148, 0.05);
+    border: 1px dashed rgba(255, 178, 148, 0.2);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    letter-spacing: 0.04em;
+    width: 100%;
+    text-align: left;
+}
+
+/* Sample Metrics Displays Row */
+.placeholder-metric-row-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.metric-mini-card {
+    background-color: rgba(33, 20, 37, 0.4);
+    border: 1px solid rgba(255, 178, 148, 0.05);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.metric-mini-card h5 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.metric-mini-card p {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------
+   COMPREHENSIVE RESPONSIVE FLUID MEDIA ADAPTATIONS MATRIX
+   ------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .dashboard-shell-container {
+        grid-template-columns: 1fr; /* Dissolves persistent sidebar split on medium grids */
+    }
+
+    /* Left Navigation Drawer Tray Suppression Configuration */
+    .dashboard-sidebar-console {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        transform: translateX(-100%); /* Moves sidebar fully outside viewport frame */
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 25px 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Active open toggle drawer status injection loop via Javascript */
+    .dashboard-sidebar-console.open {
+        transform: translateX(0);
+    }
+
+    /* Show hamburger control toggles */
+    .hamburger-menu-toggle-btn {
+        display: flex;
+    }
+
+    /* Transform hamburger lines into an interactive close format 'X' marker on drawer opens */
+    .hamburger-menu-toggle-btn.open .hamburger-bar-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-menu-toggle-btn.open .hamburger-bar-line:nth-child(2) { opacity: 0; }
+    .hamburger-menu-toggle-btn.open .hamburger-bar-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .placeholder-metric-row-cards {
+        grid-template-columns: 1fr; /* Stacks display cells cleanly onto layout lines */
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-global-header { padding: 1.25rem 20px; gap: 1rem; } /* Preserves exact strict 20px side clearances mapping */
+    .workspace-dynamic-viewport { padding: 2rem 20px; }
+    .header-greeting-wrapper h2 { font-size: 1.3rem; }
+    .header-subtext-date { font-size: 0.78rem; }
+    .header-utilities-row { gap: 1rem; }
+}
+
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    
+    // -------------------------------------------------------------
+    // 1. DYNAMIC SESSION EMAIL PREFIX CALCULATOR
+    // -------------------------------------------------------------
+    const sessionEmailCredential = localStorage.getItem("stackly_active_username");
+    const headerDisplayContainer = document.getElementById("headerUsernameDisplay");
+
+    if (headerDisplayContainer) {
+        if (sessionEmailCredential && sessionEmailCredential.includes("@")) {
+            // Split prefix out (e.g., extracts string "jeevi" from "jeevi@gmail.com")
+            const derivedFirstNameToken = sessionEmailCredential.split("@")[0];
+            headerDisplayContainer.textContent = derivedFirstNameToken;
+        } else {
+            // Fallback default state parameter value if session runs empty
+            headerDisplayContainer.textContent = "Partner";
+        }
+    }
+
+    // -------------------------------------------------------------
+    // 2. DASHBOARD VIEWPORT REFRESH LOGIC ACTION
+    // -------------------------------------------------------------
+    const refreshTriggerLink = document.getElementById("dashboardRefreshTrigger");
+    
+    if (refreshTriggerLink) {
+        refreshTriggerLink.addEventListener("click", (e) => {
+            e.preventDefault(); // Stop standard hashtag jumps
+            
+            // Re-loads current active workspace window node context cleanly
+            window.location.reload();
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. RESPONSIVE HAMBURGER VIEW DRAWER CONTROLS
+    // -------------------------------------------------------------
+    const hamburgerMenuToggle = document.getElementById("hamburgerMenuToggle");
+    const sidebarConsole = document.getElementById("sidebarConsole");
+
+    if (hamburgerMenuToggle && sidebarConsole) {
+        hamburgerMenuToggle.addEventListener("click", (e) => {
+            e.stopPropagation(); // Blocks event bubbling into root containers
+            hamburgerMenuToggle.classList.toggle("open");
+            sidebarConsole.classList.toggle("open");
+        });
+
+        // Click wrapper interceptor pass: closes drawer if clicked outside bounds
+        document.addEventListener("click", (e) => {
+            if (!sidebarConsole.contains(e.target) && !hamburgerMenuToggle.contains(e.target)) {
+                hamburgerMenuToggle.classList.remove("open");
+                sidebarConsole.classList.remove("open");
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 4. SECTION-WISE SECTION ROUTER SWITCHER PANEL
+    // -------------------------------------------------------------
+    const navigationMenuItems = document.querySelectorAll(".nav-segment-item");
+    const viewportSectionViews = document.querySelectorAll(".workspace-section-view");
+
+    navigationMenuItems.forEach(menuItem => {
+        menuItem.addEventListener("click", () => {
+            // Wipe active formatting highlights from sibling buttons loop
+            document.querySelector(".nav-segment-item.active")?.classList.remove("active");
+            menuItem.classList.add("active");
+
+            // Extract target index string metadata attribute rules
+            const targetSectionId = menuItem.getAttribute("data-target-section");
+            const structuralTargetSectionNode = document.getElementById(`section-${targetSectionId}`);
+
+            if (structuralTargetSectionNode) {
+                // Collapse currently shown panel section row mapping
+                document.querySelector(".workspace-section-view.active-view")?.classList.remove("active-view");
+                
+                // Mount new targeted section framework view
+                structuralTargetSectionNode.classList.add("active-view");
+            }
+
+            // Mobile configuration bypass fallback: auto close navigation drawer track on tab switch selections
+            if (window.innerWidth <= 992 && sidebarConsole.classList.contains("open")) {
+                hamburgerMenuToggle.classList.remove("open");
+                sidebarConsole.classList.remove("open");
+            }
+        });
+    });
+
+    // -------------------------------------------------------------
+    // 5. TERMINAL LOGOUT ACTION INTERCEPT ROUTER
+    // -------------------------------------------------------------
+    const logoutActionTrigger = document.getElementById("logoutActionTrigger");
+
+    if (logoutActionTrigger) {
+        logoutActionTrigger.addEventListener("click", () => {
+            // Optional parameter wipe security cleanup task loops
+            localStorage.removeItem("stackly_active_username");
+            
+            // Transmit navigation route right back to login webpage context terminal
+            window.location.href = "login.html";
+        });
+    }
+});
+
+    </script>
+</body>
+</html>

@@ -47,11 +47,11 @@
                 <!-- Responsive Navigation Drawer -->
                 <nav class="nav-menu-container" id="navMenuContainer">
                     <ul class="nav-list">
-                        <li><a href="#home" class="nav-item active">Home</a></li>
-                        <li><a href="#schedule" class="nav-item">Schedule</a></li>
-                        <li><a href="#speakers" class="nav-item">Speakers</a></li>
-                        <li><a href="#pricing" class="nav-item">Tickets</a></li>
-                        <li><a href="#venue" class="nav-item">Venue</a></li>
+                        <li><a href="index.html" class="nav-item active">Home</a></li>
+                        <li><a href="About.html" class="nav-item">About Us</a></li>
+                        <li><a href="services.html" class="nav-item">Services</a></li>
+                        <li><a href="blogs.html" class="nav-item">Blogs</a></li>
+                        <li><a href="contact.html" class="nav-item">Contact Us</a></li>
                     </ul>
                 </nav>
 
@@ -3653,6 +3653,694 @@ window.addEventListener("load", initializeHeroFeatures);
     
     // Safety check execution pass call
     setTimeout(executeBlogScrollObserver, 450);
+});
+
+</script>
+
+<section class="subscribe-section-fullwidth">
+    <!-- Abstract Ambient Tech Overlay Background -->
+    <div class="subscribe-bg-overlay"></div>
+
+    <div class="subscribe-container">
+        <!-- Content Column -->
+        <div class="subscribe-content">
+            <span class="subscribe-badge">STAY UP TO DATE</span>
+            
+            <!-- Title Words Fly in from Left/Right Sides Alternately -->
+            <h2 class="subscribe-title" id="subscribeTitle">Join the Stackly Architecture Loop</h2>
+            
+            <p class="subscribe-subtitle rise-element animate-in">Get deep technical breakdowns, event schedule updates, and flagship track announcements directly in your inbox.</p>
+            
+            <!-- Interactive Subscription Form Shell Framework -->
+            <form class="subscribe-form-matrix rise-element animate-in" id="subscribeForm" novalidate>
+                <div class="input-glow-wrapper">
+                    <input type="email" id="subscriberEmail" placeholder="Enter your enterprise email..." aria-label="Email address field">
+                    <!-- Dynamic client status notification field -->
+                    <div class="form-status-alert" id="formStatusAlert">Please fill in the fields</div>
+                </div>
+                <button type="submit" class="subscribe-submit-btn">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Section Shell Wrapper */
+.subscribe-section-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with generous side edge clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #170d1a 0%, #2d1933 50%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Abstract Radial Ambient Backing Grid Layer */
+.subscribe-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 178, 148, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Internal Alignment Container Shield */
+.subscribe-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px; /* Constrains input content neatly to the readable center fields */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.subscribe-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.subscribe-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Peach Family Accent focus */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Reveal Alternating from Left/Right Sides */
+.subscribe-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+.subscribe-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Initial Directional States for Word Reveal */
+.subscribe-title span.fly-left { transform: translateX(-60px); }
+.subscribe-title span.fly-right { transform: translateX(60px); }
+
+.subscribe-title span.reveal {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Title Hover Accent Glow */
+.subscribe-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.3);
+}
+
+/* Content Rising Elements Setup - Fixed: Visible by default with a smooth micro-scale */
+.rise-element {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rise-element.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.subscribe-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+.subscribe-subtitle:hover {
+    color: #ffffff;
+}
+
+/* Subscription Form Inputs Grid Layout */
+.subscribe-form-matrix {
+    display: flex;
+    width: 100%;
+    max-width: 580px;
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.input-glow-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subscribe-form-matrix input[type="email"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    border-radius: 50px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Input Box Glow Effect on Focus & Hover */
+.subscribe-form-matrix input[type="email"]:hover,
+.subscribe-form-matrix input[type="email"]:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 20px rgba(255, 178, 148, 0.15);
+}
+
+/* Validation Alert Message Box Styling */
+.form-status-alert {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ff7b7b;
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-status-alert.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Subscription CTA Trigger Button */
+.subscribe-submit-btn {
+    background: #ffb294;
+    color: #211425;
+    border: none;
+    padding: 0 2.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 5px 15px rgba(255, 178, 148, 0.2);
+}
+
+.subscribe-submit-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Strict Mobile Scaling Matrix (Preserving edge boundaries) */
+@media (max-width: 768px) {
+    .subscribe-section-fullwidth { padding: 40px 20px 25px 20px; }
+    .subscribe-title { font-size: 2rem; }
+    .subscribe-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+    .subscribe-form-matrix { flex-direction: column; gap: 1.5rem; }
+    .subscribe-submit-btn { padding: 1rem 0; width: 100%; }
+    .form-status-alert { top: auto; bottom: calc(100% + 6px); } /* Flips status position to fit stacked inputs cleanly */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // -------------------------------------------------------------
+    // 1. TEXT PARSING (Alternating side word-by-word entry)
+    // -------------------------------------------------------------
+    const subscribeTitleContainer = document.getElementById("subscribeTitle");
+    if (subscribeTitleContainer) {
+        const words = subscribeTitleContainer.textContent.split(" ");
+        subscribeTitleContainer.textContent = ""; 
+        
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            
+            // Staggers fly-in directions by index coordinates
+            if (index % 2 === 0) {
+                span.classList.add("fly-left");
+            } else {
+                span.classList.add("fly-right");
+            }
+            
+            subscribeTitleContainer.appendChild(span);
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 2. LIVE VALIDATION & REDIRECT SUBMISSION INTERCEPTOR
+    // -------------------------------------------------------------
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const formStatusAlert = document.getElementById("formStatusAlert");
+
+    if (subscribeForm) {
+        subscribeForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Blocks raw webpage page reloading loops
+            
+            const emailValue = subscriberEmail.value.trim();
+
+            if (emailValue === "") {
+                // Input empty context handler
+                formStatusAlert.textContent = "Please fill in the fields";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                // Invalid regex configuration sequence fallback
+                formStatusAlert.textContent = "Please enter a valid email address";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else {
+                // Validation passed completely -> Proceed immediately to 404 URL
+                formStatusAlert.classList.remove("visible");
+                subscriberEmail.style.borderColor = "#ffb294";
+                window.location.href = "404.html";
+            }
+        });
+
+        // Instantly wipe validation boundary errors when text input scales
+        subscriberEmail.addEventListener("input", () => {
+            formStatusAlert.classList.remove("visible");
+            subscriberEmail.style.borderColor = "rgba(255, 255, 255, 0.08)";
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. SCROLL INTERSECTION ENGINE (With bottom gap edge recovery)
+    // -------------------------------------------------------------
+    const scrollShell = document.querySelector(".content-body") || window;
+    const subscribeTitleSpans = document.querySelectorAll(".subscribe-title span");
+    const subscribeRisingElements = document.querySelectorAll(".rise-element");
+
+    function executeSubscribeScrollObserver() {
+        // Generous vertical window evaluation target threshold
+        const triggerHeight = window.innerHeight * 0.95; 
+        
+        // Safety Fallback Check: Evaluates true if page spacing constraints block deeper scrolls
+        const isPageScrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 120);
+
+        // Header Title Sequence Revelations
+        subscribeTitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    span.classList.add("reveal"); 
+                }, index * 80);
+            }
+        });
+
+        // Form fields and buttons sequential riser animations loop
+        subscribeRisingElements.forEach((element, index) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    element.classList.add("animate-in"); 
+                }, 150 * (index + 1)); // 150ms structural staging separation
+            }
+        });
+    }
+
+    // Register section observers on active scrolling frames
+    scrollShell.addEventListener("scroll", executeSubscribeScrollObserver);
+    window.addEventListener("scroll", executeSubscribeScrollObserver);
+    
+    // Safety verification check pass to check visibility constraints instantly on component mounts
+    setTimeout(executeSubscribeScrollObserver, 400);
+});
+
+</script>
+
+<footer class="main-footer">
+    <div class="footer-upper-grid">
+        
+        <!-- Column 1: Brand Info & Social Media Links -->
+        <div class="footer-column brand-summary-col">
+            <a href="#" class="footer-logo-link" id="backToTopTrigger" aria-label="Back to Top">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="footer-brand-img">
+                <span class="footer-brand-text">STACKLY</span>
+            </a>
+            <p class="footer-description">
+                Engineering premier developer conventions and high-fidelity tech ecosystem environments designed to fuel open-source web frameworks.
+            </p>
+            <div class="footer-social-row">
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+               <a href="404.html" class="social-circle-link" aria-label="Twitter X">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+    </svg>
+</a>
+
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Event Tracks Quick Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Explore Tracks</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Edge Micro-Frontends</a></li>
+                <li><a href="404.html">Zero-Trust Infrastructures</a></li>
+                <li><a href="404.html">Generative Layout Systems</a></li>
+                <li><a href="404.html">Cloud Native Sandboxes</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Attendee Support Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Event Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Technical Lab Parameters</a></li>
+                <li><a href="404.html">Registration Badges</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Location & Contact Metadata -->
+        <div class="footer-column info-metadata-col">
+            <h3 class="footer-header-title">Headquarters Location</h3>
+            <div class="metadata-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="meta-text-content">MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</span>
+            </div>
+            <div class="metadata-row phone-link-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span class="meta-text-content">+91 7010792745</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legals Banner -->
+    <div class="footer-bottom-bar">
+        <div class="bottom-bar-inner">
+            <p class="copyright-notice">&copy; 2026 Stackly Industries. All conference rights reserved.</p>
+            <div class="legal-links-row">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Base Framework */
+.main-footer {
+    width: 100%;
+    background-color: #0c0710; /* Rich dark plum base matching platform palette */
+    border-top: 1px solid rgba(255, 178, 148, 0.06);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    margin-top: 4rem;
+}
+
+/* Upper Four-Column Grid Structure */
+.footer-upper-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 50px 20px; /* Precise 20px side padding constraints preserved */
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr 0.9fr 1.1fr;
+    gap: 3.5rem;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Brand Link and Description Styling */
+.footer-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+}
+
+.footer-brand-img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-brand-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    max-width: 320px;
+}
+
+/* Circular Social Icons Row */
+.footer-social-row {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #b5a4ba;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Hover Glowing Interactivity Elements */
+.social-circle-link:hover {
+    color: #ffb294; /* Vivid Peach Accent */
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.05);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Column Header Categories */
+.footer-header-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+/* Custom Underline Accent Line Template */
+.footer-header-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #ffb294;
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(255, 178, 148, 0.6);
+}
+
+/* Navigation Lists Layout */
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: #b5a4ba;
+    font-weight: 500;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #ffb294;
+    transform: translateX(3px);
+}
+
+/* Metadata Rows for Location & Phone info */
+.metadata-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+}
+
+.meta-icon {
+    width: 18px;
+    height: 18px;
+    color: #ffb294;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.meta-text-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    text-align: left;
+}
+
+.phone-link-row .meta-text-content {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Bottom Legals Bar Framework */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 25px 0;
+    background-color: #070409;
+}
+
+.bottom-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright-notice {
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+}
+
+.legal-links-row {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.legal-links-row a {
+    text-decoration: none;
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+    transition: color 0.25s ease;
+}
+
+.legal-links-row a:hover {
+    color: #ffb294;
+}
+
+/* Strict Layout Responsive Adaptation Boundaries */
+@media (max-width: 992px) {
+    .footer-upper-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+    .footer-description { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .footer-upper-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 40px 20px 30px 20px;
+    }
+    .bottom-bar-inner {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    .legal-links-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Back to Top Click Trigger Functionality
+    const backToTopBtn = document.getElementById("backToTopTrigger");
+    
+    // Checks if the internal app container is managing scrolling offsets, or falls back to window object viewport
+    const scrollingElement = document.querySelector(".content-body") || window;
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // Blocks flash anchor resets
+            
+            if (scrollingElement === window) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            } else {
+                scrollingElement.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        });
+    }
 });
 
 </script>

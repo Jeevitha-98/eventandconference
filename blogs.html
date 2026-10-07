@@ -1,0 +1,3327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Event Experience</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Vector Icons Background -->
+    <div class="floating-icons-container">
+        <svg class="float-icon icon-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        <svg class="float-icon icon-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <svg class="float-icon icon-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <svg class="float-icon icon-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <svg class="float-icon icon-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+
+    <!-- Preloader Overlay View -->
+    <div class="preloader-overlay" id="preloaderOverlay">
+        <div class="loader-content">
+            <div class="brand-wrapper">
+                <div class="brand-logo-loader">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFB294" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h1 class="brand-name-loader">Stackly</h1>
+            </div>
+            <p class="loading-status">Preparing the conference experience...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="percentage" id="percentageText">0%</div>
+        </div>
+    </div>
+
+    <!-- Main Workspace (Hidden Initially, Revealed Post-Load) -->
+    <div class="app-workspace" id="appWorkspace">
+        <!-- Floating Transparent Header -->
+        <header class="main-header">
+            <div class="header-inner">
+                <!-- Brand Logo (Img tag references the page loop) -->
+                <a href="#" class="logo-link" onclick="window.location.reload(); return false;">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="brand-img">
+                    <span class="brand-logo-text">Stackly</span>
+                </a>
+
+                <!-- Responsive Navigation Drawer -->
+                <nav class="nav-menu-container" id="navMenuContainer">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-item ">Home</a></li>
+                        <li><a href="About.html" class="nav-item ">About Us</a></li>
+                        <li><a href="services.html" class="nav-item ">Services</a></li>
+                        <li><a href="blogs.html" class="nav-item active">Blogs</a></li>
+                        <li><a href="contact.html" class="nav-item">Contact Us</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Auth Action Workspace -->
+                <div class="auth-wrapper">
+                    <button class="auth-btn">Register Pass</button>
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation Menu">
+                        <span class="bar bar-top"></span>
+                        <span class="bar bar-mid"></span>
+                        <span class="bar bar-bot"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        
+       
+   
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =========================================================
+    // 0. PRELOADER SCROLL LOCK
+    // =========================================================
+    // Prevent scrolling while the preloader is visible
+    document.body.classList.add("preloader-active");
+
+
+    // =========================================================
+    // 1. DOM Elements Mapping
+    // =========================================================
+    const progressFill = document.getElementById("progressFill");
+    const percentageText = document.getElementById("percentageText");
+    const preloaderOverlay = document.getElementById("preloaderOverlay");
+    const appWorkspace = document.getElementById("appWorkspace");
+
+
+    // =========================================================
+    // 2. Timeline Variables (2 Seconds)
+    // =========================================================
+    const duration = 2000;
+    const intervalTime = 20;
+    const totalSteps = duration / intervalTime;
+    let currentStep = 0;
+
+
+    // =========================================================
+    // 3. Preloader Progress Loop Execution
+    // =========================================================
+    const loadingInterval = setInterval(() => {
+
+        currentStep++;
+
+        const progress = Math.min(
+            (currentStep / totalSteps) * 100,
+            100
+        );
+
+
+        // Update progress bar
+        if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+        }
+
+
+        // Update percentage
+        if (percentageText) {
+            percentageText.textContent = `${Math.floor(progress)}%`;
+        }
+
+
+        // =====================================================
+        // Loading Complete
+        // =====================================================
+        if (currentStep >= totalSteps) {
+
+            clearInterval(loadingInterval);
+
+
+            // Small delay before starting exit animation
+            setTimeout(() => {
+
+                // Fade and slightly scale the preloader
+                if (preloaderOverlay) {
+
+                    preloaderOverlay.style.opacity = "0";
+                    preloaderOverlay.style.transform = "scale(1.03)";
+                }
+
+
+                // Wait for fade animation to complete
+                setTimeout(() => {
+
+                    // Remove preloader from display
+                    if (preloaderOverlay) {
+                        preloaderOverlay.style.display = "none";
+                    }
+
+
+                    // =================================================
+                    // ENABLE PAGE SCROLLING
+                    // =================================================
+                    document.body.classList.remove("preloader-active");
+                    document.body.classList.add("preloader-finished");
+
+
+                    // =================================================
+                    // REVEAL MAIN WORKSPACE
+                    // =================================================
+                    if (appWorkspace) {
+
+                        appWorkspace.style.opacity = "1";
+
+                        // Trigger feature card reveal animation
+                        initializeHeroFeatures();
+                    }
+
+                }, 500);
+
+            }, 150);
+        }
+
+    }, intervalTime);
+
+
+    // =========================================================
+    // 4. Staggered Feature Entry Sequence
+    // =========================================================
+    function initializeHeroFeatures() {
+
+        const cards = document.querySelectorAll(".feature-card");
+
+
+        cards.forEach((card, index) => {
+
+            setTimeout(() => {
+
+                card.classList.add("reveal");
+
+            }, (index + 1) * 200);
+
+        });
+    }
+
+
+    // =========================================================
+    // 5. Navigation Menu Active & Mobile Toggle Logic
+    // =========================================================
+    const navItems = document.querySelectorAll(".nav-item");
+    const hamburgerToggle = document.getElementById("hamburgerToggle");
+    const navMenuContainer = document.getElementById("navMenuContainer");
+
+
+    // =========================================================
+    // Navigation Item Click
+    // =========================================================
+    navItems.forEach(item => {
+
+        item.addEventListener("click", (e) => {
+
+            // Remove active state from current item
+            document
+                .querySelector(".nav-item.active")
+                ?.classList.remove("active");
+
+
+            // Add active state to clicked item
+            e.currentTarget.classList.add("active");
+
+
+            // Close mobile navigation
+            if (hamburgerToggle && navMenuContainer) {
+
+                hamburgerToggle.classList.remove("open");
+                navMenuContainer.classList.remove("open");
+            }
+
+        });
+
+    });
+
+
+    // =========================================================
+    // 6. Mobile Hamburger Toggle
+    // =========================================================
+    if (hamburgerToggle && navMenuContainer) {
+
+        hamburgerToggle.addEventListener("click", () => {
+
+            hamburgerToggle.classList.toggle("open");
+            navMenuContainer.classList.toggle("open");
+
+        });
+
+    }
+
+});
+    </script>
+
+<section class="blog-hero-section">
+    <div class="blog-hero-container">
+        
+        <!-- Left Column: Context Summaries & Staggered Scroll Entrances -->
+        <div class="blog-hero-content">
+            <span class="blog-hero-badge">STACKLY INSIGHTS</span>
+            
+            <!-- Title Words Appear Word-by-Word on Scroll -->
+            <h1 class="blog-hero-title" id="blogHeroTitle">The Open Web Tech Log</h1>
+            
+            <!-- Paragraph Elements Slide In From Left/Right Sides with Text-Glow Hover -->
+            <div class="blog-hero-paragraphs">
+                <p class="blog-hero-para slide-from-left">
+                    Welcome to the central storage hub for production software engineering breakthroughs, core lifecycle updates, and multi-track framework analysis transcripts curated by our global conference speaker networks.
+                </p>
+                <p class="blog-hero-para slide-from-right">
+                    Discover comprehensive deep-dives into edge micro-frontend rendering thresholds, kernel sandboxing parameters, and design system token scaling practices built for performance architects.
+                </p>
+            </div>
+
+            <!-- CTA Actions Rise up from Bottom with 404 Interceptors -->
+            <div class="blog-hero-cta" id="blogHeroCta">
+                <a href="404.html" class="blog-hero-btn btn-peach-filled">Subscribe to Feed</a>
+                <a href="404.html" class="blog-hero-btn btn-trans-outlined">Submit Abstract</a>
+            </div>
+        </div>
+
+        <!-- Right Column: Creative Floating Frame Framework Showcase -->
+        <div class="blog-hero-visual" id="blogVisualFrame">
+            <div class="blog-hero-glow-blob"></div>
+            <div class="blog-image-frame-box">
+                <img src="https://unsplash.com" alt="Engineers analyzing network codebase logs and data infrastructure metrics">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Layout Section Settings */
+.blog-hero-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 150px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.blog-hero-container {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Content Column Configuration */
+.blog-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.blog-hero-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Signature Vivid Peach Accent */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Header Reveal Structure */
+.blog-hero-title {
+    font-size: 3.4rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    overflow: hidden;
+}
+
+.blog-hero-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blog-hero-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Side Sliding Paragraph Layout Formats */
+.blog-hero-paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.blog-hero-para {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #b5a4ba;
+    max-width: 560px;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Initial Directional Vectors for Text Rows */
+.blog-hero-para.slide-from-left { transform: translateX(-60px); }
+.blog-hero-para.slide-from-right { transform: translateX(60px); }
+
+.blog-hero-para.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Interactive Text Glow Hover Effect to Paragraphs */
+.blog-hero-para:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+/* Bottom Rising Action CTA Button Groups */
+.blog-hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blog-hero-cta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.blog-hero-btn {
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-peach-filled {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 6px 20px rgba(255, 178, 148, 0.15);
+}
+
+.btn-peach-filled:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-trans-outlined {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-trans-outlined:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Right Column: Visual Frame Showcase Geometry Layout */
+.blog-hero-visual {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 1s ease-out, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blog-hero-visual.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.blog-hero-glow-blob {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.blog-image-frame-box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.12);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+    background: #150d17;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.blog-image-frame-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Frame Hover Actions & Glowing Overlay Filters */
+.blog-image-frame-box:hover {
+    transform: translateY(-4px);
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.3);
+}
+
+.blog-image-frame-box:hover img {
+    transform: scale(1.03);
+}
+
+/* Comprehensive Responsive Systems Grid (Strict 20px Side Padding) */
+@media (max-width: 992px) {
+    .blog-hero-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+    }
+    .blog-hero-content { align-items: center; }
+    .blog-hero-title { justify-content: center; font-size: 2.8rem; }
+    .blog-hero-para { margin: 0 auto; }
+    .blog-hero-cta { justify-content: center; }
+    .blog-image-frame-box { max-width: 340px; aspect-ratio: 1 / 1; border-radius: 24px; } /* Adapts to a square frame on tablet viewports */
+}
+
+@media (max-width: 576px) {
+    .blog-hero-section { padding: 40px 20px 20px 20px; }
+    .blog-hero-title { font-size: 2.1rem; gap: 0 8px; }
+    .blog-image-frame-box { max-width: 280px; }
+    .blog-hero-cta { width: 100%; flex-direction: column; gap: 0.8rem; }
+    .blog-hero-btn { text-align: center; width: 100%; }
+    /* Convert horizontal slides to standard vertical entry to handle tight viewports cleanly */
+    .blog-hero-para.slide-from-left, 
+    .blog-hero-para.slide-from-right { transform: translateY(30px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Segments headline string into discrete animatable word tokens
+    const blogTitleBlock = document.getElementById("blogHeroTitle");
+    if (blogTitleBlock) {
+        const words = blogTitleBlock.textContent.split(" ");
+        blogTitleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            blogTitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture component element instances
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitWordsSpans = document.querySelectorAll(".blog-hero-title span");
+    const narrativeParagraphs = document.querySelectorAll(".blog-hero-para");
+    const actionsCtaBlock = document.getElementById("blogHeroCta");
+    const visualSideBox = document.getElementById("blogVisualFrame");
+
+    function executeBlogHeroScrollObserver() {
+        const structuralTriggerPointLine = window.innerHeight * 0.92;
+
+        // Word-by-word title expand reveal sequence trigger
+        splitWordsSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Parallel horizontal slide animation reveal triggers for paragraph blocks
+        narrativeParagraphs.forEach((para, index) => {
+            const rect = para.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine) {
+                setTimeout(() => {
+                    para.classList.add("animate-in");
+                }, 150 * (index + 1));
+            }
+        });
+
+        // Bottom vertical rise action buttons trigger reveal execution
+        if (actionsCtaBlock) {
+            const rect = actionsCtaBlock.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    actionsCtaBlock.classList.add("animate-in");
+                }, 450);
+            }
+        }
+
+        // Graphic showcase card reveal trigger pass
+        if (visualSideBox) {
+            const rect = visualSideBox.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    visualSideBox.classList.add("animate-in");
+                }, 200);
+            }
+        }
+    }
+
+    // Bind scroll execution tracking loops across both container channels
+    scrollContainerHost.addEventListener("scroll", executeBlogHeroScrollObserver);
+    window.addEventListener("scroll", executeBlogHeroScrollObserver);
+    
+    // Safety check execution pass to force trigger checks on mount instantly
+    setTimeout(executeBlogHeroScrollObserver, 400);
+});
+
+</script>
+
+<section class="blog-grid-section">
+    <!-- Sequential Scroll Triggered Header -->
+    <h2 class="blog-grid-title" id="blogGridSectionTitle">Recent Technical Publications</h2>
+
+    <!-- Asymmetric Creative Grid Matrix System -->
+    <div class="blog-mosaic-container">
+        
+        <!-- Post Card 1: Widescreen Feature Card -->
+        <div class="blog-mosaic-card featured-wide-card reveal-item">
+            <div class="mosaic-img-holder">
+                <img src="https://unsplash.com" alt="Next-Gen Architecture Frameworks">
+                <div class="mosaic-category-badge">ARCHITECTURE</div>
+            </div>
+            <div class="mosaic-content-panel">
+                <div class="mosaic-meta-row">October 5, 2026 • 5 Min Read</div>
+                <h3 class="mosaic-headline">Scaling Edge Deployments with Digital Micro-Frontends</h3>
+                <p class="mosaic-excerpt">Explore how modern application frameworks leverage progressive web hydration to achieve sub-millisecond paint thresholds globally over decentralized networks.</p>
+                <a href="404.html" class="mosaic-read-btn">Read Deep-Dive</a>
+            </div>
+        </div>
+
+        <!-- Post Card 2: Glassmorphic Medium Card -->
+        <div class="blog-mosaic-card standard-box-card reveal-item">
+            <div class="mosaic-img-holder">
+                <img src="https://unsplash.com" alt="Cyber Security Protocols">
+                <div class="mosaic-category-badge">SECURITY</div>
+            </div>
+            <div class="mosaic-content-panel">
+                <div class="mosaic-meta-row">September 28, 2026 • 8 Min Read</div>
+                <h3 class="mosaic-headline">Zero-Trust Isolation in Multi-Tenant Web Sandboxes</h3>
+                <p class="mosaic-excerpt">A diagnostic breakdown of kernel isolation protocols required to run untrusted runtime script clusters securely.</p>
+                <a href="404.html" class="mosaic-read-btn">Read Deep-Dive</a>
+            </div>
+        </div>
+
+        <!-- Post Card 3: Glassmorphic Medium Card -->
+        <div class="blog-mosaic-card standard-box-card reveal-item">
+            <div class="mosaic-img-holder">
+                <img src="https://unsplash.com" alt="AI Workspace Collaboration">
+                <div class="mosaic-category-badge">AI SUMMIT</div>
+            </div>
+            <div class="mosaic-content-panel">
+                <div class="mosaic-meta-row">September 14, 2026 • 4 Min Read</div>
+                <h3 class="mosaic-headline">Generative Layout Compilation in Design Workspaces</h3>
+                <p class="mosaic-excerpt">How engineering teams deploy context-aware semantic tools to dynamically build accessible user screens based on prompt streams.</p>
+                <a href="404.html" class="mosaic-read-btn">Read Deep-Dive</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.blog-grid-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+/* Word-by-Word Header Reveal Formatting */
+.blog-grid-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 12px;
+}
+
+.blog-grid-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.blog-grid-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Asymmetric Creative Mosaic Layout Grid Mapping */
+.blog-mosaic-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+/* High-fidelity cell mapping bounds mimicking elite landing design flows */
+.featured-wide-card { grid-column: span 12; display: grid !important; grid-template-columns: 1.2fr 0.8fr; }
+.standard-box-card { grid-column: span 6; }
+
+/* Structural Card Blueprint Definitions */
+.blog-mosaic-card {
+    background: rgba(33, 20, 37, 0.5); /* Deep translucent plum base */
+    border: 1.5px solid rgba(255, 178, 148, 0.04); /* Soft Peach boundary border */
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    
+    /* Scroll Trigger Initializations: Loaded sequentially one-by-one */
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.blog-mosaic-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Graphic Thumbnail Frame Configuration */
+.mosaic-img-holder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
+    overflow: hidden;
+    background: #150d18;
+}
+
+.featured-wide-card .mosaic-img-holder {
+    min-height: 340px;
+}
+
+.mosaic-img-holder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.75) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+/* Absolute Floating Category Badges */
+.mosaic-category-badge {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    background: rgba(33, 20, 37, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    color: #ffb294; /* Peach Family Token */
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    letter-spacing: 0.06em;
+    z-index: 3;
+}
+
+/* Info Summary Panel Framework */
+.mosaic-content-panel {
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #140916;
+}
+
+.mosaic-meta-row {
+    font-size: 0.82rem;
+    color: #b5a4ba;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.mosaic-headline {
+    font-size: 1.45rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+}
+
+.featured-wide-card .mosaic-headline {
+    font-size: 1.85rem;
+}
+
+.mosaic-excerpt {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    transition: color 0.3s ease;
+}
+
+/* Action Link Buttons */
+.mosaic-read-btn {
+    text-decoration: none;
+    align-self: flex-start;
+    color: #ffb294;
+    font-size: 0.92rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.mosaic-read-btn::after {
+    content: '→';
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Card Hover Actions & Vivid Peach Glowing Overlays requested */
+.blog-mosaic-card:hover {
+    border-color: #ffb294;
+    background: rgba(49, 24, 54, 0.7);
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px);
+}
+
+.blog-mosaic-card:hover .mosaic-img-holder img {
+    transform: scale(1.03);
+    filter: brightness(0.85) contrast(1.02);
+}
+
+.blog-mosaic-card:hover .mosaic-headline {
+    color: #ffb294;
+}
+
+.blog-mosaic-card:hover .mosaic-excerpt {
+    color: #ffffff;
+}
+
+.blog-mosaic-card:hover .mosaic-read-btn {
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+.blog-mosaic-card:hover .mosaic-read-btn::after {
+    transform: translateX(3px);
+}
+
+/* Comprehensive Grid Scaling Breakpoints Matrix (Strict 20px Side Padding preserved) */
+@media (max-width: 992px) {
+    .featured-wide-card { grid-template-columns: 1fr; }
+    .featured-wide-card .mosaic-img-holder { min-height: 260px; }
+    .standard-box-card { grid-column: span 12; } /* Converts to vertical uniform stack row lines on tablets */
+}
+
+@media (max-width: 680px) {
+    .blog-grid-section { padding: 40px 20px 20px 20px; }
+    .blog-mosaic-container { display: flex; flex-direction: column; gap: 1.5rem; }
+    .blog-grid-title { font-size: 2rem; margin-bottom: 2.5rem; }
+    .mosaic-content-panel { padding: 1.5rem; }
+    .mosaic-headline { font-size: 1.25rem; }
+    .featured-wide-card .mosaic-headline { font-size: 1.45rem; }
+    .mosaic-excerpt { font-size: 0.92rem; margin-bottom: 1.25rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header string array into individual animatable words on scroll
+    const titleElement = document.getElementById("blogGridSectionTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleElement.appendChild(span);
+        });
+    }
+
+    // Capture localized page scrolling frame layouts
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitTitleWords = document.querySelectorAll(".blog-grid-title span");
+    const newsCardsList = document.querySelectorAll(".blog-mosaic-card");
+
+    function executeBlogGridScrollObserver() {
+        const triggerBoundsLine = window.innerHeight * 0.92;
+
+        // Word-by-word title reveal sequence trigger
+        splitTitleWords.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Mosaic article cards fade in one-by-one sequentially on scroll trigger
+        newsCardsList.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 140); // 140ms sequential stride gaps
+            }
+        });
+    }
+
+    // Attach tracking observers to scrolling layout channels
+    scrollContainerHost.addEventListener("scroll", executeBlogGridScrollObserver);
+    window.addEventListener("scroll", executeBlogGridScrollObserver);
+    
+    // Safety check verification pass to force trigger checks on mount instantly
+    setTimeout(executeBlogGridScrollObserver, 400);
+});
+
+</script>
+
+<section class="trending-topics-section">
+    <!-- Word-by-Word Scroll Triggered Section Header -->
+    <h2 class="trending-main-title" id="trendingTitle">Trending Community Topics</h2>
+
+    <!-- Asymmetric Overlapping Grid Matrix System -->
+    <div class="trending-mosaic-grid">
+        
+        <!-- Topic Card 1 -->
+        <div class="trending-tile-card reveal-card-stagger">
+            <div class="tile-image-frame">
+                <img src="https://unsplash.com" alt="Hardware Diagnostics Cryptography">
+                <span class="tile-hot-pill">#HOT TRACK</span>
+            </div>
+            <div class="tile-details-panel">
+                <div class="tile-count-index">01/</div>
+                <h3 class="tile-headline">Hardware Cryptography & Sandbox Enclaves</h3>
+                <p class="tile-abstract">Mastering physical layer isolation and security boundaries required to secure remote micro-frontend execution streams.</p>
+                <div class="tile-footer-actions">
+                    <span class="read-duration">6 Min Read</span>
+                    <a href="404.html" class="tile-arrow-link" aria-label="Explore Topic">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topic Card 2 -->
+        <div class="trending-tile-card reveal-card-stagger">
+            <div class="tile-image-frame">
+                <img src="https://unsplash.com" alt="Sub-Millisecond Hydration Systems">
+                <span class="tile-hot-pill">#POPULAR</span>
+            </div>
+            <div class="tile-details-panel">
+                <div class="tile-count-index">02/</div>
+                <h3 class="tile-headline">Sub-Millisecond Hydration Architectures</h3>
+                <p class="tile-abstract">How leading edge framework models utilize progressive semantic tokens to completely eliminate cumulative layout shifts.</p>
+                <div class="tile-footer-actions">
+                    <span class="read-duration">4 Min Read</span>
+                    <a href="404.html" class="tile-arrow-link" aria-label="Explore Topic">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topic Card 3 -->
+        <div class="trending-tile-card reveal-card-stagger">
+            <div class="tile-image-frame">
+                <img src="https://unsplash.com" alt="Generative Layout Compilation">
+                <span class="tile-hot-pill">#NEW INSIGHT</span>
+            </div>
+            <div class="tile-details-panel">
+                <div class="tile-count-index">03/</div>
+                <h3 class="tile-headline">Generative Layout Compilation Nodes</h3>
+                <p class="tile-abstract">Deploying context-aware local language trees to instantly render accessible screen blocks from real-time streaming string outputs.</p>
+                <div class="tile-footer-actions">
+                    <span class="read-duration">9 Min Read</span>
+                    <a href="404.html" class="tile-arrow-link" aria-label="Explore Topic">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.trending-topics-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, and 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+/* Word-by-Word Header Reveal Formatting */
+.trending-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 12px;
+}
+
+.trending-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trending-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Asymmetric Grid Matrix Layout System */
+.trending-mosaic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Structural Card Blueprint Definitions */
+.trending-tile-card {
+    position: relative;
+    background: rgba(33, 20, 37, 0.5); /* Translucent Deep Plum backdrop variable */
+    border: 1.5px solid rgba(255, 178, 148, 0.04);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    
+    /* Scroll Trigger Initializations: Loaded sequentially one-by-one */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.trending-tile-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Graphic Thumbnail Frame Configuration */
+.tile-image-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #140916;
+}
+
+.tile-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.7) contrast(1.05);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+/* Floating Overlay Category Badges */
+.tile-hot-pill {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    background: rgba(33, 20, 37, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    color: #ffb294; /* Peach Family Token */
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    letter-spacing: 0.05em;
+    z-index: 3;
+}
+
+/* Info Summary Panel Framework */
+.tile-details-panel {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+}
+
+.tile-count-index {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: rgba(255, 178, 148, 0.12); /* Subtle structural numbers overlay context */
+    line-height: 1;
+    margin-bottom: 0.4rem;
+    transition: color 0.3s ease;
+}
+
+.tile-headline {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+.tile-abstract {
+    font-size: 0.94rem;
+    line-height: 1.55;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+/* Dynamic Footer Row Settings */
+.tile-footer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 1.2rem;
+}
+
+.read-duration {
+    font-size: 0.8rem;
+    color: #b5a4ba;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* Angular Vector Action Arrow Triggers */
+.tile-arrow-link {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tile-arrow-link svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+/* Card Hover Actions & High-Fidelity Theme Glow Overlays requested */
+.trending-tile-card:hover {
+    border-color: #ffb294;
+    background: rgba(49, 24, 54, 0.7);
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px);
+}
+
+.trending-tile-card:hover .tile-image-frame img {
+    transform: scale(1.04);
+    filter: brightness(0.85) contrast(1.05);
+}
+
+.trending-tile-card:hover .tile-count-index {
+    color: rgba(255, 178, 148, 0.3);
+}
+
+.trending-tile-card:hover .tile-headline {
+    color: #ffb294;
+}
+
+.trending-tile-card:hover .tile-abstract {
+    color: #ffffff;
+}
+
+.trending-tile-card:hover .tile-arrow-link {
+    background: #ffffff;
+    color: #211425;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.trending-tile-card:hover .tile-arrow-link svg {
+    transform: translate(1px, -1px);
+}
+
+/* Fluid Layout Responsive Adaptation Matrix Breakpoints (Strict 20px Side Padding) */
+@media (max-width: 992px) {
+    .trending-mosaic-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 680px) {
+    .trending-topics-section { padding: 40px 20px 20px 20px; }
+    .trending-mosaic-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .trending-main-title { font-size: 2rem; margin-bottom: 2.5rem; }
+    .tile-details-panel { padding: 1.5rem; }
+    .tile-headline { font-size: 1.2rem; }
+    .tile-abstract { font-size: 0.9rem; margin-bottom: 1.25rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header string array into individual animatable words on scroll
+    const titleElement = document.getElementById("trendingTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleElement.appendChild(span);
+        });
+    }
+
+    // Capture localized page scrolling frame layouts
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitTitleWords = document.querySelectorAll(".trending-main-title span");
+    const mosaicCardsList = document.querySelectorAll(".trending-tile-card");
+
+    function executeTrendingScrollObserver() {
+        const triggerBoundsLine = window.innerHeight * 0.92;
+
+        // Word-by-word title reveal sequence trigger
+        splitTitleWords.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Mosaic article tiles fade in one-by-one sequentially on scroll trigger
+        mosaicCardsList.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 140); // 140ms sequential stride gaps
+            }
+        });
+    }
+
+    // Attach tracking observers to scrolling layout channels
+    scrollContainerHost.addEventListener("scroll", executeTrendingScrollObserver);
+    window.addEventListener("scroll", executeTrendingScrollObserver);
+    
+    // Safety check verification pass to force trigger checks on mount instantly
+    setTimeout(executeTrendingScrollObserver, 400);
+});
+
+</script>
+
+<section class="schedule-section">
+    <!-- Word-by-Word Scroll Triggered Section Header -->
+    <h2 class="schedule-main-title" id="scheduleTitle">Conference Tracks & Agenda</h2>
+    <p class="schedule-intro-text">Navigate through our comprehensive multi-track engineering timeline. Explore pioneering keynotes, custom production sandboxes, and lightning hackathons mapped across three technical event intervals.</p>
+
+    <!-- Multi-Day Tabs Toggle Console Blueprint -->
+    <div class="day-toggle-console">
+        <button class="day-tab-btn" data-target-day="day1">Day 1</button>
+        <button class="day-tab-btn active" data-target-day="day2">Day 2</button>
+        <button class="day-tab-btn" data-target-day="day3">Day 3</button>
+    </div>
+
+    <!-- Collapsible Timetable Grid Deck Matrix -->
+    <div class="timetable-deck" id="timetableDeck">
+        
+        <!-- Slot Item 1 -->
+        <div class="schedule-card-slot reveal-item" data-day="day2">
+            <div class="slot-visible-trigger">
+                <div class="slot-meta-left">
+                    <span class="location-badge">Main Arena • Track A</span>
+                    <div class="date-stamp-box">
+                        <span class="date-num">20</span>
+                        <span class="date-month">JULY</span>
+                    </div>
+                    <span class="time-duration-text">09:00 AM - 12:00 PM</span>
+                </div>
+                
+                <div class="slot-speaker-avatar">
+                    <img src="https://unsplash.com" alt="Sarah Jenkins">
+                </div>
+
+                <div class="slot-title-summary">
+                    <h3>Scaling Distributed Edge Infrastructure & Micro-Hydration</h3>
+                    <p class="slot-excerpt">Optimizing layout token trees to guarantee stable rendering loops.</p>
+                </div>
+                <div class="slot-arrow-indicator">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+            </div>
+            
+            <!-- Hidden Collapsible Accordion Drawer -->
+            <div class="slot-hidden-drawer">
+                <div class="drawer-inner-content">
+                    <h4>Advanced Micro-Hydration Frameworks</h4>
+                    <p>This technical lab tracks down progressive web hydration benchmarks, component abstraction methods, and the deployment metrics needed to protect cumulative layout shifts over low-throughput framework runtimes.</p>
+                    <a href="404.html" class="get-direction-btn">
+                        <span>View Session Brief</span>
+                        <div class="arrow-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slot Item 2 -->
+        <div class="schedule-card-slot reveal-item" data-day="day2">
+            <div class="slot-visible-trigger">
+                <div class="slot-meta-left">
+                    <span class="location-badge">Sandbox Pod • Track B</span>
+                    <div class="date-stamp-box">
+                        <span class="date-num">20</span>
+                        <span class="date-month">JULY</span>
+                    </div>
+                    <span class="time-duration-text">01:00 PM - 03:00 PM</span>
+                </div>
+                
+                <div class="slot-speaker-avatar">
+                    <img src="https://unsplash.com" alt="Marcus Chen">
+                </div>
+
+                <div class="slot-title-summary">
+                    <h3>Zero-Trust Isolation Primitives inside Web Sandboxes</h3>
+                    <p class="slot-excerpt">Managing isolated script containers safely in production runtimes.</p>
+                </div>
+                <div class="slot-arrow-indicator">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+            </div>
+            
+            <div class="slot-hidden-drawer">
+                <div class="drawer-inner-content">
+                    <h4>Zero-Trust Script Segregation</h4>
+                    <p>A diagnostic breakdown of multi-tenant security layers required to neutralize unverified third-party scripts. Master runtime compilation filters and token tree monitoring stacks.</p>
+                    <a href="404.html" class="get-direction-btn">
+                        <span>View Session Brief</span>
+                        <div class="arrow-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slot Item 3: Active Expanded Showcase Row State -->
+        <div class="schedule-card-slot active reveal-item" data-day="day2">
+            <div class="slot-visible-trigger">
+                <div class="slot-meta-left">
+                    <span class="location-badge">Studio Lab • Track C</span>
+                    <div class="date-stamp-box">
+                        <span class="date-num">20</span>
+                        <span class="date-month">JULY</span>
+                    </div>
+                    <span class="time-duration-text">04:00 PM - 06:00 PM</span>
+                </div>
+                
+                <div class="slot-speaker-avatar">
+                    <img src="https://unsplash.com" alt="Elena Rostova">
+                </div>
+
+                <div class="slot-title-summary">
+                    <h3>Generative Layout Compilation Nodes & Semantic Parsing</h3>
+                    <p class="slot-excerpt">Deploying context-aware semantic algorithms to build accessible fluid screens.</p>
+                </div>
+                <div class="slot-arrow-indicator">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+            </div>
+            
+            <div class="slot-hidden-drawer" style="max-height: 500px;">
+                <div class="drawer-inner-content">
+                    <h4>Semantic Screen Generation Logic</h4>
+                    <p>Deploying context-aware local language trees to instantly render accessible component blocks from real-time streaming string outputs over decentralized networks.</p>
+                    <a href="404.html" class="get-direction-btn">
+                        <span>View Session Brief</span>
+                        <div class="arrow-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.schedule-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #211425; /* Base slate content text */
+}
+
+/* Word-by-Word Header Reveal Formatting */
+.schedule-main-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 12px;
+}
+
+.schedule-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.schedule-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.schedule-intro-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 3rem auto;
+}
+
+/* Multi-Day Tabs Toggle Console Layout */
+.day-toggle-console {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 4rem;
+}
+
+.day-tab-btn {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 178, 148, 0.1);
+    padding: 0.75rem 2rem;
+    color: #b5a4ba;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.day-tab-btn:hover {
+    color: #ffffff;
+    border-color: rgba(255, 178, 148, 0.25);
+    background: rgba(255, 178, 148, 0.02);
+}
+
+.day-tab-btn.active {
+    background: #ffb294; /* Reengineered palette to keep Vivid Peach theme active */
+    color: #211425;
+    border-color: #ffb294;
+    box-shadow: 0 4px 15px rgba(255, 178, 148, 0.3);
+}
+
+/* Collapsible Timetable Grid Stack Framework */
+.timetable-deck {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.schedule-card-slot {
+    background: rgba(33, 20, 37, 0.6); /* Translucent Deep Plum Layer */
+    border-radius: 14px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1.5px solid rgba(255, 178, 148, 0.05);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.schedule-card-slot.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Core Click Trigger Row */
+.slot-visible-trigger {
+    display: grid;
+    grid-template-columns: 240px 60px 1fr 40px;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Left Metadata Column */
+.slot-meta-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.location-badge {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #ffb294;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    letter-spacing: 0.02em;
+    margin-bottom: 1rem;
+}
+
+.date-stamp-box {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 0.4rem;
+}
+
+.date-num {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.date-month {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #b5a4ba;
+}
+
+.time-duration-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Portrait Speaker Circle Avatar */
+.slot-speaker-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #150d18;
+    border: 1px solid rgba(255, 178, 148, 0.2);
+}
+
+.slot-speaker-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Center Content Core Title Layouts */
+.slot-title-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding-right: 2rem;
+}
+
+.slot-title-summary h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.slot-title-summary p {
+    font-size: 0.98rem;
+    color: #b5a4ba;
+    font-weight: 500;
+}
+
+/* Right Vector Arrow Rotation Frameworks */
+.slot-arrow-indicator {
+    width: 24px;
+    height: 24px;
+    color: #b5a4ba;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease;
+}
+
+.slot-arrow-indicator svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* GLOW OVERLAYS HIGHLIGHT ONLY ON CARD HOVER PASSED */
+.schedule-card-slot:hover {
+    border-color: #ffb294; /* Vivid Peach theme boundary line glow border */
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.25);
+    background: rgba(49, 24, 54, 0.8);
+    transform: translateY(-2px);
+}
+
+.schedule-card-slot:hover .slot-title-summary h3 {
+    color: #ffb294;
+}
+
+/* ACTIVE SELECTED ENTRY STATE: Fills card with theme colors elegantly */
+.schedule-card-slot.active {
+    background: rgba(49, 24, 54, 0.9) !important;
+    border-color: #ffb294 !important;
+    box-shadow: 0 15px 40px rgba(255, 178, 148, 0.15);
+}
+
+.schedule-card-slot.active .slot-title-summary h3 {
+    color: #ffb294;
+}
+
+.schedule-card-slot.active .location-badge {
+    border-color: #ffb294;
+    background: #ffb294; 
+    color: #211425;
+}
+
+.schedule-card-slot.active .slot-arrow-indicator {
+    color: #ffb294;
+    transform: rotate(-180deg); /* Flips toggle accordion indicator icon arrow up cleanly */
+}
+
+/* Collapsible Hidden Content Panels */
+.slot-hidden-drawer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-inner-content {
+    padding: 0 2rem 2.5rem 2rem;
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding-top: 2rem;
+}
+
+.drawer-inner-content h4 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+}
+
+.drawer-inner-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 2rem;
+    max-width: 720px;
+}
+
+/* Custom Link Button Layout */
+.get-direction-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffb294; 
+    transition: color 0.3s ease;
+}
+
+.arrow-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffb294;
+    color: #211425;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px;
+    box-shadow: 0 4px 12px rgba(255, 178, 148, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.arrow-circle svg {
+    width: 100%;
+    height: 100%;
+}
+
+.get-direction-btn:hover {
+    color: #ffffff;
+}
+
+.get-direction-btn:hover .arrow-circle {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+    transform: translateX(3px);
+}
+
+/* Fluid Responsive Scaling Frameworks */
+@media (max-width: 992px) {
+    .slot-visible-trigger {
+        grid-template-columns: 180px 60px 1fr 30px;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+    .slot-title-summary h3 { font-size: 1.15rem; }
+    .date-num { font-size: 2rem; }
+}
+
+@media (max-width: 768px) {
+    .schedule-section { padding: 40px 20px 20px 20px; }
+    .slot-visible-trigger {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+    .slot-meta-left { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 1rem; width: 100%; }
+    .location-badge { margin-bottom: 0; }
+    .slot-speaker-avatar { display: none; } /* Suppresses loose portraits to maximize column readability on small viewports */
+    .slot-arrow-indicator { position: absolute; top: 1.5rem; right: 1.5rem; }
+    .slot-title-summary { padding-right: 0; }
+    .drawer-inner-content { padding: 1.5rem; }
+    .drawer-inner-content h4 { font-size: 1.2rem; }
+    .drawer-inner-content p { font-size: 0.92rem; margin-bottom: 1.5rem; }
+    .schedule-main-title { font-size: 2rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Title Segmentation Engine
+    const titleBlock = document.getElementById("scheduleTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // 2. Interactive Accordion Toggles
+    const slotVisibleTriggers = document.querySelectorAll(".slot-visible-trigger");
+    slotVisibleTriggers.forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            const currentSlotCard = trigger.closest(".schedule-card-slot");
+            const hiddenDrawerPanel = currentSlotCard.querySelector(".slot-hidden-drawer");
+            const isCurrentlyActiveOpen = currentSlotCard.classList.contains("active");
+
+            document.querySelectorAll(".schedule-card-slot.active").forEach(activeSlot => {
+                if (activeSlot !== currentSlotCard) {
+                    activeSlot.classList.remove("active");
+                    activeSlot.querySelector(".slot-hidden-drawer").style.maxHeight = "0";
+                }
+            });
+
+            if (isCurrentlyActiveOpen) {
+                currentSlotCard.classList.remove("active");
+                hiddenDrawerPanel.style.maxHeight = "0";
+            } else {
+                currentSlotCard.classList.add("active");
+                hiddenDrawerPanel.style.maxHeight = hiddenDrawerPanel.scrollHeight + "px";
+            }
+        });
+    });
+
+    // 3. Multi-Day Selector Console Filter Logic
+    const dayButtons = document.querySelectorAll(".day-tab-btn");
+    const allScheduleSlots = document.querySelectorAll(".schedule-card-slot");
+
+    dayButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelector(".day-tab-btn.active")?.classList.remove("active");
+            btn.classList.add("active");
+
+            const selectedFilterDay = btn.getAttribute("data-target-day");
+
+            allScheduleSlots.forEach(slot => {
+                if (slot.getAttribute("data-day") === selectedFilterDay) {
+                    slot.style.display = "block";
+                    setTimeout(() => { slot.style.opacity = "1"; slot.style.transform = "translateY(0)"; }, 50);
+                } else {
+                    slot.style.opacity = "0";
+                    slot.style.transform = "translateY(15px)";
+                    slot.style.display = "none";
+                }
+            });
+        });
+    });
+
+    // 4. Scroll Reveal Trackers
+    const scrollContainerMonitor = document.querySelector(".content-body") || window;
+    const splitWordsSpansList = document.querySelectorAll(".schedule-main-title span");
+    const scheduleItemsCards = document.querySelectorAll(".schedule-card-slot");
+
+    function executeScheduleScrollObserver() {
+        const triggerLineLineHeight = window.innerHeight * 0.92;
+
+        splitWordsSpansList.forEach((span, index) => {
+            if (span.getBoundingClientRect().top < triggerLineLineHeight) {
+                setTimeout(() => { span.classList.add("reveal"); }, index * 95);
+            }
+        });
+
+        scheduleItemsCards.forEach((card, index) => {
+            if (card.getBoundingClientRect().top < triggerLineLineHeight) {
+                setTimeout(() => { card.classList.add("animate-in"); }, index * 120);
+            }
+        });
+    }
+
+    scrollContainerMonitor.addEventListener("scroll", executeScheduleScrollObserver);
+    window.addEventListener("scroll", executeScheduleScrollObserver);
+    setTimeout(executeScheduleScrollObserver, 400);
+});
+
+</script>
+
+<section class="spotlight-matrix-section">
+    <!-- Word-by-Word Scroll-Triggered Creative Header -->
+    <h2 class="spotlight-matrix-title" id="spotlightMatrixTitle">Speaker Spotlight Columns</h2>
+
+    <!-- Staggered Multi-Layout Content Matrix Deck -->
+    <div class="spotlight-deck-matrix">
+        
+        <!-- Column Card 1: Horizontal Big Feature Card (Slices from Left) -->
+        <div class="spotlight-deck-card broad-feature-card fly-left-axis">
+            <div class="spotlight-media-frame">
+                <img src="https://unsplash.com" alt="Sarah Jenkins Keynote Session Overview">
+                <span class="spotlight-tag-pill">KEYNOTE REFLECTIONS</span>
+            </div>
+            <div class="spotlight-info-panel">
+                <div class="author-profile-row">
+                    <img src="https://unsplash.com" alt="Sarah Jenkins" class="author-avatar">
+                    <div class="author-meta">
+                        <h4>Sarah Jenkins</h4>
+                        <p>Lead Web Architect</p>
+                    </div>
+                </div>
+                <h3 class="spotlight-headline">The Shift To Edge Hydration Parameters inside Open-Source Ecosystems</h3>
+                <p class="spotlight-abstract">A diagnostic deep-dive into paint thresholds, cumulative layout shifts, and progressive element tree reconciliation observed inside multi-tenant web systems.</p>
+                
+                <!-- Floating Glassmorphic Social Vector Icon Link Tray -->
+                <div class="spotlight-social-tray">
+                    <a href="404.html" aria-label="Read Full Transcript"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column Card 2: Vertical Panel Card (Slices from Bottom) -->
+        <div class="spotlight-deck-card compact-box-card fly-bottom-axis">
+            <div class="spotlight-media-frame">
+                <img src="https://unsplash.com" alt="Marcus Chen Lab Demo Track">
+                <span class="spotlight-tag-pill">DEVOPS INSIGHTS</span>
+            </div>
+            <div class="spotlight-info-panel">
+                <div class="author-profile-row">
+                    <img src="https://unsplash.com" alt="Marcus Chen" class="author-avatar">
+                    <div class="author-meta">
+                        <h4>Marcus Chen</h4>
+                        <p>Principal DevOps Engineer</p>
+                    </div>
+                </div>
+                <h3 class="spotlight-headline">Zero-Trust Isolation Primitives inside Web Sandboxes</h3>
+                <p class="spotlight-abstract">Restricting malicious third-party scripts securely using lightweight execution containers and kernel-level runtime restrictions.</p>
+                
+                <div class="spotlight-social-tray">
+                    <a href="404.html" aria-label="Read Full Transcript"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column Card 3: Vertical Panel Card (Slices from Right) -->
+        <div class="spotlight-deck-card compact-box-card fly-right-axis">
+            <div class="spotlight-media-frame">
+                <img src="https://unsplash.com" alt="Elena Rostova Summit Seminar">
+                <span class="spotlight-tag-pill">AI RESEARCH</span>
+            </div>
+            <div class="spotlight-info-panel">
+                <div class="author-profile-row">
+                    <img src="https://unsplash.com" alt="Elena Rostova" class="author-avatar">
+                    <div class="author-meta">
+                        <h4>Elena Rostova</h4>
+                        <p>AI Research Specialist</p>
+                    </div>
+                </div>
+                <h3 class="spotlight-headline">Dynamic Token Tree Compilation Layers in UI</h3>
+                <p class="spotlight-abstract">Deploying context-aware semantic layout tools to dynamically build accessible user screens based on prompt streams inside live workspace frameworks.</p>
+                
+                <div class="spotlight-social-tray">
+                    <a href="404.html" aria-label="Read Full Transcript"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Setup */
+.spotlight-matrix-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+/* Word-by-Word Header Reveal Formatting */
+.spotlight-matrix-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 12px;
+}
+
+.spotlight-matrix-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spotlight-matrix-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered Masonry Card Grid Deck Setup */
+.spotlight-deck-matrix {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Custom dimensional remapping to generate creative asymmetry layout splits */
+.broad-feature-card { grid-column: span 2; display: grid !important; grid-template-columns: 1.15fr 0.85fr; }
+.compact-box-card { grid-column: span 1; }
+
+/* Structural Card Blueprint Definitions */
+.spotlight-deck-card {
+    background: rgba(33, 20, 37, 0.5); /* Deep translucent plum base variable */
+    border: 1.5px solid rgba(255, 178, 148, 0.04);
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    
+    /* Scroll Trigger Initializations: Loaded sequentially from different sides */
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+/* MULTI-DIRECTIONAL FLY-IN SLOTS REQUESTED */
+.spotlight-deck-card.fly-left-axis   { transform: translateX(-80px); }
+.spotlight-deck-card.fly-right-axis  { transform: translateX(80px); }
+.spotlight-deck-card.fly-bottom-axis { transform: translateY(60px); }
+
+.spotlight-deck-card.animate-ready {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Graphic Thumbnail Frame Configuration */
+.spotlight-media-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 240px;
+    overflow: hidden;
+    background: #140916;
+}
+
+.broad-feature-card .spotlight-media-frame { min-height: 340px; }
+
+.spotlight-media-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.72) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+/* Absolute Floating Glassmorphic Badges */
+.spotlight-tag-pill {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    background: rgba(33, 20, 37, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    color: #ffb294;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    letter-spacing: 0.05em;
+    z-index: 3;
+}
+
+/* Info Summary Panel Framework */
+.spotlight-info-panel {
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #130815;
+    position: relative;
+}
+
+/* Author Row Branding Setup */
+.author-profile-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+}
+
+.author-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    object-fit: cover;
+}
+
+.author-meta h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.author-meta p {
+    font-size: 0.78rem;
+    color: #b5a4ba;
+}
+
+.spotlight-headline {
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.35;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+}
+
+.broad-feature-card .spotlight-headline { font-size: 1.75rem; }
+
+.spotlight-abstract {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+/* Action CTA Vector Anchor Tray System */
+.spotlight-social-tray {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+}
+
+.spotlight-social-tray a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #b5a4ba;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spotlight-social-tray svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+/* Card Hover Actions & Luminous Content Glow Filters */
+.spotlight-deck-card:hover {
+    border-color: #ffb294;
+    background: rgba(49, 24, 54, 0.7);
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px);
+}
+
+.spotlight-deck-card:hover .spotlight-media-frame img {
+    transform: scale(1.03);
+    filter: brightness(0.85) contrast(1.05);
+}
+
+.spotlight-deck-card:hover .spotlight-headline {
+    color: #ffb294;
+}
+
+.spotlight-deck-card:hover .spotlight-abstract {
+    color: #ffffff;
+}
+
+.spotlight-deck-card:hover .spotlight-social-tray a {
+    background: #ffb294;
+    border-color: #ffb294;
+    color: #211425;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.4);
+}
+
+.spotlight-deck-card:hover .spotlight-social-tray a svg {
+    transform: translate(1px, -1px);
+}
+
+/* Fluid Layout Responsive Matrix (Strict 20px Side Padding Preserved) */
+@media (max-width: 992px) {
+    .broad-feature-card { grid-template-columns: 1fr; }
+    .broad-feature-card .spotlight-media-frame { min-height: 240px; }
+    .compact-box-card { grid-column: span 2; } /* Normalizes boxes into full rows on smaller screens */
+}
+
+@media (max-width: 576px) {
+    .spotlight-matrix-section { padding: 40px 20px 20px 20px; }
+    .spotlight-deck-matrix { display: flex; flex-direction: column; gap: 1.5rem; }
+    .spotlight-matrix-title { font-size: 1.9rem; margin-bottom: 2.5rem; }
+    .spotlight-info-panel { padding: 1.5rem; }
+    .spotlight-headline { font-size: 1.2rem; }
+    .broad-feature-card .spotlight-headline { font-size: 1.35rem; }
+    .spotlight-abstract { font-size: 0.9rem; margin-bottom: 1.25rem; }
+    .spotlight-social-tray a { width: 100%; border-radius: 30px; gap: 8px; } /* Adapts links cleanly on small mobile viewports */
+    /* Normalize horizontal slider shifts to clean vertical paths for stacked mobile rows */
+    .spotlight-deck-card.fly-left-axis, 
+    .spotlight-deck-card.fly-right-axis, 
+    .spotlight-deck-card.fly-bottom-axis { transform: translateY(30px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header string array into individual animatable words on scroll
+    const titleElement = document.getElementById("spotlightMatrixTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleElement.appendChild(span);
+        });
+    }
+
+    // Capture localized page scrolling frame layouts
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitTitleWords = document.querySelectorAll(".spotlight-matrix-title span");
+    const mosaicCardsList = document.querySelectorAll(".spotlight-deck-card");
+
+    function executeSpotlightMatrixScrollObserver() {
+        const triggerBoundsLine = window.innerHeight * 0.92;
+
+        // Word-by-word title reveal sequence trigger
+        splitTitleWords.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Masonry columnist cards fly in one-by-one from multi-directional paths on scroll trigger
+        mosaicCardsList.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    card.classList.add("animate-ready");
+                }, index * 140); // 140ms sequential stride gaps
+            }
+        });
+    }
+
+    // Attach tracking observers to scrolling layout channels
+    scrollContainerHost.addEventListener("scroll", executeSpotlightMatrixScrollObserver);
+    window.addEventListener("scroll", executeSpotlightMatrixScrollObserver);
+    
+    // Safety check verification pass to force trigger checks on mount instantly
+    setTimeout(executeSpotlightMatrixScrollObserver, 400);
+});
+
+</script>
+
+<section class="testimonial-section">
+    <!-- Scroll Triggered Section Header -->
+    <h2 class="testimonial-main-title" id="testimonialTitle">What Attendees Say</h2>
+
+    <!-- Asymmetric Creative Review Matrix Container -->
+    <div class="testimonial-grid">
+        
+        <!-- Review Capsule 1: Shifts up from Left -->
+        <div class="review-capsule shift-left">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Elena Rostova">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Elena Rostova</h3>
+                    <p class="reviewer-org">AI Systems Lead at Nexus</p>
+                </div>
+            </div>
+            
+            <!-- Glowing Ratings Bar -->
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "Stackly completely changed my view on technical keynotes. The multi-track environment loaded instantly, and being able to drop straight into interactive dev code sandboxes with speakers felt like the future."
+            </p>
+        </div>
+
+        <!-- Review Capsule 2: Shifts up from Center -->
+        <div class="review-capsule shift-center">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Marcus Chen">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Marcus Chen</h3>
+                    <p class="reviewer-org">Principal Infrastructure Engineer</p>
+                </div>
+            </div>
+            
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "The focus on production constraints and architectural scalability is what sets this network apart. I've walked away with active deployment fixes that solved three scaling bottlenecks this quarter."
+            </p>
+        </div>
+
+        <!-- Review Capsule 3: Shifts up from Right -->
+        <div class="review-capsule shift-right">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Sarah Jenkins">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Sarah Jenkins</h3>
+                    <p class="reviewer-org">VP Engineering at CloudFlow</p>
+                </div>
+            </div>
+            
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9734;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "The physical venues and fluid visual layout are incredible. Stackly provides an elite networking arena. Being able to connect directly with 5000+ enterprise software architects was invaluable."
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Core Section Layout Frame */
+.testimonial-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+}
+
+/* Scroll Activated Title Styles */
+.testimonial-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+}
+
+.testimonial-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.testimonial-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Asymmetric Creative Grid Matrix */
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    width: 100%;
+    padding-top: 20px;
+}
+
+/* Individual Review Capsule Card Architectures */
+.review-capsule {
+    position: relative;
+    background: rgba(33, 20, 37, 0.7);
+    border: 1.5px solid rgba(255, 178, 148, 0.04);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll Trigger Setup: Hidden by default */
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
+}
+
+/* Dynamic Entrance Directions on Scroll Trigger */
+.review-capsule.shift-left { transform: translate(-40px, 30px); }
+.review-capsule.shift-center { transform: translate(0, 50px); }
+.review-capsule.shift-right { transform: translate(40px, 30px); }
+
+.review-capsule.animate-in {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Background Ambient Glow Layer */
+.review-glow-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    background: radial-gradient(circle at 10% 10%, rgba(255, 178, 148, 0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Header Avatar Frameworks */
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    z-index: 2;
+}
+
+.reviewer-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    background: #1a0f1d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.reviewer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.reviewer-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewer-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+.reviewer-org {
+    font-size: 0.85rem;
+    color: #b5a4ba;
+    margin-top: 0.1rem;
+}
+
+/* Rating Vectors */
+.star-rating-bar {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 1.25rem;
+    z-index: 2;
+}
+
+.star-vector {
+    color: rgba(255, 178, 148, 0.2); /* Default empty star color base */
+    font-size: 1.1rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Fill logic color selection matching Peach */
+.star-rating-bar .star-vector:not(:last-child),
+.star-rating-bar .star-vector {
+    color: #ffb294;
+}
+.star-rating-bar span:contains('&#9734;') {
+    color: rgba(255, 178, 148, 0.2) !important;
+}
+
+/* Review Block Text Layout */
+.review-body-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    cursor: default;
+    z-index: 2;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Card Hover Actions & Glowing Overlays */
+.review-capsule:hover {
+    border-color: #ffb294;
+    box-shadow: 0 0 30px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px) !important;
+}
+
+.review-capsule:hover .review-glow-layer {
+    opacity: 0.8;
+    background: radial-gradient(circle at 10% 10%, rgba(255, 178, 148, 0.08) 0%, transparent 60%);
+}
+
+.review-capsule:hover .reviewer-name {
+    color: #ffb294;
+}
+
+.review-capsule:hover .review-body-text {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.review-capsule:hover .star-vector {
+    text-shadow: 0 0 8px rgba(255, 178, 148, 0.8);
+}
+
+/* Responsive Structural Breakpoints Layout Matrix */
+@media (max-width: 992px) {
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 580px;
+        margin: 0 auto;
+    }
+    .review-capsule {
+        transform: translateY(40px) !important; /* Converts desktop offsets into simple vertical checks for mobile viewports */
+    }
+    .testimonial-main-title {
+        font-size: 2.2rem;
+        margin-bottom: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-section { padding: 40px 20px 20px 20px; }
+    .testimonial-main-title { font-size: 1.8rem; }
+    .review-capsule { padding: 1.5rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header string into animatable words
+    const headerBlock = document.getElementById("testimonialTitle");
+    if (headerBlock) {
+        const words = headerBlock.textContent.split(" ");
+        headerBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            headerBlock.appendChild(span);
+        });
+    }
+
+    // Identify current active template scroll wrappers
+    const scrollTracker = document.querySelector(".content-body") || window;
+    const titleWords = document.querySelectorAll(".testimonial-main-title span");
+    const reviewCards = document.querySelectorAll(".review-capsule");
+
+    function executeTestimonialScrollAnimations() {
+        const structuralTriggerPoint = window.innerHeight * 0.92;
+
+        // Word-by-word title expand fade reveal step
+        titleWords.forEach((span, index) => {
+            const boundaryBox = span.getBoundingClientRect();
+            if (boundaryBox.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 110);
+            }
+        });
+
+        // Review card multi-directional slide matrix arrival stagger
+        reviewCards.forEach((card, index) => {
+            const boundaryBox = card.getBoundingClientRect();
+            if (boundaryBox.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 150); // 150ms incremental stepping offset execution loops
+            }
+        });
+    }
+
+    // Hook logic streams to main viewport containers
+    scrollTracker.addEventListener("scroll", executeTestimonialScrollAnimations);
+    window.addEventListener("scroll", executeTestimonialScrollAnimations);
+    
+    // Initial load verify tracking checks pass execution loop
+    setTimeout(executeTestimonialScrollAnimations, 450);
+});
+
+</script>
+
+<section class="subscribe-section-fullwidth">
+    <!-- Abstract Ambient Tech Overlay Background -->
+    <div class="subscribe-bg-overlay"></div>
+
+    <div class="subscribe-container">
+        <!-- Content Column -->
+        <div class="subscribe-content">
+            <span class="subscribe-badge">STAY UP TO DATE</span>
+            
+            <!-- Title Words Fly in from Left/Right Sides Alternately -->
+            <h2 class="subscribe-title" id="subscribeTitle">Join the Stackly Architecture Loop</h2>
+            
+            <p class="subscribe-subtitle rise-element animate-in">Get deep technical breakdowns, event schedule updates, and flagship track announcements directly in your inbox.</p>
+            
+            <!-- Interactive Subscription Form Shell Framework -->
+            <form class="subscribe-form-matrix rise-element animate-in" id="subscribeForm" novalidate>
+                <div class="input-glow-wrapper">
+                    <input type="email" id="subscriberEmail" placeholder="Enter your enterprise email..." aria-label="Email address field">
+                    <!-- Dynamic client status notification field -->
+                    <div class="form-status-alert" id="formStatusAlert">Please fill in the fields</div>
+                </div>
+                <button type="submit" class="subscribe-submit-btn">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Section Shell Wrapper */
+.subscribe-section-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with generous side edge clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #170d1a 0%, #2d1933 50%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Abstract Radial Ambient Backing Grid Layer */
+.subscribe-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 178, 148, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Internal Alignment Container Shield */
+.subscribe-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px; /* Constrains input content neatly to the readable center fields */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.subscribe-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.subscribe-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Peach Family Accent focus */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Reveal Alternating from Left/Right Sides */
+.subscribe-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+.subscribe-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Initial Directional States for Word Reveal */
+.subscribe-title span.fly-left { transform: translateX(-60px); }
+.subscribe-title span.fly-right { transform: translateX(60px); }
+
+.subscribe-title span.reveal {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Title Hover Accent Glow */
+.subscribe-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.3);
+}
+
+/* Content Rising Elements Setup - Fixed: Visible by default with a smooth micro-scale */
+.rise-element {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rise-element.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.subscribe-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+.subscribe-subtitle:hover {
+    color: #ffffff;
+}
+
+/* Subscription Form Inputs Grid Layout */
+.subscribe-form-matrix {
+    display: flex;
+    width: 100%;
+    max-width: 580px;
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.input-glow-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subscribe-form-matrix input[type="email"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    border-radius: 50px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Input Box Glow Effect on Focus & Hover */
+.subscribe-form-matrix input[type="email"]:hover,
+.subscribe-form-matrix input[type="email"]:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 20px rgba(255, 178, 148, 0.15);
+}
+
+/* Validation Alert Message Box Styling */
+.form-status-alert {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ff7b7b;
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-status-alert.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Subscription CTA Trigger Button */
+.subscribe-submit-btn {
+    background: #ffb294;
+    color: #211425;
+    border: none;
+    padding: 0 2.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 5px 15px rgba(255, 178, 148, 0.2);
+}
+
+.subscribe-submit-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Strict Mobile Scaling Matrix (Preserving edge boundaries) */
+@media (max-width: 768px) {
+    .subscribe-section-fullwidth { padding: 40px 20px 25px 20px; }
+    .subscribe-title { font-size: 2rem; }
+    .subscribe-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+    .subscribe-form-matrix { flex-direction: column; gap: 1.5rem; }
+    .subscribe-submit-btn { padding: 1rem 0; width: 100%; }
+    .form-status-alert { top: auto; bottom: calc(100% + 6px); } /* Flips status position to fit stacked inputs cleanly */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // -------------------------------------------------------------
+    // 1. TEXT PARSING (Alternating side word-by-word entry)
+    // -------------------------------------------------------------
+    const subscribeTitleContainer = document.getElementById("subscribeTitle");
+    if (subscribeTitleContainer) {
+        const words = subscribeTitleContainer.textContent.split(" ");
+        subscribeTitleContainer.textContent = ""; 
+        
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            
+            // Staggers fly-in directions by index coordinates
+            if (index % 2 === 0) {
+                span.classList.add("fly-left");
+            } else {
+                span.classList.add("fly-right");
+            }
+            
+            subscribeTitleContainer.appendChild(span);
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 2. LIVE VALIDATION & REDIRECT SUBMISSION INTERCEPTOR
+    // -------------------------------------------------------------
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const formStatusAlert = document.getElementById("formStatusAlert");
+
+    if (subscribeForm) {
+        subscribeForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Blocks raw webpage page reloading loops
+            
+            const emailValue = subscriberEmail.value.trim();
+
+            if (emailValue === "") {
+                // Input empty context handler
+                formStatusAlert.textContent = "Please fill in the fields";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                // Invalid regex configuration sequence fallback
+                formStatusAlert.textContent = "Please enter a valid email address";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else {
+                // Validation passed completely -> Proceed immediately to 404 URL
+                formStatusAlert.classList.remove("visible");
+                subscriberEmail.style.borderColor = "#ffb294";
+                window.location.href = "404.html";
+            }
+        });
+
+        // Instantly wipe validation boundary errors when text input scales
+        subscriberEmail.addEventListener("input", () => {
+            formStatusAlert.classList.remove("visible");
+            subscriberEmail.style.borderColor = "rgba(255, 255, 255, 0.08)";
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. SCROLL INTERSECTION ENGINE (With bottom gap edge recovery)
+    // -------------------------------------------------------------
+    const scrollShell = document.querySelector(".content-body") || window;
+    const subscribeTitleSpans = document.querySelectorAll(".subscribe-title span");
+    const subscribeRisingElements = document.querySelectorAll(".rise-element");
+
+    function executeSubscribeScrollObserver() {
+        // Generous vertical window evaluation target threshold
+        const triggerHeight = window.innerHeight * 0.95; 
+        
+        // Safety Fallback Check: Evaluates true if page spacing constraints block deeper scrolls
+        const isPageScrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 120);
+
+        // Header Title Sequence Revelations
+        subscribeTitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    span.classList.add("reveal"); 
+                }, index * 80);
+            }
+        });
+
+        // Form fields and buttons sequential riser animations loop
+        subscribeRisingElements.forEach((element, index) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    element.classList.add("animate-in"); 
+                }, 150 * (index + 1)); // 150ms structural staging separation
+            }
+        });
+    }
+
+    // Register section observers on active scrolling frames
+    scrollShell.addEventListener("scroll", executeSubscribeScrollObserver);
+    window.addEventListener("scroll", executeSubscribeScrollObserver);
+    
+    // Safety verification check pass to check visibility constraints instantly on component mounts
+    setTimeout(executeSubscribeScrollObserver, 400);
+});
+
+</script>
+
+<footer class="main-footer">
+    <div class="footer-upper-grid">
+        
+        <!-- Column 1: Brand Info & Social Media Links -->
+        <div class="footer-column brand-summary-col">
+            <a href="#" class="footer-logo-link" id="backToTopTrigger" aria-label="Back to Top">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="footer-brand-img">
+                <span class="footer-brand-text">STACKLY</span>
+            </a>
+            <p class="footer-description">
+                Engineering premier developer conventions and high-fidelity tech ecosystem environments designed to fuel open-source web frameworks.
+            </p>
+            <div class="footer-social-row">
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+               <a href="404.html" class="social-circle-link" aria-label="Twitter X">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+    </svg>
+</a>
+
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Event Tracks Quick Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Explore Tracks</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Edge Micro-Frontends</a></li>
+                <li><a href="404.html">Zero-Trust Infrastructures</a></li>
+                <li><a href="404.html">Generative Layout Systems</a></li>
+                <li><a href="404.html">Cloud Native Sandboxes</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Attendee Support Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Event Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Technical Lab Parameters</a></li>
+                <li><a href="404.html">Registration Badges</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Location & Contact Metadata -->
+        <div class="footer-column info-metadata-col">
+            <h3 class="footer-header-title">Headquarters Location</h3>
+            <div class="metadata-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="meta-text-content">MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</span>
+            </div>
+            <div class="metadata-row phone-link-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span class="meta-text-content">+91 7010792745</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legals Banner -->
+    <div class="footer-bottom-bar">
+        <div class="bottom-bar-inner">
+            <p class="copyright-notice">&copy; 2026 Stackly Industries. All conference rights reserved.</p>
+            <div class="legal-links-row">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Base Framework */
+.main-footer {
+    width: 100%;
+    background-color: #0c0710; /* Rich dark plum base matching platform palette */
+    border-top: 1px solid rgba(255, 178, 148, 0.06);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    margin-top: 4rem;
+}
+
+/* Upper Four-Column Grid Structure */
+.footer-upper-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 50px 20px; /* Precise 20px side padding constraints preserved */
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr 0.9fr 1.1fr;
+    gap: 3.5rem;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Brand Link and Description Styling */
+.footer-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+}
+
+.footer-brand-img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-brand-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    max-width: 320px;
+}
+
+/* Circular Social Icons Row */
+.footer-social-row {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #b5a4ba;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Hover Glowing Interactivity Elements */
+.social-circle-link:hover {
+    color: #ffb294; /* Vivid Peach Accent */
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.05);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Column Header Categories */
+.footer-header-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+/* Custom Underline Accent Line Template */
+.footer-header-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #ffb294;
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(255, 178, 148, 0.6);
+}
+
+/* Navigation Lists Layout */
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: #b5a4ba;
+    font-weight: 500;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #ffb294;
+    transform: translateX(3px);
+}
+
+/* Metadata Rows for Location & Phone info */
+.metadata-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+}
+
+.meta-icon {
+    width: 18px;
+    height: 18px;
+    color: #ffb294;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.meta-text-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    text-align: left;
+}
+
+.phone-link-row .meta-text-content {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Bottom Legals Bar Framework */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 25px 0;
+    background-color: #070409;
+}
+
+.bottom-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright-notice {
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+}
+
+.legal-links-row {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.legal-links-row a {
+    text-decoration: none;
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+    transition: color 0.25s ease;
+}
+
+.legal-links-row a:hover {
+    color: #ffb294;
+}
+
+/* Strict Layout Responsive Adaptation Boundaries */
+@media (max-width: 992px) {
+    .footer-upper-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+    .footer-description { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .footer-upper-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 40px 20px 30px 20px;
+    }
+    .bottom-bar-inner {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    .legal-links-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Back to Top Click Trigger Functionality
+    const backToTopBtn = document.getElementById("backToTopTrigger");
+    
+    // Checks if the internal app container is managing scrolling offsets, or falls back to window object viewport
+    const scrollingElement = document.querySelector(".content-body") || window;
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // Blocks flash anchor resets
+            
+            if (scrollingElement === window) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            } else {
+                scrollingElement.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        });
+    }
+});
+
+</script>
+

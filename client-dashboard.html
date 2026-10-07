@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly – Client Attendee Dashboard Terminal</title>
+    <link rel="stylesheet" href="client-dashboard.css">
+</head>
+<body class="dashboard-root-body">
+
+    <!-- Central Master Grid Application Shell -->
+    <div class="dashboard-shell-container">
+        
+        <!-- Left Sidebar: Professional Navigation Control Console -->
+        <aside class="dashboard-sidebar-console" id="sidebarConsole">
+            <div class="sidebar-brand-wrapper">
+                <!-- Branding logo with localized view refresh function pass -->
+                <a href="#" class="sidebar-brand-link" id="dashboardRefreshTrigger" aria-label="Refresh Dashboard Matrix State">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Terminal Core Logo" class="brand-vector-logo">
+                    <span class="brand-title-text">STACKLY</span>
+                </a>
+            </div>
+
+            <!-- Staggered Functional Sidebar Menus Stack for Attendees -->
+            <nav class="sidebar-navigation-stack">
+                <button class="nav-segment-item active" data-target-section="my-pass">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="16" y1="2" x2="16" y2="4"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>My Access Passes</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="saved-schedule">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>Saved Agenda Tracks</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="workspaces">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    <span>My Sandbox Pods</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="certificates">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Lab Certifications</span>
+                </button>
+                <button class="nav-segment-item" data-target-section="profile-settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>Profile Settings</span>
+                </button>
+            </nav>
+
+            <!-- Logout action button linked right back to login.html path rules -->
+            <div class="sidebar-footer-block">
+                <button class="sidebar-logout-btn" id="logoutActionTrigger">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span>Exit Terminal</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Right Side: Main Application Canvas Content Frame Box -->
+        <main class="dashboard-main-canvas">
+            
+            <!-- Global Action Bar Header Matrix -->
+            <header class="dashboard-global-header">
+                <!-- Hamburger menu toggle icon -->
+                <button class="hamburger-menu-toggle-btn" id="hamburgerMenuToggle" aria-label="Toggle Navigation Console Drawer">
+                    <span class="hamburger-bar-line"></span>
+                    <span class="hamburger-bar-line"></span>
+                    <span class="hamburger-bar-line"></span>
+                </button>
+
+                <!-- Localized greeting row parsing user first name strings -->
+                <div class="header-greeting-wrapper">
+                    <h2>Welcome, <span class="session-user-firstname" id="headerUsernameDisplay">Attendee</span>!</h2>
+                    <p class="header-subtext-date">Stackly Attendee Dashboard Terminal</p>
+                </div>
+
+                <!-- Right Action Arrays (Bell, Notifications & Profile Avatar) -->
+                <div class="header-utilities-row">
+                    <!-- Notification Bell Trigger with active ping dot -->
+                    <button class="utility-bell-btn" id="notificationBellTrigger" aria-label="View Active Notification Streams">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <div class="notification-ping-dot"></div>
+                    </button>
+
+                    <!-- Interactive User Settings Profile Avatar -->
+                    <div class="utility-user-profile-avatar">
+                        <img src="https://unsplash.com" alt="Active Account Session Profile">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dynamic Workspace Content Hub Viewport Wrapper Links -->
+            <div class="workspace-dynamic-viewport" id="workspaceViewport">
+                
+                <!-- Section Frame 1: My Access Passes -->
+                <div class="workspace-section-view active-view" id="section-my-pass">
+                    <div class="section-title-label">SECTION CONTENT VIEW: MY ACCESS PASSES</div>
+                    <div class="placeholder-metric-row-cards">
+                        <div class="metric-mini-card"><h5>Current Ticket Status</h5><p>Enterprise Pass</p></div>
+                        <div class="metric-mini-card"><h5>Badge Code Verified</h5><p>STK-9482-X</p></div>
+                        <div class="metric-mini-card"><h5>Seat Assignments</h5><p>Row A / Pod 04</p></div>
+                    </div>
+                </div>
+
+                <!-- Section Frame 2: Saved Agenda Tracks -->
+                <div class="workspace-section-view" id="section-saved-schedule">
+                    <div class="section-title-label">SECTION CONTENT VIEW: SAVED AGENDA TRACKS</div>
+                </div>
+
+                <!-- Section Frame 3: My Sandbox Pods -->
+                <div class="workspace-section-view" id="section-workspaces">
+                    <div class="section-title-label">SECTION CONTENT VIEW: MY SANDBOX PODS</div>
+                </div>
+
+                <!-- Section Frame 4: Lab Certifications -->
+                <div class="workspace-section-view" id="section-certificates">
+                    <div class="section-title-label">SECTION CONTENT VIEW: LAB CERTIFICATIONS</div>
+                </div>
+
+                <!-- Section Frame 5: Profile Settings -->
+                <div class="workspace-section-view" id="section-profile-settings">
+                    <div class="section-title-label">SECTION CONTENT VIEW: PROFILE SETTINGS</div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+   <style>
+    /* Core Layout Box Variables Resets */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-root-body {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #08040a; /* Premium Stackly background plum black shade variable */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+/* Master Grid Structure Layout Wrap */
+.dashboard-shell-container {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+/* -------------------------------------------------------------
+   LEFT CONSOLE SIDEBAR STYLING
+   ------------------------------------------------------------- */
+.dashboard-sidebar-console {
+    background-color: #0e0813; /* Rich dark plum panel context block */
+    border-right: 1px solid rgba(255, 178, 148, 0.05); /* Soft peach border rules line */
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.sidebar-brand-wrapper {
+    margin-bottom: 3.5rem;
+    padding-left: 0.5rem;
+}
+
+.sidebar-brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.brand-vector-logo {
+    width: 26px;
+    height: 26px;
+}
+
+.brand-title-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.06em;
+}
+
+/* Navigation Segment Items Arrays */
+.sidebar-navigation-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+}
+
+.nav-segment-item {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: 0.9rem 1.2rem;
+    border-radius: 12px;
+    color: #b5a4ba;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-segment-item svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.nav-segment-item:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Active Highlight Menu Row State */
+.nav-segment-item.active {
+    background-color: rgba(255, 178, 148, 0.04);
+    border-color: rgba(255, 178, 148, 0.15);
+    color: #ffb294; /* Vivid Peach focus identity accent */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Logout Actions Block */
+.sidebar-footer-block {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.sidebar-logout-btn {
+    background: transparent;
+    border: none;
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    color: #b5a4ba;
+    font-size: 0.92rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.25s ease;
+}
+
+.sidebar-logout-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #ff7b7b; /* Alert red highlight vector sign out icon */
+}
+
+.sidebar-logout-btn:hover {
+    background-color: rgba(255, 123, 123, 0.05);
+    color: #ff7b7b;
+}
+
+/* -------------------------------------------------------------
+   RIGHT MAIN PANEL WORKSPACE VIEWPORT
+   ------------------------------------------------------------- */
+.dashboard-main-canvas {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #070308;
+}
+
+/* Global Top Bar Action Header Row System */
+.dashboard-global-header {
+    background-color: #0c0710;
+    border-bottom: 1px solid rgba(255, 178, 148, 0.04);
+    padding: 1.5rem 2rem; /* Safety layout boundaries */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header-greeting-wrapper h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    margin-bottom: 0.25rem;
+}
+
+.session-user-firstname {
+    color: #ffb294; /* Highlights Calculated prefix nickname string */
+    text-transform: capitalize;
+}
+
+.header-subtext-date {
+    font-size: 0.85rem;
+    color: #b5a4ba;
+    font-weight: 500;
+}
+
+/* Utility Tray (Bell and Profile Avatar) */
+.header-utilities-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.utility-bell-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #b5a4ba;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.utility-bell-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.notification-ping-dot {
+    position: absolute;
+    top: 10px;
+    right: 11px;
+    width: 7px;
+    height: 7px;
+    background-color: #ffb294; /* Active alert ping dot */
+    border-radius: 50%;
+    box-shadow: 0 0 6px #ffb294;
+}
+
+.utility-bell-btn:hover {
+    color: #ffb294;
+    border-color: rgba(255, 178, 148, 0.3);
+    box-shadow: 0 0 12px rgba(255, 178, 148, 0.15);
+}
+
+.utility-user-profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.utility-user-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hamburger view control triggers */
+.hamburger-menu-toggle-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    z-index: 200;
+}
+
+.hamburger-bar-line {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dynamic Content Section Architecture Frames Wrapper */
+.workspace-dynamic-viewport {
+    padding: 2.5rem 2rem;
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.workspace-section-view {
+    display: none;
+    animation: viewportFadeIn 0.4s ease-out forwards;
+}
+
+.workspace-section-view.active-view {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+@keyframes viewportFadeIn {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.section-title-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffb294;
+    background-color: rgba(255, 178, 148, 0.05);
+    border: 1px dashed rgba(255, 178, 148, 0.2);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    letter-spacing: 0.04em;
+    width: 100%;
+    text-align: left;
+}
+
+/* Sample Metrics Displays Row */
+.placeholder-metric-row-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.metric-mini-card {
+    background-color: rgba(33, 20, 37, 0.4);
+    border: 1px solid rgba(255, 178, 148, 0.05);
+    border-radius: 14px;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.metric-mini-card h5 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.metric-mini-card p {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------
+   COMPREHENSIVE RESPONSIVE FLUID MEDIA ADAPTATIONS MATRIX
+   ------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .dashboard-shell-container {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-sidebar-console {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 25px 0 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .dashboard-sidebar-console.open {
+        transform: translateX(0);
+    }
+
+    .hamburger-menu-toggle-btn {
+        display: flex;
+    }
+
+    .hamburger-menu-toggle-btn.open .hamburger-bar-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-menu-toggle-btn.open .hamburger-bar-line:nth-child(2) { opacity: 0; }
+    .hamburger-menu-toggle-btn.open .hamburger-bar-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .placeholder-metric-row-cards {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-global-header { padding: 1.25rem 20px; gap: 1rem; } /* Strict 20px margins */
+    .workspace-dynamic-viewport { padding: 2rem 20px; }
+    .header-greeting-wrapper h2 { font-size: 1.3rem; }
+    .header-subtext-date { font-size: 0.78rem; }
+    .header-utilities-row { gap: 1rem; }
+}
+
+   </style>
+
+   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    
+    // -------------------------------------------------------------
+    // 1. DYNAMIC SESSION EMAIL PREFIX NICKNAME CALCULATOR
+    // -------------------------------------------------------------
+    const sessionEmailCredential = localStorage.getItem("stackly_active_username");
+    const headerDisplayContainer = document.getElementById("headerUsernameDisplay");
+
+    if (headerDisplayContainer) {
+        if (sessionEmailCredential && sessionEmailCredential.includes("@")) {
+            // Split prefix out (e.g. extracts string "jeevi" from "jeevi@gmail.com")
+            const derivedFirstNameToken = sessionEmailCredential.split("@")[0];
+            headerDisplayContainer.textContent = derivedFirstNameToken;
+        } else {
+            headerDisplayContainer.textContent = "Attendee";
+        }
+    }
+
+    // -------------------------------------------------------------
+    // 2. DASHBOARD VIEWPORT REFRESH LOGIC ACTION
+    // -------------------------------------------------------------
+    const refreshTriggerLink = document.getElementById("dashboardRefreshTrigger");
+    
+    if (refreshTriggerLink) {
+        refreshTriggerLink.addEventListener("click", (e) => {
+            e.preventDefault(); 
+            window.location.reload(); // Re-loads current active workspace window node context cleanly
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. RESPONSIVE HAMBURGER VIEW DRAWER CONTROLS
+    // -------------------------------------------------------------
+    const hamburgerMenuToggle = document.getElementById("hamburgerMenuToggle");
+    const sidebarConsole = document.getElementById("sidebarConsole");
+
+    if (hamburgerMenuToggle && sidebarConsole) {
+        hamburgerMenuToggle.addEventListener("click", (e) => {
+            e.stopPropagation(); 
+            hamburgerMenuToggle.classList.toggle("open");
+            sidebarConsole.classList.toggle("open");
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!sidebarConsole.contains(e.target) && !hamburgerMenuToggle.contains(e.target)) {
+                hamburgerMenuToggle.classList.remove("open");
+                sidebarConsole.classList.remove("open");
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 4. SECTION-WISE SECTION ROUTER SWITCHER PANEL
+    // -------------------------------------------------------------
+    const navigationMenuItems = document.querySelectorAll(".nav-segment-item");
+    const viewportSectionViews = document.querySelectorAll(".workspace-section-view");
+
+    navigationMenuItems.forEach(menuItem => {
+        menuItem.addEventListener("click", () => {
+            document.querySelector(".nav-segment-item.active")?.classList.remove("active");
+            menuItem.classList.add("active");
+
+            const targetSectionId = menuItem.getAttribute("data-target-section");
+            const structuralTargetSectionNode = document.getElementById(`section-${targetSectionId}`);
+
+            if (structuralTargetSectionNode) {
+                document.querySelector(".workspace-section-view.active-view")?.classList.remove("active-view");
+                structuralTargetSectionNode.classList.add("active-view");
+            }
+
+            if (window.innerWidth <= 992 && sidebarConsole.classList.contains("open")) {
+                hamburgerMenuToggle.classList.remove("open");
+                sidebarConsole.classList.remove("open");
+            }
+        });
+    });
+
+    // -------------------------------------------------------------
+    // 5. TERMINAL LOGOUT ACTION INTERCEPT ROUTER
+    // -------------------------------------------------------------
+    const logoutActionTrigger = document.getElementById("logoutActionTrigger");
+
+    if (logoutActionTrigger) {
+        logoutActionTrigger.addEventListener("click", () => {
+            localStorage.removeItem("stackly_active_username");
+            window.location.href = "login.html"; // Routes back to login terminal
+        });
+    }
+});
+
+   </script>
+</body>
+</html>

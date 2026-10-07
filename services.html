@@ -1,0 +1,3220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Event Experience</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Vector Icons Background -->
+    <div class="floating-icons-container">
+        <svg class="float-icon icon-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        <svg class="float-icon icon-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <svg class="float-icon icon-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <svg class="float-icon icon-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <svg class="float-icon icon-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+
+    <!-- Preloader Overlay View -->
+    <div class="preloader-overlay" id="preloaderOverlay">
+        <div class="loader-content">
+            <div class="brand-wrapper">
+                <div class="brand-logo-loader">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFB294" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h1 class="brand-name-loader">Stackly</h1>
+            </div>
+            <p class="loading-status">Preparing the conference experience...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="percentage" id="percentageText">0%</div>
+        </div>
+    </div>
+
+    <!-- Main Workspace (Hidden Initially, Revealed Post-Load) -->
+    <div class="app-workspace" id="appWorkspace">
+        <!-- Floating Transparent Header -->
+        <header class="main-header">
+            <div class="header-inner">
+                <!-- Brand Logo (Img tag references the page loop) -->
+                <a href="#" class="logo-link" onclick="window.location.reload(); return false;">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="brand-img">
+                    <span class="brand-logo-text">Stackly</span>
+                </a>
+
+                <!-- Responsive Navigation Drawer -->
+                <nav class="nav-menu-container" id="navMenuContainer">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-item ">Home</a></li>
+                        <li><a href="About.html" class="nav-item ">About Us</a></li>
+                        <li><a href="services.html" class="nav-item active">Services</a></li>
+                        <li><a href="blogs.html" class="nav-item">Blogs</a></li>
+                        <li><a href="contact.html" class="nav-item">Contact Us</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Auth Action Workspace -->
+                <div class="auth-wrapper">
+                    <button class="auth-btn">Register Pass</button>
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation Menu">
+                        <span class="bar bar-top"></span>
+                        <span class="bar bar-mid"></span>
+                        <span class="bar bar-bot"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        
+       
+   
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =========================================================
+    // 0. PRELOADER SCROLL LOCK
+    // =========================================================
+    // Prevent scrolling while the preloader is visible
+    document.body.classList.add("preloader-active");
+
+
+    // =========================================================
+    // 1. DOM Elements Mapping
+    // =========================================================
+    const progressFill = document.getElementById("progressFill");
+    const percentageText = document.getElementById("percentageText");
+    const preloaderOverlay = document.getElementById("preloaderOverlay");
+    const appWorkspace = document.getElementById("appWorkspace");
+
+
+    // =========================================================
+    // 2. Timeline Variables (2 Seconds)
+    // =========================================================
+    const duration = 2000;
+    const intervalTime = 20;
+    const totalSteps = duration / intervalTime;
+    let currentStep = 0;
+
+
+    // =========================================================
+    // 3. Preloader Progress Loop Execution
+    // =========================================================
+    const loadingInterval = setInterval(() => {
+
+        currentStep++;
+
+        const progress = Math.min(
+            (currentStep / totalSteps) * 100,
+            100
+        );
+
+
+        // Update progress bar
+        if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+        }
+
+
+        // Update percentage
+        if (percentageText) {
+            percentageText.textContent = `${Math.floor(progress)}%`;
+        }
+
+
+        // =====================================================
+        // Loading Complete
+        // =====================================================
+        if (currentStep >= totalSteps) {
+
+            clearInterval(loadingInterval);
+
+
+            // Small delay before starting exit animation
+            setTimeout(() => {
+
+                // Fade and slightly scale the preloader
+                if (preloaderOverlay) {
+
+                    preloaderOverlay.style.opacity = "0";
+                    preloaderOverlay.style.transform = "scale(1.03)";
+                }
+
+
+                // Wait for fade animation to complete
+                setTimeout(() => {
+
+                    // Remove preloader from display
+                    if (preloaderOverlay) {
+                        preloaderOverlay.style.display = "none";
+                    }
+
+
+                    // =================================================
+                    // ENABLE PAGE SCROLLING
+                    // =================================================
+                    document.body.classList.remove("preloader-active");
+                    document.body.classList.add("preloader-finished");
+
+
+                    // =================================================
+                    // REVEAL MAIN WORKSPACE
+                    // =================================================
+                    if (appWorkspace) {
+
+                        appWorkspace.style.opacity = "1";
+
+                        // Trigger feature card reveal animation
+                        initializeHeroFeatures();
+                    }
+
+                }, 500);
+
+            }, 150);
+        }
+
+    }, intervalTime);
+
+
+    // =========================================================
+    // 4. Staggered Feature Entry Sequence
+    // =========================================================
+    function initializeHeroFeatures() {
+
+        const cards = document.querySelectorAll(".feature-card");
+
+
+        cards.forEach((card, index) => {
+
+            setTimeout(() => {
+
+                card.classList.add("reveal");
+
+            }, (index + 1) * 200);
+
+        });
+    }
+
+
+    // =========================================================
+    // 5. Navigation Menu Active & Mobile Toggle Logic
+    // =========================================================
+    const navItems = document.querySelectorAll(".nav-item");
+    const hamburgerToggle = document.getElementById("hamburgerToggle");
+    const navMenuContainer = document.getElementById("navMenuContainer");
+
+
+    // =========================================================
+    // Navigation Item Click
+    // =========================================================
+    navItems.forEach(item => {
+
+        item.addEventListener("click", (e) => {
+
+            // Remove active state from current item
+            document
+                .querySelector(".nav-item.active")
+                ?.classList.remove("active");
+
+
+            // Add active state to clicked item
+            e.currentTarget.classList.add("active");
+
+
+            // Close mobile navigation
+            if (hamburgerToggle && navMenuContainer) {
+
+                hamburgerToggle.classList.remove("open");
+                navMenuContainer.classList.remove("open");
+            }
+
+        });
+
+    });
+
+
+    // =========================================================
+    // 6. Mobile Hamburger Toggle
+    // =========================================================
+    if (hamburgerToggle && navMenuContainer) {
+
+        hamburgerToggle.addEventListener("click", () => {
+
+            hamburgerToggle.classList.toggle("open");
+            navMenuContainer.classList.toggle("open");
+
+        });
+
+    }
+
+});
+    </script>
+
+<section class="services-hero-section">
+    <div class="services-hero-container">
+        
+        <!-- Left Column: Architectural Narrative Workspaces -->
+        <div class="services-hero-content">
+            <span class="services-hero-badge">OUR CAPABILITIES</span>
+            
+            <!-- Title Words Appear Word-by-Word on Scroll -->
+            <h1 class="services-hero-title" id="servicesHeroTitle">Comprehensive Architectural Framework Systems</h1>
+            
+            <!-- Description Paragraphs Slide in from the Sides with Text-Glow Hover -->
+            <div class="services-hero-paragraphs">
+                <p class="services-hero-para slide-from-left">
+                    We engineer the professional infrastructure required to transform static events into active developer workspaces. Our comprehensive ecosystem provides modular tools, deep interaction pipelines, and localized sandboxes that let enterprise teams build web frameworks safely.
+                </p>
+                <p class="services-hero-para slide-from-right">
+                    From managing thousands of streaming concurrent video Hydration tracks to hosting physical diagnostic lab hackathons, our services ensure accessibility, high fidelity, and zero-latency technical exchanges.
+                </p>
+            </div>
+
+            <!-- CTA Buttons Rise from the Bottom -->
+            <div class="services-hero-cta" id="servicesHeroCta">
+                <a href="#packages" class="services-hero-btn btn-peach-filled">Explore Packages</a>
+                <a href="404.html" class="services-hero-btn btn-trans-outlined">Custom Request</a>
+            </div>
+        </div>
+
+        <!-- Right Column: Visual Frame Geometry Showcase -->
+        <div class="services-hero-visual" id="servicesVisualFrame">
+            <div class="services-hero-glow-blob"></div>
+            <div class="services-image-frame-box">
+                <img src="https://unsplash.com" alt="Stackly software development workspace systems analysis operations">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Layout Section Settings */
+.services-hero-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 150px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.services-hero-container {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Content Column Configuration */
+.services-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.services-hero-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Signature Vivid Peach Accent */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Header Reveal Structure */
+.services-hero-title {
+    font-size: 3.4rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    overflow: hidden;
+}
+
+.services-hero-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-hero-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Side Sliding Paragraph Layout Formats */
+.services-hero-paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.services-hero-para {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #b5a4ba;
+    max-width: 560px;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Initial Directional Vectors for Text Rows */
+.services-hero-para.slide-from-left { transform: translateX(-60px); }
+.services-hero-para.slide-from-right { transform: translateX(60px); }
+
+.services-hero-para.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Interactive Text Glow Hover Effect to Paragraphs */
+.services-hero-para:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+/* Bottom Rising Action CTA Button Groups */
+.services-hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-hero-cta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.services-hero-btn {
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-peach-filled {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 6px 20px rgba(255, 178, 148, 0.15);
+}
+
+.btn-peach-filled:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-trans-outlined {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-trans-outlined:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Right Column: Visual Frame Geometry Layout */
+.services-hero-visual {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 1s ease-out, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-hero-visual.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.services-hero-glow-blob {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.services-image-frame-box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.12);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+    background: #150d17;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.services-image-frame-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Frame Hover Actions & Glowing Overlay Filters */
+.services-image-frame-box:hover {
+    transform: translateY(-4px);
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.3);
+}
+
+.services-image-frame-box:hover img {
+    transform: scale(1.03);
+}
+
+/* Comprehensive Responsive Systems Grid (Strict 20px Side Padding) */
+@media (max-width: 992px) {
+    .services-hero-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+    }
+    .services-hero-content { align-items: center; }
+    .services-hero-title { justify-content: center; font-size: 2.8rem; }
+    .services-hero-para { margin: 0 auto; }
+    .services-hero-cta { justify-content: center; }
+    .services-image-frame-box { max-width: 340px; aspect-ratio: 1 / 1; border-radius: 24px; } /* Adapts neatly to a square aspect grid on tablet viewports */
+}
+
+@media (max-width: 576px) {
+    .services-hero-section { padding: 40px 20px 20px 20px; }
+    .services-hero-title { font-size: 2.1rem; gap: 0 8px; }
+    .services-image-frame-box { max-width: 280px; }
+    .services-hero-cta { width: 100%; flex-direction: column; gap: 0.8rem; }
+    .services-hero-btn { text-align: center; width: 100%; }
+    /* Reconvert side sliders to vertical animations to handle mobile spacing flow neatly */
+    .services-hero-para.slide-from-left, 
+    .services-hero-para.slide-from-right { transform: translateY(30px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Segments headline string into discrete animatable word tokens
+    const heroTitleBlock = document.getElementById("servicesHeroTitle");
+    if (heroTitleBlock) {
+        const words = heroTitleBlock.textContent.split(" ");
+        heroTitleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            heroTitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture component element instances
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitWordsSpans = document.querySelectorAll(".services-hero-title span");
+    const narrativeParagraphs = document.querySelectorAll(".services-hero-para");
+    const actionsCtaBlock = document.getElementById("servicesHeroCta");
+    const visualSideBox = document.getElementById("servicesVisualFrame");
+
+    function executeServicesScrollObserver() {
+        const structuralTriggerPointLine = window.innerHeight * 0.92;
+
+        // Word-by-word title expand reveal sequence trigger
+        splitWordsSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Parallel horizontal slide animation reveal triggers for paragraph blocks
+        narrativeParagraphs.forEach((para, index) => {
+            const rect = para.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine) {
+                setTimeout(() => {
+                    para.classList.add("animate-in");
+                }, 150 * (index + 1));
+            }
+        });
+
+        // Bottom vertical rise action buttons trigger reveal execution
+        if (actionsCtaBlock) {
+            const rect = actionsCtaBlock.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    actionsCtaBlock.classList.add("animate-in");
+                }, 450);
+            }
+        }
+
+        // Graphic squircle showcase card reveal trigger pass
+        if (visualSideBox) {
+            const rect = visualSideBox.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    visualSideBox.classList.add("animate-in");
+                }, 200);
+            }
+        }
+    }
+
+    // Bind scroll execution tracking loops across both container channels
+    scrollContainerHost.addEventListener("scroll", executeServicesScrollObserver);
+    window.addEventListener("scroll", executeServicesScrollObserver);
+    
+    // Safety check execution pass to force trigger checks on mount instantly
+    setTimeout(executeServicesScrollObserver, 400);
+});
+
+</script>
+
+
+
+<section class="services-matrix-section">
+    <!-- Word-by-Word Scroll Triggered Section Header -->
+    <h2 class="services-matrix-title" id="servicesGridTitle">Our Premium Event Capabilities</h2>
+
+    <!-- Asymmetric Creative Grid Matrix System -->
+    <div class="services-mosaic-grid">
+        
+        <!-- Service Block 1 -->
+        <div class="service-mosaic-card reveal-card">
+            <div class="mosaic-image-wrapper">
+                <img src="https://unsplash.com" alt="Immersive Stage Setup & Lighting">
+                <div class="mosaic-card-badge">STAGE ARCHITECTURE</div>
+            </div>
+            <div class="mosaic-info-wrapper">
+                <h3>Immersive Keynote Arenas</h3>
+                <p>We craft high-fidelity physical stage formats featuring custom micro-interactions, panoramic projection systems, and responsive atmospheric neon framework setups.</p>
+                <a href="404.html" class="mosaic-action-link">Explore Package &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Service Block 2 -->
+        <div class="service-mosaic-card reveal-card">
+            <div class="mosaic-image-wrapper">
+                <img src="https://unsplash.com" alt="Technical Workshop Labs">
+                <div class="mosaic-card-badge">PRODUCTION RUNTIMES</div>
+            </div>
+            <div class="mosaic-info-wrapper">
+                <h3>Diagnostic Lab Workspaces</h3>
+                <p>Deploy localized high-throughput hardware sandboxes, sub-millisecond hydration tests, and zero-trust isolated script execution clusters for real-time hackathons.</p>
+                <a href="404.html" class="mosaic-action-link">Explore Package &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Service Block 3 -->
+        <div class="service-mosaic-card reveal-card">
+            <div class="mosaic-image-wrapper">
+                <img src="https://unsplash.com" alt="Global Network Event Arena">
+                <div class="mosaic-card-badge">B2B ENGAGEMENT</div>
+            </div>
+            <div class="mosaic-info-wrapper">
+                <h3>Elite Networking Arenas</h3>
+                <p>Construct structured interaction pipelines, round-table engineering hubs, and collaborative spaces designed to securely connect 5,000+ software architects.</p>
+                <a href="404.html" class="mosaic-action-link">Explore Package &rarr;</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.services-matrix-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+/* Word-by-Word Header Reveal Formatting */
+.services-matrix-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 12px;
+}
+
+.services-matrix-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-matrix-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Asymmetric Creative Mosaic Layout Grid Mapping */
+.services-mosaic-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Custom width remapping for an elegant, creative asymmetric flow */
+.services-mosaic-grid .service-mosaic-card:nth-child(1) { grid-column: span 4; }
+.services-mosaic-grid .service-mosaic-card:nth-child(2) { grid-column: span 4; }
+.services-mosaic-grid .service-mosaic-card:nth-child(3) { grid-column: span 4; }
+
+/* Structural Card Blueprint Definitions */
+.service-mosaic-card {
+    background: rgba(33, 20, 37, 0.5); /* Deep translucent plum fill base */
+    border: 1.5px solid rgba(255, 178, 148, 0.04); /* Soft Peach outline boundary border */
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    
+    /* Scroll Trigger Initializations: Loaded sequentially one-by-one */
+    opacity: 0;
+    transform: translateY(35px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.service-mosaic-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Overlapping Geometric Image Wrapper Layout */
+.mosaic-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    overflow: hidden;
+    background: #150d18;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.mosaic-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.7) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+/* Glassmorphic Content Badges */
+.mosaic-card-badge {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    background: rgba(33, 20, 37, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    color: #ffb294; /* Peach Accent Token */
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    letter-spacing: 0.06em;
+    z-index: 3;
+}
+
+/* Content Text Blocks Configuration */
+.mosaic-info-wrapper {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.mosaic-info-wrapper h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+}
+
+.mosaic-info-wrapper p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+/* Action CTA Routing Links */
+.mosaic-action-link {
+    text-decoration: none;
+    align-self: flex-start;
+    color: #ffb294;
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover Actions & High-Fidelity Glow Filters requested */
+.service-mosaic-card:hover {
+    border-color: #ffb294;
+    background: rgba(49, 24, 54, 0.7);
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px);
+}
+
+.service-mosaic-card:hover .mosaic-image-wrapper img {
+    transform: scale(1.04);
+    filter: brightness(0.85) contrast(1.02);
+}
+
+.service-mosaic-card:hover .mosaic-info-wrapper h3 {
+    color: #ffb294;
+}
+
+.service-mosaic-card:hover .mosaic-info-wrapper p {
+    color: #ffffff;
+}
+
+.service-mosaic-card:hover .mosaic-action-link {
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+/* Fluid Layout Responsive Adaptations (Preserving 20px side margins) */
+@media (max-width: 1024px) {
+    .services-mosaic-grid .service-mosaic-card:nth-child(1),
+    .services-mosaic-grid .service-mosaic-card:nth-child(2) { grid-column: span 6; }
+    .services-mosaic-grid .service-mosaic-card:nth-child(3) { grid-column: span 12; } /* Spans full bottom row elegantly on medium screens */
+}
+
+@media (max-width: 680px) {
+    .services-matrix-section { padding: 40px 20px 20px 20px; }
+    .services-mosaic-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .services-matrix-title { font-size: 2rem; margin-bottom: 2.5rem; }
+    .mosaic-info-wrapper { padding: 1.5rem; }
+    .mosaic-info-wrapper h3 { font-size: 1.2rem; }
+    .mosaic-info-wrapper p { font-size: 0.9rem; margin-bottom: 1.25rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header string array into animatable words on scroll
+    const headerTitleBlock = document.getElementById("servicesGridTitle");
+    if (headerTitleBlock) {
+        const words = headerTitleBlock.textContent.split(" ");
+        headerTitleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            headerTitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture localized page scrolling frame layouts
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitTitleWords = document.querySelectorAll(".services-matrix-title span");
+    const mosaicCardsList = document.querySelectorAll(".service-mosaic-card");
+
+    function executeServicesGridScrollObserver() {
+        const triggerBoundsLine = window.innerHeight * 0.92;
+
+        // Word-by-word section title reveal loop
+        splitTitleWords.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Mosaic layouts cards fade in one-by-one sequentially on scroll trigger
+        mosaicCardsList.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 140); // 140ms sequential stride gaps
+            }
+        });
+    }
+
+    // Attach tracking observers to scrolling paths
+    scrollContainerHost.addEventListener("scroll", executeServicesGridScrollObserver);
+    window.addEventListener("scroll", executeServicesGridScrollObserver);
+    
+    // Safety check initialization execution pass
+    setTimeout(executeServicesGridScrollObserver, 400);
+});
+
+</script>
+
+<section class="openmic-section">
+    <div class="openmic-container">
+        
+        <!-- Left Column: Portrait Showcase with Tech Speaker Profile Labeling -->
+        <div class="openmic-visual-side">
+            <div class="portrait-card-wrapper">
+                <img src="https://unsplash.com" alt="Tech Conference Keynote Speaker">
+                
+                <!-- Floating Info Card matching the layout bottom labeling -->
+                <div class="portrait-profile-meta">
+                    <h4 class="profile-name">David Vance</h4>
+                    <p class="profile-details">San Francisco – Principal Systems Architect</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Context Narratives & Domain-Specific Content -->
+        <div class="openmic-content-side">
+            <span class="openmic-tagline">OPEN MIC / CALL FOR SPEAKERS</span>
+            
+            <!-- Title Words Appear Word-by-Word on Scroll -->
+            <h2 class="openmic-title" id="openmicTitle">Want to be a stackly speaker?</h2>
+            
+            <!-- Paragraph Elements Slide In From the Sides -->
+            <div class="openmic-paragraphs-group">
+                <p class="openmic-para slide-from-left">
+                    Submitting talk proposals online according to session track availability. When the keynote slots fill out you can apply for lightning mic panels. Reviewing structural abstracts online according to compliance criteria.
+                </p>
+                <p class="openmic-para slide-from-right">
+                    When the workshop tracks run out you can claim a sandbox demo booth slot instead to display your open-web framework.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.openmic-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.openmic-container {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Column: Portrait Showcase Architecture */
+.openmic-visual-side {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portrait-card-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 16 / 10; /* Clean widescreen landscape geometry matching reference image proportions */
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    background: #140816;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.portrait-card-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.65) grayscale(0.3); /* Replicates the low-key contrast filter mood from reference */
+    transition: transform 0.6s ease, filter 0.4s ease;
+}
+
+/* Bottom Label Elements matching portrait typography layout */
+.portrait-profile-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(12, 7, 16, 0.95) 0%, rgba(12, 7, 16, 0) 100%);
+    text-align: left;
+    z-index: 3;
+}
+
+.profile-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.2rem;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+.profile-details {
+    font-size: 0.85rem;
+    color: #b5a4ba;
+    font-weight: 500;
+}
+
+/* Portrait Card Active Hover Glow Actions */
+.portrait-card-wrapper:hover {
+    transform: translateY(-4px);
+    border-color: #ffb294; /* Vivid Peach focus framework accent */
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.25);
+}
+
+.portrait-card-wrapper:hover img {
+    transform: scale(1.02);
+    filter: brightness(0.85) grayscale(0);
+}
+
+.portrait-card-wrapper:hover .profile-name {
+    color: #ffb294;
+}
+
+/* Right Content Column Configuration */
+.openmic-content-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.openmic-tagline {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffb294;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+}
+
+/* Word-by-Word Title Reveal Structure */
+.openmic-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    text-transform: uppercase; /* Capitalized header format matching reference screenshot rules */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.openmic-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.openmic-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Side Sliding Paragraph Layout Frames */
+.openmic-paragraphs-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.openmic-para {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #b5a4ba;
+    max-width: 580px;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Initial Directional States for Text Rows */
+.openmic-para.slide-from-left { transform: translateX(-60px); }
+.openmic-para.slide-from-right { transform: translateX(60px); }
+
+.openmic-para.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Interactive Text Glow Hover Effect to Paragraphs */
+.openmic-para:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+/* Fluid Layout Responsive Matrix (Strict 20px margins preserved) */
+@media (max-width: 992px) {
+    .openmic-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+    }
+    .openmic-visual-side { order: 2; }
+    .openmic-content-side { order: 1; align-items: center; }
+    .openmic-title { justify-content: center; font-size: 2.2rem; }
+    .portrait-card-wrapper { max-width: 380px; }
+    .portrait-profile-meta { text-align: center; }
+}
+
+@media (max-width: 576px) {
+    .openmic-section { padding: 40px 20px 20px 20px; }
+    .openmic-title { font-size: 1.8rem; gap: 0 8px; }
+    .portrait-card-wrapper { max-width: 290px; }
+    .openmic-para { font-size: 0.95rem; }
+    .openmic-para.slide-from-left, 
+    .openmic-para.slide-from-right { transform: translateY(30px); } /* Safe vertical arrival swap for mobile stacks */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Segments headline string into discrete animatable word tokens
+    const openmicTitle = document.getElementById("openmicTitle");
+    if (openmicTitle) {
+        const words = openmicTitle.textContent.split(" ");
+        openmicTitle.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            openmicTitle.appendChild(span);
+        });
+    }
+
+    // Capture localized page scrolling frame layouts
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitTitleWords = document.querySelectorAll(".openmic-title span");
+    const narrativeParagraphs = document.querySelectorAll(".openmic-para");
+
+    function executeOpenMicScrollObserver() {
+        const triggerBoundsLine = window.innerHeight * 0.92;
+
+        // Word-by-word title reveal sequence trigger
+        splitTitleWords.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Parallel horizontal slide animation reveal triggers for paragraphs
+        narrativeParagraphs.forEach((para, index) => {
+            const rect = para.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    para.classList.add("animate-in");
+                }, 150 * (index + 1));
+            }
+        });
+    }
+
+    // Attach tracking observers to scrolling layout channels
+    scrollContainerHost.addEventListener("scroll", executeOpenMicScrollObserver);
+    window.addEventListener("scroll", executeOpenMicScrollObserver);
+    
+    // Safety check verification pass to force trigger checks on mount instantly
+    setTimeout(executeOpenMicScrollObserver, 400);
+});
+
+</script>
+
+<section class="about-cta-banner-fullwidth">
+    <!-- Moving Abstract Geometric Tech Backdrop -->
+    <div class="banner-mesh-backdrop"></div>
+
+    <div class="banner-alignment-container">
+        <!-- Left Side: 2 Lines of Content Narrative -->
+        <div class="banner-narrative-block">
+            <!-- Line 1: Word-by-Word Scroll Revealed Title -->
+            <h2 class="banner-title" id="bannerCtaTitle">Ready to Architecture the Future?</h2>
+            
+            <!-- Line 2: Word-by-Word Scroll Revealed Description Subtitle -->
+            <p class="banner-subtitle" id="bannerCtaSubtitle">Claim your enterprise access badge today and join 5,000+ software creators.</p>
+        </div>
+
+        <!-- Right Side: Dual Actions Sliding from the Sides -->
+        <div class="banner-actions-block" id="bannerActionsBlock">
+            <a href="404.html" class="banner-btn btn-slide-left">Get Tickets</a>
+            <a href="404.html" class="banner-btn btn-slide-right">View Schedule</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Breakout Banner Wrapper */
+.about-cta-banner-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with 2rem side edge safety clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #170d1a 0%, #311836 50%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+}
+
+/* Background Highlight Radial Canvas Layer */
+.banner-mesh-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 80% 50%, rgba(255, 178, 148, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Internal Inner Content Alignment Shield */
+.banner-alignment-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Narrative Block (2 Lines) Layout */
+.banner-narrative-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+/* Line 1: Word-by-Word Title Wrapper Styles */
+.banner-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+/* Line 2: Word-by-Word Subtitle Wrapper Styles */
+.banner-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+/* Universal Text Word Reveal Animation Configurations */
+.banner-title span,
+.banner-subtitle span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.banner-title span {
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.banner-title span.reveal,
+.banner-subtitle span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover Content Glow Effect */
+.banner-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.35);
+}
+
+.banner-subtitle:hover {
+    color: #ffffff;
+}
+
+/* Right Side Actions Layout Structure */
+.banner-actions-block {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.banner-btn {
+    text-decoration: none;
+    padding: 0.85rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 50px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* CTA Buttons Slide-In Direction Frames */
+.banner-btn.btn-slide-left { transform: translateX(-50px); background: #ffb294; color: #211425; }
+.banner-btn.btn-slide-right { transform: translateX(50px); background: transparent; color: #ffffff; border: 1.5px solid rgba(255, 255, 255, 0.2); }
+
+/* Animation Ready Revelations */
+.banner-actions-block.animate-in .banner-btn {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* CTA Button Active Hover Enhancements */
+.btn-slide-left:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-slide-right:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Responsive Scaling Breakpoints Matrix (Strict 20px side margin preservation) */
+@media (max-width: 992px) {
+    .banner-alignment-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+    .banner-narrative-block { align-items: center; }
+    .banner-title, .banner-subtitle { justify-content: center; }
+    .banner-actions-block { justify-content: center; }
+    .banner-title { font-size: 2.1rem; }
+}
+
+@media (max-width: 576px) {
+    .about-cta-banner-fullwidth { padding: 40px 20px 25px 20px; }
+    .banner-title { font-size: 1.8rem; }
+    .banner-subtitle { font-size: 0.95rem; }
+    .banner-actions-block { flex-direction: column; width: 100%; gap: 0.8rem; }
+    .banner-btn { text-align: center; width: 100%; }
+    /* Reconvert horizontal slider shifts to clean vertical transitions for mobile stacks */
+    .banner-btn.btn-slide-left, .banner-btn.btn-slide-right { transform: translateY(30px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Title Segmentation Engine (Word-by-word title processing)
+    const titleBlock = document.getElementById("bannerCtaTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // 2. Subtitle Segmentation Engine (Word-by-word paragraph processing)
+    const subtitleBlock = document.getElementById("bannerCtaSubtitle");
+    if (subtitleBlock) {
+        const words = subtitleBlock.textContent.split(" ");
+        subtitleBlock.textContent = ""; 
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            subtitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture localized scrolling shell tracking variables
+    const scrollContainer = document.querySelector(".content-body") || window;
+    
+    const bannerTitleSpans = document.querySelectorAll(".banner-title span");
+    const bannerSubtitleSpans = document.querySelectorAll(".banner-subtitle span");
+    const actionsWrapper = document.getElementById("bannerActionsBlock");
+
+    function executeBannerCtaScrollObserver() {
+        const triggerPointHeight = window.innerHeight * 0.92;
+
+        // Line 1: Word-by-word headline reveal trigger
+        bannerTitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerPointHeight) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 90);
+            }
+        });
+
+        // Line 2: Word-by-word subtitle description reveal trigger
+        bannerSubtitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerPointHeight) {
+                // Add initial operational latency offset delay so subtitle waits for title to commence mapping
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, (index * 60) + 300);
+            }
+        });
+
+        // Buttons side glide triggers
+        if (actionsWrapper) {
+            const rect = actionsWrapper.getBoundingClientRect();
+            // Force active visibility state if block rolls in view or layout spacing restricts tracking loops
+            if (rect.top < triggerPointHeight || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    actionsWrapper.classList.add("animate-in");
+                }, 400);
+            }
+        }
+    }
+
+    // Register handlers to scroll tracks
+    scrollContainer.addEventListener("scroll", executeBannerCtaScrollObserver);
+    window.addEventListener("scroll", executeBannerCtaScrollObserver);
+    
+    // Safety processing validation loop pass
+    setTimeout(executeBannerCtaScrollObserver, 400);
+});
+
+</script>
+
+
+<section class="curriculum-section">
+    <!-- Section Header Content Block -->
+    <div class="curriculum-header">
+        <!-- Word-by-Word Scroll Triggered Title -->
+        <h2 class="curriculum-main-title" id="curriculumTitle">The things you'll get to know from this event</h2>
+        <p class="curriculum-intro-text">Explore our advanced technical syllabus. Master modern micro-hydration benchmarks, edge runtime parameters, and zero-trust codebase isolation layers through immersive live labs.</p>
+    </div>
+
+    <!-- RE-ENGINEERED OVERLAPPING DECK MATRIX: Hovering pulls card to the front -->
+    <div class="curriculum-deck">
+        
+        <!-- Card 1: User Experience Solving -->
+        <div class="curriculum-card theme-card-pink active">
+            <div class="card-left-tab">
+                <div class="tab-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <h3 class="tab-title">User Flow Solving</h3>
+                <p class="tab-summary">Diagnosing application paint thresholds and hydration blocks.</p>
+            </div>
+            <div class="card-right-panel">
+                <h4 class="panel-headline">User Flow Solving Infrastructure</h4>
+                <p class="panel-desc">Learn how modern engineering teams parse browser interactions, prevent cumulative layout shifts, and compress asset streams to guarantee sub-millisecond execution times across compact viewports.</p>
+                <ul class="panel-bullet-grid">
+                    <li><span class="bullet-dot"></span>Performance Tuning</li>
+                    <li><span class="bullet-dot"></span>Layout Stability</li>
+                    <li><span class="bullet-dot"></span>Hydration Auditing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card 2: Digital Workspace Architecture -->
+        <div class="curriculum-card theme-card-yellow">
+            <div class="card-left-tab">
+                <div class="tab-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                </div>
+                <h3 class="tab-title">Digital Systems Design</h3>
+                <p class="tab-summary">Configuring clean open-source micro-frontend runtime models.</p>
+            </div>
+            <div class="card-right-panel">
+                <h4 class="panel-headline">Digital Systems Design Architecture</h4>
+                <p class="panel-desc">Master the orchestration of decoupled workspace modules. Discover strategy parameters for shared dependency injections, version fallback hooks, and secure state management inside complex technical setups.</p>
+                <ul class="panel-bullet-grid">
+                    <li><span class="bullet-dot"></span>Modular Bundling</li>
+                    <li><span class="bullet-dot"></span>Dependency Control</li>
+                    <li><span class="bullet-dot"></span>State Preservation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card 3: Visual Interface Design -->
+        <div class="curriculum-card theme-card-blue">
+            <div class="card-left-tab">
+                <div class="tab-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                </div>
+                <h3 class="tab-title">Visual Interface Design</h3>
+                <p class="tab-summary">Constructing unified token networks and accessible design views.</p>
+            </div>
+            <div class="card-right-panel">
+                <h4 class="panel-headline">Visual Interface Design Frameworks</h4>
+                <p class="panel-desc">Deploy context-aware semantic layout tools to dynamically scale user components. Build flexible design token systems that preserve corporate color hierarchies and branding metrics flawlessly across all screens.</p>
+                <ul class="panel-bullet-grid">
+                    <li><span class="bullet-dot"></span>Token Orchestration</li>
+                    <li><span class="bullet-dot"></span>Adaptive Theming</li>
+                    <li><span class="bullet-dot"></span>Color Palette Logic</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.curriculum-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+/* Header Blocks Formatting */
+.curriculum-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 4.5rem;
+    max-width: 800px;
+}
+
+/* Word-by-Word Header Reveal Structure */
+.curriculum-main-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+}
+
+.curriculum-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.curriculum-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.curriculum-intro-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    transition: color 0.3s ease;
+}
+
+.curriculum-intro-text:hover {
+    color: #ffffff;
+}
+
+/* HIGH-FIDELITY OVERLAPPING DECK MATRIX FRAMEWORK */
+.curriculum-deck {
+    position: relative;
+    width: 100%;
+    height: 380px; /* Locks height to contain standard card footprints cleanly */
+    display: flex;
+}
+
+/* Individual Layered Card Blueprint Definitions */
+.curriculum-card {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 78%; /* Base card width leaves room for hidden tabs to peak out from behind */
+    border-radius: 24px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: -15px 10px 40px rgba(0, 0, 0, 0.4);
+    border: 1.5px solid rgba(255, 178, 148, 0.04);
+    background: #190f1d;
+    
+    /* Animation Hooks for shifting index positioning smoothly */
+    transition: left 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, z-index 0s linear;
+}
+
+/* Strict Layout Overlap Positioning Coordinates matching reference image stacks */
+.curriculum-card:nth-child(1) { left: 0%; z-index: 10; }
+.curriculum-card:nth-child(2) { left: 11%; z-index: 9; }
+.curriculum-card:nth-child(3) { left: 22%; z-index: 8; }
+
+/* Interactive Hover Trigger Logic: Pulls active card to the front and spreads the deck */
+.curriculum-card:hover {
+    z-index: 50 !important; /* Forces current hover target to snap above all siblings */
+    border-color: #ffb294; /* Peach Family Accent focus border */
+    box-shadow: 0 15px 45px rgba(255, 178, 148, 0.18), -15px 10px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(-4px);
+}
+
+/* Spreads overlapping cards out on deck hover so they reveal themselves fully */
+.curriculum-deck:hover .curriculum-card:nth-child(2) { left: 8%; }
+.curriculum-deck:hover .curriculum-card:nth-child(3) { left: 16%; }
+
+/* When a card is actively hovered, push its preceding and succeeding siblings back */
+.curriculum-card:hover ~ .curriculum-card {
+    transform: translateX(12%); /* Shifts posterior cards rightward */
+}
+
+/* Left Sidebar Tab (Always visible in the stack to peak out) */
+.card-left-tab {
+    width: 250px;
+    padding: 2.2rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    border-right: 1px solid rgba(255, 255, 255, 0.03);
+    flex-shrink: 0;
+    height: 100%;
+    justify-content: flex-start;
+}
+
+/* Custom Palette Adaptations remapped from your screenshot variables */
+.theme-card-pink .card-left-tab { background: linear-gradient(135deg, rgba(230, 92, 123, 0.15) 0%, rgba(33, 20, 37, 0.7) 100%); }
+.theme-card-yellow .card-left-tab { background: linear-gradient(135deg, rgba(255, 210, 100, 0.1) 0%, rgba(33, 20, 37, 0.7) 100%); }
+.theme-card-blue .card-left-tab { background: linear-gradient(135deg, rgba(0, 85, 255, 0.15) 0%, rgba(33, 20, 37, 0.7) 100%); }
+
+.tab-icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.theme-card-pink .tab-icon-box { background: #e65c7b; color: #ffffff; }
+.theme-card-yellow .tab-icon-box { background: #ffd264; color: #211425; }
+.theme-card-blue .tab-icon-box { background: #0055ff; color: #ffffff; }
+
+.tab-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+}
+
+.tab-summary {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #b5a4ba;
+}
+
+/* Right Content Panel Framework (Revealed fully when pulled to front) */
+.card-right-panel {
+    flex: 1;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    background: #130916; /* Solid dark background context to block overlapping text elements leaking */
+}
+
+.panel-headline {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+}
+
+.panel-desc {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    max-width: 580px;
+}
+
+/* Technical Bullet Grid Architecture */
+.panel-bullet-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 2.5rem;
+    list-style: none;
+}
+
+.panel-bullet-grid li {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: 0.02em;
+}
+
+.bullet-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ffb294; /* Glowing peach pointer dots matching screenshot ticks */
+    box-shadow: 0 0 6px #ffb294;
+    display: inline-block;
+}
+
+/* Hover Card Context Updates */
+.curriculum-card:hover .panel-headline {
+    color: #ffb294;
+}
+
+/* Robust Layout Responsive Adaptations (Strict 20px side margins) */
+@media (max-width: 992px) {
+    .curriculum-deck {
+        flex-direction: column;
+        height: auto; /* Drops absolute stacking to avoid column collapse variables on tablets */
+        gap: 1.5rem;
+    }
+    .curriculum-card {
+        position: relative;
+        width: 100% !important;
+        left: 0 !important;
+        transform: none !important;
+        height: auto;
+    }
+    .curriculum-header { align-items: center; text-align: center; margin-left: auto; margin-right: auto; }
+    .curriculum-main-title { justify-content: center; font-size: 2.2rem; }
+}
+
+@media (max-width: 680px) {
+    .curriculum-section { padding: 40px 20px 20px 20px; }
+    .curriculum-main-title { font-size: 1.8rem; }
+    .curriculum-card { flex-direction: column; border-radius: 16px; }
+    .card-left-tab { width: 100%; border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding: 1.5rem; }
+    .card-right-panel { padding: 1.5rem; }
+    .panel-headline { font-size: 1.3rem; }
+    .panel-desc { font-size: 0.9rem; margin-bottom: 1.25rem; }
+    .tab-icon-box { margin-bottom: 1rem; }
+    .panel-bullet-grid { flex-direction: column; gap: 0.6rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Segments header text into animatable words on scroll
+    const curriculumTitleBlock = document.getElementById("curriculumTitle");
+    if (curriculumTitleBlock) {
+        const words = curriculumTitleBlock.textContent.split(" ");
+        curriculumTitleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            curriculumTitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture scrolling container parameters
+    const scrollContainerPanel = document.querySelector(".content-body") || window;
+    const splitTitleWordsSpans = document.querySelectorAll(".curriculum-main-title span");
+
+    function executeCurriculumScrollObserver() {
+        const structuralTriggerHeight = window.innerHeight * 0.92;
+
+        // Header word-by-word staggered reveal loop execution
+        splitTitleWordsSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerHeight) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95); // 95ms chronological text steps
+            }
+        });
+    }
+
+    // Attach tracking observers to scroll channels
+    scrollContainerPanel.addEventListener("scroll", executeCurriculumScrollObserver);
+    window.addEventListener("scroll", executeCurriculumScrollObserver);
+    
+    // Safety check initialization pass
+    setTimeout(executeCurriculumScrollObserver, 400);
+});
+
+</script>
+
+<section class="mentors-section">
+    <!-- Word-by-Word Section Title (Reveals from all sides on scroll) -->
+    <h2 class="mentors-main-title" id="mentorsMainTitle">Meet Our Expert Track Mentors</h2>
+
+    <!-- Responsive 3-Column Profile Matrix matching your reference layout geometry -->
+    <div class="mentors-grid">
+        
+        <!-- Mentor Profile 1 -->
+        <div class="mentor-profile-card fly-left">
+            <div class="avatar-canvas-wrapper theme-avatar-blue">
+                <img src="https://unsplash.com" alt="Sarah Jenkins - Lead Web Architect">
+            </div>
+            <div class="mentor-meta-details">
+                <h3 class="mentor-name">Sarah Jenkins</h3>
+                <p class="mentor-role">Lead Web Architect</p>
+            </div>
+        </div>
+
+        <!-- Mentor Profile 2 -->
+        <div class="mentor-profile-card fly-top">
+            <div class="avatar-canvas-wrapper theme-avatar-mint">
+                <img src="https://unsplash.com" alt="Marcus Chen - DevOps Specialist">
+            </div>
+            <div class="mentor-meta-details">
+                <h3 class="mentor-name">Marcus Chen</h3>
+                <p class="mentor-role">Principal DevOps Engineer</p>
+            </div>
+        </div>
+
+        <!-- Mentor Profile 3 -->
+        <div class="mentor-profile-card fly-right">
+            <div class="avatar-canvas-wrapper theme-avatar-pink">
+                <img src="https://unsplash.com" alt="Elena Rostova - AI Researcher">
+            </div>
+            <div class="mentor-meta-details">
+                <h3 class="mentor-name">Elena Rostova</h3>
+                <p class="mentor-role">AI Research Specialist</p>
+            </div>
+        </div>
+
+        <!-- Mentor Profile 4 -->
+        <div class="mentor-profile-card fly-left">
+            <div class="avatar-canvas-wrapper theme-avatar-gold">
+                <img src="https://unsplash.com" alt="David Vance - Systems Engineer">
+            </div>
+            <div class="mentor-meta-details">
+                <h3 class="mentor-name">David Vance</h3>
+                <p class="mentor-role">Senior Systems Architect</p>
+            </div>
+        </div>
+
+        <!-- Mentor Profile 5 -->
+        <div class="mentor-profile-card fly-bottom">
+            <div class="avatar-canvas-wrapper theme-avatar-purple">
+                <img src="https://unsplash.com" alt="Albert Fin - UI Token Architect">
+            </div>
+            <div class="mentor-meta-details">
+                <h3 class="mentor-name">Albert Fin</h3>
+                <p class="mentor-role">Senior Design Token Engineer</p>
+            </div>
+        </div>
+
+        <!-- Mentor Profile 6 -->
+        <div class="mentor-profile-card fly-right">
+            <div class="avatar-canvas-wrapper theme-avatar-orange">
+                <img src="https://unsplash.com" alt="Robert Bale - Hydration Auditor">
+            </div>
+            <div class="mentor-meta-details">
+                <h3 class="mentor-name">Robert Bale</h3>
+                <p class="mentor-role">Core Hydration Auditor</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.mentors-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+/* Word-by-Word Header Reveal from Alternating Left/Right/Top/Bottom Sides */
+.mentors-main-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 14px;
+}
+
+.mentors-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Multi-Directional Initial Offsets for Header Text Mapping */
+.mentors-main-title span.fly-left   { transform: translateX(-60px); }
+.mentors-main-title span.fly-right  { transform: translateX(60px); }
+.mentors-main-title span.fly-top    { transform: translateY(-40px); }
+.mentors-main-title span.fly-bottom { transform: translateY(40px); }
+
+.mentors-main-title span.reveal {
+    opacity: 1;
+    transform: translate(0, 0);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 3-Column Profile Matrix Container Grid matching reference screenshot dimensions */
+.speakers-grid,
+.mentors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem 2.5rem;
+    width: 100%;
+}
+
+/* Profile Card Architecture Frame */
+.mentor-profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    
+    /* Scroll Trigger Initialization Hooks */
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Multi-Directional Card Fly-In Enclosures requested */
+.mentor-profile-card.fly-left   { transform: translateX(-80px); }
+.mentor-profile-card.fly-right  { transform: translateX(80px); }
+.mentor-profile-card.fly-top    { transform: translateY(-60px); }
+.mentor-profile-card.fly-bottom { transform: translateY(60px); }
+
+.mentor-profile-card.animate-in {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Square Graphic Canvas Box for Portrait Avatars matching reference image */
+.avatar-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Keeps block perfectly square */
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(255, 178, 148, 0.05);
+    box-shadow: -10px 12px 0px rgba(0, 0, 0, 0.25); /* Replicates the solid offset shadow profile seen in screenshot */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Isolated soft backing tones mapping to reference image styles */
+.theme-avatar-blue   { background-color: rgba(0, 85, 255, 0.15); }
+.theme-avatar-mint   { background-color: rgba(0, 255, 204, 0.12); }
+.theme-avatar-pink   { background-color: rgba(230, 92, 123, 0.15); }
+.theme-avatar-gold   { background-color: rgba(255, 210, 100, 0.12); }
+.theme-avatar-purple { background-color: rgba(144, 58, 255, 0.15); }
+.theme-avatar-orange { background-color: rgba(255, 130, 80, 0.12); }
+
+.avatar-canvas-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85) contrast(1.02);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Metadata Text Architecture appearing from bottom slots */
+.mentor-meta-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0.25rem;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s; /* Delayed secondary entry cascade rules */
+}
+
+.mentor-profile-card.animate-in .mentor-meta-details {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mentor-name {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.mentor-role {
+    font-size: 0.92rem;
+    color: #b5a4ba;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+/* Interactive Focus Hover, Card Scaling & High-Fidelity Glow Filters requested */
+.mentor-profile-card:hover .avatar-canvas-wrapper {
+    transform: scale(1.03) translateY(-4px);
+    border-color: #ffb294; /* Peach theme focal line overlay */
+    box-shadow: 0 0 30px rgba(255, 178, 148, 0.25);
+}
+
+.mentor-profile-card:hover .avatar-canvas-wrapper img {
+    transform: scale(1.04);
+}
+
+.mentor-profile-card:hover .mentor-name {
+    color: #ffb294;
+    text-shadow: 0 0 10px rgba(255, 178, 148, 0.3);
+}
+
+/* Fluid Layout Responsive Adaptations (Strict 20px margins) */
+@media (max-width: 992px) {
+    .speakers-grid,
+    .mentors-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 2rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .mentors-section { padding: 40px 20px 20px 20px; }
+    .speakers-grid,
+    .mentors-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        max-width: 340px;
+        margin: 0 auto;
+    }
+    .mentors-main-title { font-size: 2rem; gap: 0 8px; margin-bottom: 2.5rem; }
+    .mentor-name { font-size: 1.2rem; }
+    .mentor-role { font-size: 0.88rem; }
+    /* Normalize fly-in vectors to clean vertical transition paths for stacked mobile rows */
+    .mentor-profile-card.fly-left, 
+    .mentor-profile-card.fly-right, 
+    .mentor-profile-card.fly-top, 
+    .mentor-profile-card.fly-bottom { transform: translateY(30px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Segments headline into discrete word token spans multi-directionally
+    const mainTitleBlock = document.getElementById("mentorsMainTitle");
+    if (mainTitleBlock) {
+        const words = mainTitleBlock.textContent.split(" ");
+        mainTitleBlock.textContent = ""; 
+        
+        const directions = ["fly-left", "fly-top", "fly-right", "fly-bottom"];
+        
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            
+            // Staggers initial directional layout vector classes across all four sides
+            const chosenDirection = directions[index % directions.length];
+            span.classList.add(chosenDirection);
+            
+            mainTitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture template active scroll parameters
+    const scrollContainerHostFrame = document.querySelector(".content-body") || window;
+    
+    const titleWordSpansList = document.querySelectorAll(".about-title span, .mentors-main-title span");
+    const structuralProfileCards = document.querySelectorAll(".mentor-profile-card");
+
+    function executeMentorsScrollObserver() {
+        const triggerBoundsLineHeight = window.innerHeight * 0.92;
+
+        // Title character tokens reveal execution loops
+        titleWordSpansList.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBoundsLineHeight) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 90);
+            }
+        });
+
+        // Profile card frames sequential multi-directional stagger entry loop
+        structuralProfileCards.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < triggerBoundsLineHeight) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 120); // 120ms sequential stride gaps
+            }
+        });
+    }
+
+    // Attach tracking observers to scrolling layout channels
+    scrollContainerHostFrame.addEventListener("scroll", executeMentorsScrollObserver);
+    window.addEventListener("scroll", executeMentorsScrollObserver);
+    
+    // Safety check initialization execution pass
+    setTimeout(executeMetricsScrollObserver, 400);
+});
+
+</script>
+
+<section class="testimonial-section">
+    <!-- Scroll Triggered Section Header -->
+    <h2 class="testimonial-main-title" id="testimonialTitle">What Attendees Say</h2>
+
+    <!-- Asymmetric Creative Review Matrix Container -->
+    <div class="testimonial-grid">
+        
+        <!-- Review Capsule 1: Shifts up from Left -->
+        <div class="review-capsule shift-left">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Elena Rostova">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Elena Rostova</h3>
+                    <p class="reviewer-org">AI Systems Lead at Nexus</p>
+                </div>
+            </div>
+            
+            <!-- Glowing Ratings Bar -->
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "Stackly completely changed my view on technical keynotes. The multi-track environment loaded instantly, and being able to drop straight into interactive dev code sandboxes with speakers felt like the future."
+            </p>
+        </div>
+
+        <!-- Review Capsule 2: Shifts up from Center -->
+        <div class="review-capsule shift-center">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Marcus Chen">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Marcus Chen</h3>
+                    <p class="reviewer-org">Principal Infrastructure Engineer</p>
+                </div>
+            </div>
+            
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "The focus on production constraints and architectural scalability is what sets this network apart. I've walked away with active deployment fixes that solved three scaling bottlenecks this quarter."
+            </p>
+        </div>
+
+        <!-- Review Capsule 3: Shifts up from Right -->
+        <div class="review-capsule shift-right">
+            <div class="review-glow-layer"></div>
+            <div class="review-header">
+                <div class="reviewer-avatar">
+                    <img src="https://unsplash.com" alt="Sarah Jenkins">
+                </div>
+                <div class="reviewer-meta">
+                    <h3 class="reviewer-name">Sarah Jenkins</h3>
+                    <p class="reviewer-org">VP Engineering at CloudFlow</p>
+                </div>
+            </div>
+            
+            <div class="star-rating-bar">
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9733;</span>
+                <span class="star-vector">&#9734;</span>
+            </div>
+            
+            <p class="review-body-text">
+                "The physical venues and fluid visual layout are incredible. Stackly provides an elite networking arena. Being able to connect directly with 5000+ enterprise software architects was invaluable."
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Core Section Layout Frame */
+.testimonial-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow: hidden;
+}
+
+/* Scroll Activated Title Styles */
+.testimonial-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+}
+
+.testimonial-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.testimonial-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Asymmetric Creative Grid Matrix */
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    width: 100%;
+    padding-top: 20px;
+}
+
+/* Individual Review Capsule Card Architectures */
+.review-capsule {
+    position: relative;
+    background: rgba(33, 20, 37, 0.7);
+    border: 1.5px solid rgba(255, 178, 148, 0.04);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    
+    /* Scroll Trigger Setup: Hidden by default */
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
+}
+
+/* Dynamic Entrance Directions on Scroll Trigger */
+.review-capsule.shift-left { transform: translate(-40px, 30px); }
+.review-capsule.shift-center { transform: translate(0, 50px); }
+.review-capsule.shift-right { transform: translate(40px, 30px); }
+
+.review-capsule.animate-in {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Background Ambient Glow Layer */
+.review-glow-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    background: radial-gradient(circle at 10% 10%, rgba(255, 178, 148, 0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Header Avatar Frameworks */
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    z-index: 2;
+}
+
+.reviewer-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    background: #1a0f1d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.reviewer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.reviewer-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewer-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+.reviewer-org {
+    font-size: 0.85rem;
+    color: #b5a4ba;
+    margin-top: 0.1rem;
+}
+
+/* Rating Vectors */
+.star-rating-bar {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 1.25rem;
+    z-index: 2;
+}
+
+.star-vector {
+    color: rgba(255, 178, 148, 0.2); /* Default empty star color base */
+    font-size: 1.1rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Fill logic color selection matching Peach */
+.star-rating-bar .star-vector:not(:last-child),
+.star-rating-bar .star-vector {
+    color: #ffb294;
+}
+.star-rating-bar span:contains('&#9734;') {
+    color: rgba(255, 178, 148, 0.2) !important;
+}
+
+/* Review Block Text Layout */
+.review-body-text {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    cursor: default;
+    z-index: 2;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Card Hover Actions & Glowing Overlays */
+.review-capsule:hover {
+    border-color: #ffb294;
+    box-shadow: 0 0 30px rgba(255, 178, 148, 0.25);
+    transform: translateY(-5px) !important;
+}
+
+.review-capsule:hover .review-glow-layer {
+    opacity: 0.8;
+    background: radial-gradient(circle at 10% 10%, rgba(255, 178, 148, 0.08) 0%, transparent 60%);
+}
+
+.review-capsule:hover .reviewer-name {
+    color: #ffb294;
+}
+
+.review-capsule:hover .review-body-text {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+.review-capsule:hover .star-vector {
+    text-shadow: 0 0 8px rgba(255, 178, 148, 0.8);
+}
+
+/* Responsive Structural Breakpoints Layout Matrix */
+@media (max-width: 992px) {
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 580px;
+        margin: 0 auto;
+    }
+    .review-capsule {
+        transform: translateY(40px) !important; /* Converts desktop offsets into simple vertical checks for mobile viewports */
+    }
+    .testimonial-main-title {
+        font-size: 2.2rem;
+        margin-bottom: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-section { padding: 40px 20px 20px 20px; }
+    .testimonial-main-title { font-size: 1.8rem; }
+    .review-capsule { padding: 1.5rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header string into animatable words
+    const headerBlock = document.getElementById("testimonialTitle");
+    if (headerBlock) {
+        const words = headerBlock.textContent.split(" ");
+        headerBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            headerBlock.appendChild(span);
+        });
+    }
+
+    // Identify current active template scroll wrappers
+    const scrollTracker = document.querySelector(".content-body") || window;
+    const titleWords = document.querySelectorAll(".testimonial-main-title span");
+    const reviewCards = document.querySelectorAll(".review-capsule");
+
+    function executeTestimonialScrollAnimations() {
+        const structuralTriggerPoint = window.innerHeight * 0.92;
+
+        // Word-by-word title expand fade reveal step
+        titleWords.forEach((span, index) => {
+            const boundaryBox = span.getBoundingClientRect();
+            if (boundaryBox.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 110);
+            }
+        });
+
+        // Review card multi-directional slide matrix arrival stagger
+        reviewCards.forEach((card, index) => {
+            const boundaryBox = card.getBoundingClientRect();
+            if (boundaryBox.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 150); // 150ms incremental stepping offset execution loops
+            }
+        });
+    }
+
+    // Hook logic streams to main viewport containers
+    scrollTracker.addEventListener("scroll", executeTestimonialScrollAnimations);
+    window.addEventListener("scroll", executeTestimonialScrollAnimations);
+    
+    // Initial load verify tracking checks pass execution loop
+    setTimeout(executeTestimonialScrollAnimations, 450);
+});
+
+</script>
+
+<section class="subscribe-section-fullwidth">
+    <!-- Abstract Ambient Tech Overlay Background -->
+    <div class="subscribe-bg-overlay"></div>
+
+    <div class="subscribe-container">
+        <!-- Content Column -->
+        <div class="subscribe-content">
+            <span class="subscribe-badge">STAY UP TO DATE</span>
+            
+            <!-- Title Words Fly in from Left/Right Sides Alternately -->
+            <h2 class="subscribe-title" id="subscribeTitle">Join the Stackly Architecture Loop</h2>
+            
+            <p class="subscribe-subtitle rise-element animate-in">Get deep technical breakdowns, event schedule updates, and flagship track announcements directly in your inbox.</p>
+            
+            <!-- Interactive Subscription Form Shell Framework -->
+            <form class="subscribe-form-matrix rise-element animate-in" id="subscribeForm" novalidate>
+                <div class="input-glow-wrapper">
+                    <input type="email" id="subscriberEmail" placeholder="Enter your enterprise email..." aria-label="Email address field">
+                    <!-- Dynamic client status notification field -->
+                    <div class="form-status-alert" id="formStatusAlert">Please fill in the fields</div>
+                </div>
+                <button type="submit" class="subscribe-submit-btn">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Section Shell Wrapper */
+.subscribe-section-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with generous side edge clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #170d1a 0%, #2d1933 50%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Abstract Radial Ambient Backing Grid Layer */
+.subscribe-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 178, 148, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Internal Alignment Container Shield */
+.subscribe-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px; /* Constrains input content neatly to the readable center fields */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.subscribe-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.subscribe-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Peach Family Accent focus */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Reveal Alternating from Left/Right Sides */
+.subscribe-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+.subscribe-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Initial Directional States for Word Reveal */
+.subscribe-title span.fly-left { transform: translateX(-60px); }
+.subscribe-title span.fly-right { transform: translateX(60px); }
+
+.subscribe-title span.reveal {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Title Hover Accent Glow */
+.subscribe-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.3);
+}
+
+/* Content Rising Elements Setup - Fixed: Visible by default with a smooth micro-scale */
+.rise-element {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rise-element.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.subscribe-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+.subscribe-subtitle:hover {
+    color: #ffffff;
+}
+
+/* Subscription Form Inputs Grid Layout */
+.subscribe-form-matrix {
+    display: flex;
+    width: 100%;
+    max-width: 580px;
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.input-glow-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subscribe-form-matrix input[type="email"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    border-radius: 50px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Input Box Glow Effect on Focus & Hover */
+.subscribe-form-matrix input[type="email"]:hover,
+.subscribe-form-matrix input[type="email"]:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 20px rgba(255, 178, 148, 0.15);
+}
+
+/* Validation Alert Message Box Styling */
+.form-status-alert {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ff7b7b;
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-status-alert.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Subscription CTA Trigger Button */
+.subscribe-submit-btn {
+    background: #ffb294;
+    color: #211425;
+    border: none;
+    padding: 0 2.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 5px 15px rgba(255, 178, 148, 0.2);
+}
+
+.subscribe-submit-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Strict Mobile Scaling Matrix (Preserving edge boundaries) */
+@media (max-width: 768px) {
+    .subscribe-section-fullwidth { padding: 40px 20px 25px 20px; }
+    .subscribe-title { font-size: 2rem; }
+    .subscribe-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+    .subscribe-form-matrix { flex-direction: column; gap: 1.5rem; }
+    .subscribe-submit-btn { padding: 1rem 0; width: 100%; }
+    .form-status-alert { top: auto; bottom: calc(100% + 6px); } /* Flips status position to fit stacked inputs cleanly */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // -------------------------------------------------------------
+    // 1. TEXT PARSING (Alternating side word-by-word entry)
+    // -------------------------------------------------------------
+    const subscribeTitleContainer = document.getElementById("subscribeTitle");
+    if (subscribeTitleContainer) {
+        const words = subscribeTitleContainer.textContent.split(" ");
+        subscribeTitleContainer.textContent = ""; 
+        
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            
+            // Staggers fly-in directions by index coordinates
+            if (index % 2 === 0) {
+                span.classList.add("fly-left");
+            } else {
+                span.classList.add("fly-right");
+            }
+            
+            subscribeTitleContainer.appendChild(span);
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 2. LIVE VALIDATION & REDIRECT SUBMISSION INTERCEPTOR
+    // -------------------------------------------------------------
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const formStatusAlert = document.getElementById("formStatusAlert");
+
+    if (subscribeForm) {
+        subscribeForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Blocks raw webpage page reloading loops
+            
+            const emailValue = subscriberEmail.value.trim();
+
+            if (emailValue === "") {
+                // Input empty context handler
+                formStatusAlert.textContent = "Please fill in the fields";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                // Invalid regex configuration sequence fallback
+                formStatusAlert.textContent = "Please enter a valid email address";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else {
+                // Validation passed completely -> Proceed immediately to 404 URL
+                formStatusAlert.classList.remove("visible");
+                subscriberEmail.style.borderColor = "#ffb294";
+                window.location.href = "404.html";
+            }
+        });
+
+        // Instantly wipe validation boundary errors when text input scales
+        subscriberEmail.addEventListener("input", () => {
+            formStatusAlert.classList.remove("visible");
+            subscriberEmail.style.borderColor = "rgba(255, 255, 255, 0.08)";
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. SCROLL INTERSECTION ENGINE (With bottom gap edge recovery)
+    // -------------------------------------------------------------
+    const scrollShell = document.querySelector(".content-body") || window;
+    const subscribeTitleSpans = document.querySelectorAll(".subscribe-title span");
+    const subscribeRisingElements = document.querySelectorAll(".rise-element");
+
+    function executeSubscribeScrollObserver() {
+        // Generous vertical window evaluation target threshold
+        const triggerHeight = window.innerHeight * 0.95; 
+        
+        // Safety Fallback Check: Evaluates true if page spacing constraints block deeper scrolls
+        const isPageScrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 120);
+
+        // Header Title Sequence Revelations
+        subscribeTitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    span.classList.add("reveal"); 
+                }, index * 80);
+            }
+        });
+
+        // Form fields and buttons sequential riser animations loop
+        subscribeRisingElements.forEach((element, index) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    element.classList.add("animate-in"); 
+                }, 150 * (index + 1)); // 150ms structural staging separation
+            }
+        });
+    }
+
+    // Register section observers on active scrolling frames
+    scrollShell.addEventListener("scroll", executeSubscribeScrollObserver);
+    window.addEventListener("scroll", executeSubscribeScrollObserver);
+    
+    // Safety verification check pass to check visibility constraints instantly on component mounts
+    setTimeout(executeSubscribeScrollObserver, 400);
+});
+
+</script>
+
+<footer class="main-footer">
+    <div class="footer-upper-grid">
+        
+        <!-- Column 1: Brand Info & Social Media Links -->
+        <div class="footer-column brand-summary-col">
+            <a href="#" class="footer-logo-link" id="backToTopTrigger" aria-label="Back to Top">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="footer-brand-img">
+                <span class="footer-brand-text">STACKLY</span>
+            </a>
+            <p class="footer-description">
+                Engineering premier developer conventions and high-fidelity tech ecosystem environments designed to fuel open-source web frameworks.
+            </p>
+            <div class="footer-social-row">
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+               <a href="404.html" class="social-circle-link" aria-label="Twitter X">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+    </svg>
+</a>
+
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Event Tracks Quick Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Explore Tracks</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Edge Micro-Frontends</a></li>
+                <li><a href="404.html">Zero-Trust Infrastructures</a></li>
+                <li><a href="404.html">Generative Layout Systems</a></li>
+                <li><a href="404.html">Cloud Native Sandboxes</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Attendee Support Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Event Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Technical Lab Parameters</a></li>
+                <li><a href="404.html">Registration Badges</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Location & Contact Metadata -->
+        <div class="footer-column info-metadata-col">
+            <h3 class="footer-header-title">Headquarters Location</h3>
+            <div class="metadata-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="meta-text-content">MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</span>
+            </div>
+            <div class="metadata-row phone-link-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span class="meta-text-content">+91 7010792745</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legals Banner -->
+    <div class="footer-bottom-bar">
+        <div class="bottom-bar-inner">
+            <p class="copyright-notice">&copy; 2026 Stackly Industries. All conference rights reserved.</p>
+            <div class="legal-links-row">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Base Framework */
+.main-footer {
+    width: 100%;
+    background-color: #0c0710; /* Rich dark plum base matching platform palette */
+    border-top: 1px solid rgba(255, 178, 148, 0.06);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    margin-top: 4rem;
+}
+
+/* Upper Four-Column Grid Structure */
+.footer-upper-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 50px 20px; /* Precise 20px side padding constraints preserved */
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr 0.9fr 1.1fr;
+    gap: 3.5rem;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Brand Link and Description Styling */
+.footer-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+}
+
+.footer-brand-img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-brand-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    max-width: 320px;
+}
+
+/* Circular Social Icons Row */
+.footer-social-row {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #b5a4ba;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Hover Glowing Interactivity Elements */
+.social-circle-link:hover {
+    color: #ffb294; /* Vivid Peach Accent */
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.05);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Column Header Categories */
+.footer-header-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+/* Custom Underline Accent Line Template */
+.footer-header-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #ffb294;
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(255, 178, 148, 0.6);
+}
+
+/* Navigation Lists Layout */
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: #b5a4ba;
+    font-weight: 500;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #ffb294;
+    transform: translateX(3px);
+}
+
+/* Metadata Rows for Location & Phone info */
+.metadata-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+}
+
+.meta-icon {
+    width: 18px;
+    height: 18px;
+    color: #ffb294;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.meta-text-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    text-align: left;
+}
+
+.phone-link-row .meta-text-content {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Bottom Legals Bar Framework */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 25px 0;
+    background-color: #070409;
+}
+
+.bottom-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright-notice {
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+}
+
+.legal-links-row {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.legal-links-row a {
+    text-decoration: none;
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+    transition: color 0.25s ease;
+}
+
+.legal-links-row a:hover {
+    color: #ffb294;
+}
+
+/* Strict Layout Responsive Adaptation Boundaries */
+@media (max-width: 992px) {
+    .footer-upper-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+    .footer-description { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .footer-upper-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 40px 20px 30px 20px;
+    }
+    .bottom-bar-inner {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    .legal-links-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Back to Top Click Trigger Functionality
+    const backToTopBtn = document.getElementById("backToTopTrigger");
+    
+    // Checks if the internal app container is managing scrolling offsets, or falls back to window object viewport
+    const scrollingElement = document.querySelector(".content-body") || window;
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // Blocks flash anchor resets
+            
+            if (scrollingElement === window) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            } else {
+                scrollingElement.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        });
+    }
+});
+
+</script>

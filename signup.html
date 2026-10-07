@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Terminal – Create Profile Matrix</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body class="stackly-signup-body">
+
+    <div class="signup-split-canvas-wrapper">
+        
+        <!-- Left Column: Domain Branding Showcase -->
+        <div class="signup-branding-side">
+            <div class="branding-ambient-glow"></div>
+            <div class="branding-inner-content">
+                <span class="branding-tag-pill">REGISTRATION TERMINAL</span>
+                <h1 class="branding-main-title">Create Your<br><span class="peach-gradient-text">Engineering Journey.</span></h1>
+                <p class="branding-subtext">Join our elite architectural network and explore production constraints transparently, collaborate on distributed micro-frontends, and claim live sandbox demo booths.</p>
+                
+                <!-- Graphic Image Showcase Frame -->
+                <div class="branding-image-mask-box">
+                    <img src="https://unsplash.com" alt="Engineers collaborating in a tech workspace environment">
+                </div>
+
+                <!-- Three Icon Bullet Points from the Reference Layout Base -->
+                <div class="branding-features-row">
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Live Sandboxes</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Verified Network</span>
+                    </div>
+                    <div class="feature-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Hydration Labs</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Interactive Registration Form Panel -->
+        <div class="signup-panel-side">
+            <!-- Navigation back to Login Page -->
+            <a href="login.html" class="back-navigation-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <span>Back to Login</span>
+            </a>
+
+            <div class="auth-panel-inner">
+                <h2 class="auth-headline">Create <span class="peach-gradient-text">Account</span></h2>
+                <p class="auth-sub-description">Register your account to manage enterprise multi-track sessions, secure badges, and workspace profiles.</p>
+
+                <!-- Profile Registration Form Shell -->
+                <form class="auth-stack-form" id="stacklySignupForm" novalidate>
+                    
+                    <!-- Input 1: Name -->
+                    <div class="auth-field-wrapper">
+                        <label for="regName">YOUR FULL NAME</label>
+                        <div class="input-vector-shell">
+                            <input type="text" id="regName" placeholder="Enter your full name..." required>
+                        </div>
+                    </div>
+
+                    <!-- Input 2: Email -->
+                    <div class="auth-field-wrapper">
+                        <label for="regEmail">EMAIL ADDRESS</label>
+                        <div class="input-vector-shell">
+                            <input type="email" id="regEmail" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <!-- Input 3: Mobile -->
+                    <div class="auth-field-wrapper">
+                        <label for="regMobile">10-DIGIT MOBILE NUMBER</label>
+                        <div class="input-vector-shell">
+                            <input type="tel" id="regMobile" placeholder="10-digit mobile number" required>
+                        </div>
+                    </div>
+
+                    <!-- Input 4: Password -->
+                    <div class="auth-field-wrapper">
+                        <label for="regPassword">PASSWORD KEY</label>
+                        <div class="input-vector-shell">
+                            <input type="password" id="regPassword" placeholder="Create a password" required>
+                            <button type="button" class="password-toggle-eye" data-target="regPassword" aria-label="Toggle view state">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Input 5: Confirm Password -->
+                    <div class="auth-field-wrapper">
+                        <label for="regConfirmPassword">CONFIRM PASSWORD KEY</label>
+                        <div class="input-vector-shell">
+                            <input type="password" id="regConfirmPassword" placeholder="Confirm your password" required>
+                            <button type="button" class="password-toggle-eye" data-target="regConfirmPassword" aria-label="Toggle view state">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Client-Side Warning/Success Indicators -->
+                    <div class="auth-status-alert-box alert-error" id="signupErrorAlert">Please fill in the fields</div>
+                    <div class="auth-status-alert-box alert-success" id="signupSuccessAlert">Successfully signed up!</div>
+
+                    <!-- Submit Action Button -->
+                    <button type="submit" class="auth-submit-trigger-btn">
+                        <span>SIGN UP</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </button>
+                </form>
+
+                <!-- Footer redirection lines -->
+                <div class="auth-panel-footer">
+                    <p>Already have an account? <a href="login.html" class="login-link-anchor">Log In</a></p>
+                    <a href="index.html" class="return-home-anchor">Return to Home</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+ <style>
+    /* Core Canvas Box Model Rules */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.stackly-signup-body {
+    width: 100vw;
+    min-height: 100vh;
+    background: #0c0710; /* Strict Deep Plum base */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup-split-canvas-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+}
+
+/* Left Sidebar Columns Setup */
+.signup-branding-side {
+    position: relative;
+    background: linear-gradient(135deg, #1b0f24 0%, #0d0712 100%);
+    border-right: 1px solid rgba(255, 178, 148, 0.05);
+    padding: 4rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+.branding-ambient-glow {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.05) 0%, transparent 70%);
+    top: -10%;
+    left: -10%;
+    pointer-events: none;
+}
+
+.branding-inner-content {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 520px;
+}
+
+.branding-tag-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #ffb294;
+    background: rgba(255, 178, 148, 0.06);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.branding-main-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+}
+
+.peach-gradient-text {
+    background: linear-gradient(135deg, #ffffff 30%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.branding-subtext {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 2.5rem;
+}
+
+/* Image Geometry Mask */
+.branding-image-mask-box {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 178, 148, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    background: #140816;
+    margin-bottom: 2rem;
+}
+
+.branding-image-mask-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.72) contrast(1.02);
+}
+
+/* Features Row Ticks */
+.branding-features-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #b5a4ba;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.feature-item svg {
+    width: 14px;
+    height: 14px;
+    color: #ffb294; /* Peach verification ticks matching reference checkmarks */
+}
+
+/* Right Column Interaction Form Panel */
+.signup-panel-side {
+    background: #0f0914;
+    padding: 4rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.back-navigation-link {
+    position: absolute;
+    top: 2.5rem;
+    left: 4.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #b5a4ba;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.back-navigation-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.back-navigation-link:hover { color: #ffb294; }
+.back-navigation-link:hover svg { transform: translateX(-3px); }
+
+/* Form Elements Styling */
+.auth-panel-inner {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-headline {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.auth-sub-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    margin-bottom: 2rem;
+}
+
+.auth-stack-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.auth-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    width: 100%;
+}
+
+.auth-field-wrapper label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #b5a4ba;
+    letter-spacing: 0.05em;
+}
+
+.input-vector-shell {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-vector-shell input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+    color: #ffffff;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.input-vector-shell input:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 12px rgba(255, 178, 148, 0.15);
+}
+
+.password-toggle-eye {
+    position: absolute;
+    right: 1.2rem;
+    background: transparent;
+    border: none;
+    color: rgba(181, 164, 186, 0.5);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    outline: none;
+}
+
+.password-toggle-eye svg { width: 16px; height: 16px; }
+.password-toggle-eye:hover { color: #ffb294; }
+
+/* Status Notifications Alert Banners */
+.auth-status-alert-box {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    display: none; /* Controlled via JS classes */
+}
+
+.alert-error {
+    background: rgba(255, 123, 123, 0.06);
+    border: 1px dashed #ff7b7b;
+    color: #ff7b7b;
+}
+
+.alert-success {
+    background: rgba(0, 170, 108, 0.06);
+    border: 1px dashed #00aa6c;
+    color: #00aa6c;
+}
+
+.auth-status-alert-box.visible {
+    display: block;
+}
+
+/* Submit Action Button Block */
+.auth-submit-trigger-btn {
+    width: 100%;
+    background: #1a101f; /* Deep structural matching button shell layout from screenshot */
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    border-radius: 30px; /* Smooth pill curve button matching template design */
+    padding: 1rem 0;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-submit-trigger-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+}
+
+.auth-submit-trigger-btn:hover {
+    background: #ffb294;
+    color: #211425;
+    border-color: #ffb294;
+    box-shadow: 0 5px 15px rgba(255, 178, 148, 0.3);
+}
+
+.auth-submit-trigger-btn:hover svg {
+    transform: translateX(3px);
+}
+
+/* Panel Footer Redirection Options */
+.auth-panel-footer {
+    text-align: center;
+    width: 100%;
+    margin-top: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.auth-panel-footer p {
+    font-size: 0.9rem;
+    color: #b5a4ba;
+}
+
+.login-link-anchor {
+    text-decoration: none;
+    color: #ffb294;
+    font-weight: 700;
+    border-bottom: 1.5px solid transparent;
+    transition: all 0.25s ease;
+}
+
+.login-link-anchor:hover {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+
+.return-home-anchor {
+    font-size: 0.85rem;
+    color: rgba(181, 164, 186, 0.5);
+    text-decoration: underline;
+    transition: color 0.25s ease;
+}
+
+.return-home-anchor:hover {
+    color: #ffb294;
+}
+
+/* Adaptive Media Query Scaling Matrix (Strict 20px Side Clearances) */
+@media (max-width: 1024px) {
+    .signup-split-canvas-wrapper { grid-template-columns: 1fr; }
+    .signup-branding-side { display: none !important; } /* Strips graphic column asset loops on small screens */
+    .signup-panel-side { padding: 6rem 20px 4rem 20px; min-height: 100vh; }
+    .back-navigation-link { left: 20px; top: 2.5rem; }
+}
+
+@media (max-width: 480px) {
+    .auth-headline { font-size: 1.85rem; }
+    .auth-sub-description { font-size: 0.88rem; }
+    .auth-submit-trigger-btn { font-size: 0.88rem; }
+}
+
+ </style>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const signupForm = document.getElementById("stacklySignupForm");
+    
+    const regName = document.getElementById("regName");
+    const regEmail = document.getElementById("regEmail");
+    const regMobile = document.getElementById("regMobile");
+    const regPassword = document.getElementById("regPassword");
+    const regConfirmPassword = document.getElementById("regConfirmPassword");
+    
+    const signupErrorAlert = document.getElementById("signupErrorAlert");
+    const signupSuccessAlert = document.getElementById("signupSuccessAlert");
+
+    // 1. Password Visibility Eye Toggle Listeners Loop
+    const toggleButtons = document.querySelectorAll(".password-toggle-eye");
+    toggleButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const inputTargetId = btn.getAttribute("data-target");
+            const targetInputNode = document.getElementById(inputTargetId);
+            
+            if (targetInputNode) {
+                const isMasked = targetInputNode.getAttribute("type") === "password";
+                targetInputNode.setAttribute("type", isMasked ? "text" : "password");
+                btn.style.color = isMasked ? "#ffb294" : "rgba(181, 164, 186, 0.5)";
+            }
+        });
+    });
+
+    // 2. Active Registration Form Intercept Validation Passes
+    if (signupForm) {
+        signupForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Stop standard browser page updates
+
+            // Clear active notification displays instantly
+            signupErrorAlert.classList.remove("visible");
+            signupSuccessAlert.classList.remove("visible");
+
+            const fieldsList = [regName, regEmail, regMobile, regPassword, regConfirmPassword];
+            let isFormFilled = true;
+
+            // Reset borders before check path loops
+            fieldsList.forEach(input => {
+                if (input) input.style.borderColor = "rgba(255, 178, 148, 0.15)";
+            });
+
+            // Blank Inputs Checker Pass
+            fieldsList.forEach(input => {
+                if (input && input.value.trim() === "") {
+                    isFormFilled = false;
+                    input.style.borderColor = "#ff7b7b"; // Flag missed nodes in alert red outline lines
+                }
+            });
+
+            if (!isFormFilled) {
+                signupErrorAlert.textContent = "Please fill in the fields";
+                signupErrorAlert.classList.add("visible");
+                return;
+            }
+
+            // Email Pattern Syntax Check Pass
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(regEmail.value.trim())) {
+                signupErrorAlert.textContent = "Please enter a valid email address";
+                signupErrorAlert.classList.add("visible");
+                regEmail.style.borderColor = "#ff7b7b";
+                return;
+            }
+
+            // Mobile Digits Bound Pass
+            if (!/^\d{10}$/.test(regMobile.value.trim())) {
+                signupErrorAlert.textContent = "Please enter a valid 10-digit mobile number";
+                signupErrorAlert.classList.add("visible");
+                regMobile.style.borderColor = "#ff7b7b";
+                return;
+            }
+
+            // Password Sync Verification Matching Check
+            if (regPassword.value !== regConfirmPassword.value) {
+                signupErrorAlert.textContent = "Passwords do not match";
+                signupErrorAlert.classList.add("visible");
+                regPassword.style.borderColor = "#ff7b7b";
+                regConfirmPassword.style.borderColor = "#ff7b7b";
+                return;
+            }
+
+            // SUCCESS ENVIRONMENT TRIGGER: Reveal notification text and route to Login view
+            signupSuccessAlert.classList.add("visible");
+            
+            // Lock form button interactions during redirection latency delay paths
+            const submitBtn = signupForm.querySelector(".auth-submit-trigger-btn");
+            if (submitBtn) submitBtn.disabled = true;
+
+            setTimeout(() => {
+                window.location.href = "login.html"; // Routes natively right back into login workspace terminal
+            }, 1800); // 1.8 seconds delay gives the success message time to render beautifully
+        });
+
+        // Clear layout warnings immediately on active input re-engagement typing passes
+        [regName, regEmail, regMobile, regPassword, regConfirmPassword].forEach(input => {
+            if (input) {
+                input.addEventListener("input", () => {
+                    signupErrorAlert.classList.remove("visible");
+                    input.style.borderColor = "rgba(255, 178, 148, 0.15)";
+                });
+            }
+        });
+    }
+});
+
+ </script>
+</body>
+</html>

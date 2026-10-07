@@ -1,0 +1,2274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Event Experience</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Vector Icons Background -->
+    <div class="floating-icons-container">
+        <svg class="float-icon icon-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        <svg class="float-icon icon-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <svg class="float-icon icon-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <svg class="float-icon icon-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <svg class="float-icon icon-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+
+    <!-- Preloader Overlay View -->
+    <div class="preloader-overlay" id="preloaderOverlay">
+        <div class="loader-content">
+            <div class="brand-wrapper">
+                <div class="brand-logo-loader">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFB294" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h1 class="brand-name-loader">Stackly</h1>
+            </div>
+            <p class="loading-status">Preparing the conference experience...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="percentage" id="percentageText">0%</div>
+        </div>
+    </div>
+
+    <!-- Main Workspace (Hidden Initially, Revealed Post-Load) -->
+    <div class="app-workspace" id="appWorkspace">
+        <!-- Floating Transparent Header -->
+        <header class="main-header">
+            <div class="header-inner">
+                <!-- Brand Logo (Img tag references the page loop) -->
+                <a href="#" class="logo-link" onclick="window.location.reload(); return false;">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="brand-img">
+                    <span class="brand-logo-text">Stackly</span>
+                </a>
+
+                <!-- Responsive Navigation Drawer -->
+                <nav class="nav-menu-container" id="navMenuContainer">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-item ">Home</a></li>
+                        <li><a href="About.html" class="nav-item">About Us</a></li>
+                        <li><a href="services.html" class="nav-item">Services</a></li>
+                        <li><a href="blogs.html" class="nav-item">Blogs</a></li>
+                        <li><a href="contact.html" class="nav-item active">Contact Us</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Auth Action Workspace -->
+                <div class="auth-wrapper">
+                   <a href="login.html" class="auth-navigation-link">
+    <button class="auth-btn">Register Pass</button>
+</a>
+
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation Menu">
+                        <span class="bar bar-top"></span>
+                        <span class="bar bar-mid"></span>
+                        <span class="bar bar-bot"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+       
+   
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =========================================================
+    // 0. PRELOADER SCROLL LOCK
+    // =========================================================
+    // Prevent scrolling while the preloader is visible
+    document.body.classList.add("preloader-active");
+
+
+    // =========================================================
+    // 1. DOM Elements Mapping
+    // =========================================================
+    const progressFill = document.getElementById("progressFill");
+    const percentageText = document.getElementById("percentageText");
+    const preloaderOverlay = document.getElementById("preloaderOverlay");
+    const appWorkspace = document.getElementById("appWorkspace");
+
+
+    // =========================================================
+    // 2. Timeline Variables (2 Seconds)
+    // =========================================================
+    const duration = 2000;
+    const intervalTime = 20;
+    const totalSteps = duration / intervalTime;
+    let currentStep = 0;
+
+
+    // =========================================================
+    // 3. Preloader Progress Loop Execution
+    // =========================================================
+    const loadingInterval = setInterval(() => {
+
+        currentStep++;
+
+        const progress = Math.min(
+            (currentStep / totalSteps) * 100,
+            100
+        );
+
+
+        // Update progress bar
+        if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+        }
+
+
+        // Update percentage
+        if (percentageText) {
+            percentageText.textContent = `${Math.floor(progress)}%`;
+        }
+
+
+        // =====================================================
+        // Loading Complete
+        // =====================================================
+        if (currentStep >= totalSteps) {
+
+            clearInterval(loadingInterval);
+
+
+            // Small delay before starting exit animation
+            setTimeout(() => {
+
+                // Fade and slightly scale the preloader
+                if (preloaderOverlay) {
+
+                    preloaderOverlay.style.opacity = "0";
+                    preloaderOverlay.style.transform = "scale(1.03)";
+                }
+
+
+                // Wait for fade animation to complete
+                setTimeout(() => {
+
+                    // Remove preloader from display
+                    if (preloaderOverlay) {
+                        preloaderOverlay.style.display = "none";
+                    }
+
+
+                    // =================================================
+                    // ENABLE PAGE SCROLLING
+                    // =================================================
+                    document.body.classList.remove("preloader-active");
+                    document.body.classList.add("preloader-finished");
+
+
+                    // =================================================
+                    // REVEAL MAIN WORKSPACE
+                    // =================================================
+                    if (appWorkspace) {
+
+                        appWorkspace.style.opacity = "1";
+
+                        // Trigger feature card reveal animation
+                        initializeHeroFeatures();
+                    }
+
+                }, 500);
+
+            }, 150);
+        }
+
+    }, intervalTime);
+
+
+    // =========================================================
+    // 4. Staggered Feature Entry Sequence
+    // =========================================================
+    function initializeHeroFeatures() {
+
+        const cards = document.querySelectorAll(".feature-card");
+
+
+        cards.forEach((card, index) => {
+
+            setTimeout(() => {
+
+                card.classList.add("reveal");
+
+            }, (index + 1) * 200);
+
+        });
+    }
+
+
+    // =========================================================
+    // 5. Navigation Menu Active & Mobile Toggle Logic
+    // =========================================================
+    const navItems = document.querySelectorAll(".nav-item");
+    const hamburgerToggle = document.getElementById("hamburgerToggle");
+    const navMenuContainer = document.getElementById("navMenuContainer");
+
+
+    // =========================================================
+    // Navigation Item Click
+    // =========================================================
+    navItems.forEach(item => {
+
+        item.addEventListener("click", (e) => {
+
+            // Remove active state from current item
+            document
+                .querySelector(".nav-item.active")
+                ?.classList.remove("active");
+
+
+            // Add active state to clicked item
+            e.currentTarget.classList.add("active");
+
+
+            // Close mobile navigation
+            if (hamburgerToggle && navMenuContainer) {
+
+                hamburgerToggle.classList.remove("open");
+                navMenuContainer.classList.remove("open");
+            }
+
+        });
+
+    });
+
+
+    // =========================================================
+    // 6. Mobile Hamburger Toggle
+    // =========================================================
+    if (hamburgerToggle && navMenuContainer) {
+
+        hamburgerToggle.addEventListener("click", () => {
+
+            hamburgerToggle.classList.toggle("open");
+            navMenuContainer.classList.toggle("open");
+
+        });
+
+    }
+
+});
+    </script>
+
+<section class="contact-hero-section">
+    <div class="contact-hero-container">
+        
+        <!-- Left Column: Context Metadata & Staggered Scroll Entrances -->
+        <div class="contact-hero-content">
+            <span class="contact-hero-badge">GET IN TOUCH</span>
+            
+            <!-- Title Words Appear Word-by-Word on Scroll -->
+            <h1 class="contact-hero-title" id="contactHeroTitle">Connect With Our Technical Architecture Team</h1>
+            
+            <!-- Paragraph Elements Slide In From Left/Right Sides with Text-Glow Hover -->
+            <div class="contact-hero-paragraphs">
+                <p class="contact-hero-para slide-from-left">
+                    Have questions about the multi-track summit schedule, sandbox test setups, or ticket access tiers? Reach out directly to our core infrastructure coordination deck for zero-latency workspace logistics.
+                </p>
+                <p class="contact-hero-para slide-from-right">
+                    Whether you are an enterprise platform architect looking to submit a session talk proposal or an open-web sponsor coordinating hardware labs, our operations network is available to deploy solutions.
+                </p>
+            </div>
+
+            <!-- CTA Actions Rise up from Bottom with 404 Interceptors -->
+            <div class="contact-hero-cta" id="contactHeroCta">
+                <a href="404.html" class="contact-hero-btn btn-peach-filled">Open Support Ticket</a>
+                <a href="#contactForm" class="contact-hero-btn btn-trans-outlined">Send Message</a>
+            </div>
+        </div>
+
+        <!-- Right Column: Creative Squircle Frame Geometry Showcase -->
+        <div class="contact-hero-visual" id="contactVisualFrame">
+            <div class="contact-hero-glow-blob"></div>
+            <div class="contact-image-frame-box">
+                <img src="https://unsplash.com" alt="Stackly tech conference support coordination help workspace">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+/* Base Layout Section Settings */
+.contact-hero-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 150px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.contact-hero-container {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 4.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Content Column Configuration */
+.contact-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.contact-hero-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Signature Vivid Peach Accent */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Header Reveal Structure */
+.contact-hero-title {
+    font-size: 3.4rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    overflow: hidden;
+}
+
+.contact-hero-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-hero-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Side Sliding Paragraph Layout Formats */
+.contact-hero-paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.contact-hero-para {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: #b5a4ba;
+    max-width: 560px;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Initial Directional Vectors for Text Rows */
+.contact-hero-para.slide-from-left { transform: translateX(-60px); }
+.contact-hero-para.slide-from-right { transform: translateX(60px); }
+
+.contact-hero-para.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Interactive Text Glow Hover Effect to Paragraphs */
+.contact-hero-para:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+/* Bottom Rising Action CTA Button Groups */
+.contact-hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-hero-cta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-hero-btn {
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-peach-filled {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 6px 20px rgba(255, 178, 148, 0.15);
+}
+
+.btn-peach-filled:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-trans-outlined {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-trans-outlined:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Right Column: Visual Frame Showcase Geometry Layout */
+.contact-hero-visual {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 1s ease-out, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-hero-visual.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.contact-hero-glow-blob {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.contact-image-frame-box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.12);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+    background: #150d17;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.contact-image-frame-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Frame Hover Actions & Glowing Overlay Filters */
+.contact-image-frame-box:hover {
+    transform: translateY(-4px);
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.3);
+}
+
+.contact-image-frame-box:hover img {
+    transform: scale(1.03);
+}
+
+/* Comprehensive Responsive Systems Grid (Strict 20px Side Padding Preserved) */
+@media (max-width: 992px) {
+    .contact-hero-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+    }
+    .contact-hero-content { align-items: center; }
+    .contact-hero-title { justify-content: center; font-size: 2.8rem; }
+    .contact-hero-para { margin: 0 auto; }
+    .contact-hero-cta { justify-content: center; }
+    .contact-image-frame-box { max-width: 340px; aspect-ratio: 1 / 1; border-radius: 24px; } /* Adapts to square on tablet views */
+}
+
+@media (max-width: 576px) {
+    .contact-hero-section { padding: 40px 20px 20px 20px; }
+    .contact-hero-title { font-size: 2.1rem; gap: 0 8px; }
+    .contact-image-frame-box { max-width: 280px; }
+    .contact-hero-cta { width: 100%; flex-direction: column; gap: 0.8rem; }
+    .contact-hero-btn { text-align: center; width: 100%; }
+    /* Convert horizontal slides to standard vertical entry to handle mobile gaps cleanly */
+    .contact-hero-para.slide-from-left, 
+    .contact-hero-para.slide-from-right { transform: translateY(30px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Segments headline string into discrete animatable word tokens
+    const contactTitleBlock = document.getElementById("contactHeroTitle");
+    if (contactTitleBlock) {
+        const words = contactTitleBlock.textContent.split(" ");
+        contactTitleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            contactTitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture component element instances
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const splitWordsSpans = document.querySelectorAll(".contact-hero-title span");
+    const narrativeParagraphs = document.querySelectorAll(".contact-hero-para");
+    const actionsCtaBlock = document.getElementById("contactHeroCta");
+    const visualSideBox = document.getElementById("contactVisualFrame");
+
+    function executeContactHeroScrollObserver() {
+        const structuralTriggerPointLine = window.innerHeight * 0.92;
+
+        // Word-by-word title expand reveal sequence trigger
+        splitWordsSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // Parallel horizontal slide animation reveal triggers for paragraph blocks
+        narrativeParagraphs.forEach((para, index) => {
+            const rect = para.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine) {
+                setTimeout(() => {
+                    para.classList.add("animate-in");
+                }, 150 * (index + 1));
+            }
+        });
+
+        // Bottom vertical rise action buttons trigger reveal execution
+        if (actionsCtaBlock) {
+            const rect = actionsCtaBlock.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    actionsCtaBlock.classList.add("animate-in");
+                }, 450);
+            }
+        }
+
+        // Graphic showcase card reveal trigger pass
+        if (visualSideBox) {
+            const rect = visualSideBox.getBoundingClientRect();
+            if (rect.top < structuralTriggerPointLine || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    visualSideBox.classList.add("animate-in");
+                }, 200);
+            }
+        }
+    }
+
+    // Bind scroll execution tracking loops across both container channels
+    scrollContainerHost.addEventListener("scroll", executeContactHeroScrollObserver);
+    window.addEventListener("scroll", executeContactHeroScrollObserver);
+    
+    // Safety check execution pass to force trigger checks on mount instantly
+    setTimeout(executeContactHeroScrollObserver, 400);
+});
+
+</script>
+
+<section class="contact-form-section">
+    <div class="contact-form-container">
+        
+        <!-- Left Column Card: Form Matrix -->
+        <div class="contact-column-card form-block-card" id="formBlockCard">
+            <span class="card-badge-pill">REGISTRATION WORKSPACE</span>
+            <h2 class="card-main-headline">Configure Your Gathering Matrix</h2>
+            <p class="card-sub-description">Fill out your baseline requirements coordinates below. Our system will dynamically compute a tailored conference proposal quote blueprint.</p>
+            
+            <form class="stackly-contact-form" id="stacklyContactForm" novalidate>
+                <div class="form-inputs-grid">
+                    
+                    <div class="input-field-wrapper">
+                        <label for="fullName">FULL NAME / CORPORATE TITLE</label>
+                        <div class="input-icon-shell">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                            <input type="text" id="fullName" placeholder="e.g. Vikram R">
+                        </div>
+                    </div>
+
+                    <div class="input-field-wrapper">
+                        <label for="mobileHandle">CONTACT MOBILE HANDLE</label>
+                        <div class="input-icon-shell">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <input type="tel" id="mobileHandle" placeholder="e.g. 9876543210">
+                        </div>
+                    </div>
+
+                    <div class="input-field-wrapper">
+                        <label for="emailAddress">EMAIL INBOX ADDRESS</label>
+                        <div class="input-icon-shell">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" id="emailAddress" placeholder="e.g. design@stacklystudio.com">
+                        </div>
+                    </div>
+
+                    <div class="input-field-wrapper">
+                        <label for="guestVolume">ESTIMATED GUEST VOLUME ATTENDANCE</label>
+                        <div class="input-icon-shell">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <input type="number" id="guestVolume" placeholder="e.g. 150">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="input-field-wrapper textarea-fullwidth">
+                    <label for="eventNotes">THEMATIC TRACK PREFERENCES & EVENT NOTES</label>
+                    <div class="input-icon-shell textarea-shell">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="textarea-icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        <textarea id="eventNotes" placeholder="Describe any tracking macro thresholds, custom cloud sandboxes, or specific multi-track summit panel inclusions..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-error-alert-banner" id="formErrorAlert">Please fill in the fields</div>
+
+                <button type="submit" class="form-transmit-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    <span>Transmit Conference Blueprint Request</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Right Column Card: Directory Metadata Info -->
+        <div class="contact-column-card info-block-card" id="infoBlockCard">
+            <span class="card-badge-pill light-orange-pill">FLAGSHIP HEADQUARTERS HUB</span>
+            <h2 class="card-main-headline">Reach Our Summit Architects</h2>
+            <p class="card-sub-description">Connect directly with our corporate logistics staff to fast-track specialized seat bookings, custom registration badges, and track sponsorships.</p>
+            
+            <div class="info-meta-stack">
+                <div class="info-meta-row">
+                    <div class="row-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="row-text-content">
+                        <h5>VISIT OUR STUDIO</h5>
+                        <p>MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</p>
+                    </div>
+                </div>
+
+                <div class="info-meta-row">
+                    <div class="row-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="row-text-content">
+                        <h5>DIRECT HOTLINES</h5>
+                        <p><a href="tel:+917010792745" class="phone-link">+91 7010792745</a></p>
+                    </div>
+                </div>
+
+                <div class="info-meta-row clickable-mail-row">
+                    <div class="row-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div class="row-text-content">
+                        <h5>ELECTRONIC MAIL</h5>
+                        <p><a href="mailto:design@://stacklystudio.com" class="outlook-mail-trigger">design@stacklystudio.com</a></p>
+                    </div>
+                </div>
+
+                <div class="info-meta-row">
+                    <div class="row-icon-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="row-text-content">
+                        <h5>ATELIER AVAILABILITY</h5>
+                        <p>Mon - Sun: 9:00 AM - 7:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Core Section Framework Configuration */
+.contact-form-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom padding metrics */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+}
+
+/* FIXED ALIGNMENT ENGINE: Grid configuration forced onto a flat single line */
+.contact-form-container {
+    display: grid;
+    grid-template-columns: 1.22fr 0.78fr;
+    gap: 2.5rem;
+    align-items: stretch; /* Enforces uniform block heights across matching structural columns */
+    width: 100%;
+    margin: 0;
+}
+
+/* Base Card Blueprint Architectures */
+.contact-column-card {
+    background: #25162a; /* Solid contrasting color fill matching domain backdrop palette */
+    border: 1.5px solid rgba(255, 178, 148, 0.08);
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    box-sizing: border-box;
+    margin: 0; /* Zeroes loose exterior spacing shifts completely */
+    width: 100%;
+    
+    /* Scroll Reveal Animation Attributes */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.contact-column-card.animate-ready {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.contact-column-card:hover {
+    border-color: #ffb294; /* Vivid Peach glowing focus outline */
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.22);
+}
+
+/* Internal Metadata Elements Setup */
+.card-badge-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #ffb294;
+    background: rgba(255, 178, 148, 0.06);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.25rem;
+}
+
+.light-orange-pill {
+    color: #ffd264;
+    background: rgba(255, 210, 100, 0.06);
+    border-color: rgba(255, 210, 100, 0.15);
+}
+
+.card-main-headline {
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+    margin-top: 0;
+}
+
+.card-sub-description {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #b5a4ba;
+    margin-bottom: 2rem;
+    margin-top: 0;
+}
+
+/* Form Matrix Inputs Grid Alignment */
+.stackly-contact-form {
+    width: 100%;
+}
+
+.form-inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    width: 100%;
+    margin-bottom: 1.25rem;
+}
+
+.input-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.input-field-wrapper label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+}
+
+.input-icon-shell {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-shell svg {
+    position: absolute;
+    left: 1.2rem;
+    width: 16px;
+    height: 16px;
+    color: #b5a4ba;
+    pointer-events: none;
+}
+
+.input-icon-shell input,
+.input-icon-shell textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem 0.9rem 2.8rem;
+    font-size: 0.95rem;
+    color: #ffffff;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.input-icon-shell input:focus,
+.input-icon-shell textarea:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+}
+
+.textarea-fullwidth {
+    grid-column: span 2;
+    margin-top: 0.25rem;
+}
+
+.textarea-shell { align-items: start; }
+.textarea-icon { top: 1.1rem; }
+.input-icon-shell textarea { height: 110px; resize: none; padding-top: 1rem; }
+
+/* Validation Warning Banner */
+.form-error-alert-banner {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    background: rgba(255, 123, 123, 0.08);
+    border: 1px dashed #ff7b7b;
+    color: #ff7b7b;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 8px;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+    display: none;
+}
+
+.form-error-alert-banner.visible {
+    display: block;
+}
+
+/* Form Action Button */
+.form-transmit-btn {
+    width: auto;
+    background: #ffb294;
+    border: none;
+    border-radius: 8px;
+    padding: 0.9rem 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #211425;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 12px rgba(255, 178, 148, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-transmit-btn svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+.form-transmit-btn:hover { background: #ffffff; box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+.form-transmit-btn:hover svg { transform: translate(2px, -2px); }
+
+/* Right Column Directory Items Stack */
+.info-meta-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between; /* Spreads rows out to match form height boundaries evenly */
+}
+
+.info-meta-row {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 178, 148, 0.1);
+    padding: 1.15rem 1.25rem;
+    border-radius: 12px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.row-icon-box {
+    width: 44px;
+    height: 44px;
+    background: rgba(33, 20, 37, 0.8);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffb294;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.row-icon-box svg { width: 100%; height: 100%; }
+.row-text-content h5 { font-size: 0.72rem; font-weight: 800; color: #b5a4ba; letter-spacing: 0.08em; margin-bottom: 0.3rem; margin-top: 0; }
+.row-text-content p { font-size: 0.92rem; font-weight: 700; color: #ffffff; line-height: 1.45; margin: 0; }
+
+.phone-link, .outlook-mail-trigger {
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.phone-link:hover, .outlook-mail-trigger:hover {
+    color: #ffb294;
+    border-bottom-color: #ffb294;
+}
+
+.info-meta-row:hover {
+    border-color: #ffb294;
+    background: rgba(49, 24, 54, 0.4);
+}
+
+.clickable-mail-row:hover .row-icon-box {
+    background: #ffb294;
+    color: #211425;
+    border-color: #ffb294;
+    box-shadow: 0 0 10px rgba(255, 178, 148, 0.4);
+}
+
+/* Fluid Layout Responsive Adaptation Grid Constraints */
+@media (max-width: 1024px) {
+    .contact-form-container {
+        grid-template-columns: 1fr; /* Gracefully stacks column blocks on tablet/mobile screens */
+        gap: 2.5rem;
+    }
+    .info-meta-stack { gap: 1.25rem; }
+}
+
+@media (max-width: 650px) {
+    .form-inputs-grid { grid-template-columns: 1fr; }
+    .textarea-fullwidth { grid-column: span 1; }
+    .contact-column-card { padding: 1.5rem; }
+    .card-main-headline { font-size: 1.5rem; }
+    .form-transmit-btn { width: 100%; text-align: center; justify-content: center; }
+}
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // -------------------------------------------------------------
+    // 1. SELECTORS & TIMELINE VARIABLES (Preloader System)
+    // -------------------------------------------------------------
+    const progressFill = document.getElementById("progressFill");
+    const percentageText = document.getElementById("percentageText");
+    const preloaderOverlay = document.getElementById("preloaderOverlay");
+    const appWorkspace = document.getElementById("appWorkspace");
+    
+    const duration = 2000; // 2 seconds loading loop duration
+    const intervalTime = 20;     
+    const totalSteps = duration / intervalTime;
+    let currentStep = 0;
+
+    // -------------------------------------------------------------
+    // 2. PRELOADER INTEGRATION EXECUTION
+    // -------------------------------------------------------------
+    const loadingInterval = setInterval(() => {
+        currentStep++;
+        const progress = Math.min((currentStep / totalSteps) * 100, 100);
+        
+        if (progressFill) progressFill.style.width = `${progress}%`;
+        if (percentageText) percentageText.textContent = `${Math.floor(progress)}%`;
+
+        if (currentStep >= totalSteps) {
+            clearInterval(loadingInterval);
+            
+            // Clean exit transition sequence
+            setTimeout(() => {
+                if (preloaderOverlay) {
+                    preloaderOverlay.style.opacity = '0';
+                    preloaderOverlay.style.transform = 'scale(1.03)';
+                }
+                
+                setTimeout(() => {
+                    if (preloaderOverlay) preloaderOverlay.style.display = 'none';
+                    if (appWorkspace) {
+                        appWorkspace.style.opacity = '1';
+                        // Initialize all core screen layout functions on clear load pass
+                        initializeHeroFeatures();
+                        executeScrollAnimations();
+                        executeAboutScrollAnimations();
+                        processScrollTriggerActions();
+                        evaluateSpeakersScroll();
+                        executeFaqScrollObserver();
+                        executeBlogScrollObserver();
+                        executeSubscribeScrollObserver();
+                        evaluateWhoWeAreScrollAnimations();
+                        executeTestimonialScrollAnimations();
+                        executeFaqSplitScrollObserver();
+                        executeBlogGridScrollObserver();
+                        executePartnersScrollObserver();
+                        executeCurriculumScrollObserver();
+                        evaluateDetailsScroll();
+                        executeScheduleScrollObserver();
+                        executeContactFormReveal();
+                    }
+                }, 500);
+            }, 150);
+        }
+    }, intervalTime);
+
+    function initializeHeroFeatures() {
+        const heroCards = document.querySelectorAll('.hero-section .feature-card');
+        heroCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('reveal');
+            }, (index + 1) * 200);
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. CONTACT FORM VALIDATOR & LEVEL VIEWPORT ALIGNER
+    // -------------------------------------------------------------
+    const contactForm = document.getElementById("stacklyContactForm");
+    const formErrorAlert = document.getElementById("formErrorAlert");
+
+    const inputFields = [
+        document.getElementById("fullName"),
+        document.getElementById("mobileHandle"),
+        document.getElementById("emailAddress"),
+        document.getElementById("guestVolume"),
+        document.getElementById("eventNotes")
+    ];
+
+    if (contactForm) {
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault(); 
+            
+            let isFormValidAndFilled = true;
+            formErrorAlert.classList.remove("visible");
+
+            inputFields.forEach(input => {
+                if (input && input.value.trim() === "") {
+                    isFormValidAndFilled = false;
+                    input.style.borderColor = "#ff7b7b"; // Flag fields in warning crimson border
+                }
+            });
+
+            if (!isFormValidAndFilled) {
+                formErrorAlert.classList.add("visible"); 
+            } else {
+                window.location.href = "404.html"; // Routes explicitly to tracking page
+            }
+        });
+
+        inputFields.forEach(input => {
+            if (input) {
+                input.addEventListener("input", () => {
+                    formErrorAlert.classList.remove("visible");
+                    input.style.borderColor = "rgba(255, 178, 148, 0.15)";
+                });
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 4. ACCORDION FAQ TIMETABLE MECHANISMS
+    // -------------------------------------------------------------
+    const slotVisibleTriggers = document.querySelectorAll(".slot-visible-trigger");
+    slotVisibleTriggers.forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            const currentSlotCard = trigger.closest(".schedule-card-slot");
+            const hiddenDrawerPanel = currentSlotCard.querySelector(".slot-hidden-drawer");
+            const isCurrentlyActiveOpen = currentSlotCard.classList.contains("active");
+
+            document.querySelectorAll(".schedule-card-slot.active").forEach(activeSlot => {
+                if (activeSlot !== currentSlotCard) {
+                    activeSlot.classList.remove("active");
+                    activeSlot.querySelector(".slot-hidden-drawer").style.maxHeight = "0";
+                }
+            });
+
+            if (isCurrentlyActiveOpen) {
+                currentSlotCard.classList.remove("active");
+                hiddenDrawerPanel.style.maxHeight = "0";
+            } else {
+                currentSlotCard.classList.add("active");
+                hiddenDrawerPanel.style.maxHeight = hiddenDrawerPanel.scrollHeight + "px";
+            }
+        });
+    });
+
+    // -------------------------------------------------------------
+    // 5. BACK TO TOP SCROLL ANCHOR LOOP
+    // -------------------------------------------------------------
+    const backToTopBtn = document.getElementById("backToTopTrigger");
+    const scrollingElement = document.querySelector(".content-body") || window;
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (scrollingElement === window) {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+                scrollingElement.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 6. CENTRALIZED SCROLL OBSERVER MECHANISMS
+    // -------------------------------------------------------------
+    const formBlockCard = document.getElementById("formBlockCard");
+    const infoBlockCard = document.getElementById("infoBlockCard");
+
+    function executeContactFormReveal() {
+        const structuralTriggerPoint = window.innerHeight * 0.95;
+        const isScrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 150);
+
+        if (formBlockCard && (formBlockCard.getBoundingClientRect().top < structuralTriggerPoint || isScrolledToBottom)) {
+            formBlockCard.classList.add("animate-ready");
+        }
+        if (infoBlockCard && (infoBlockCard.getBoundingClientRect().top < structuralTriggerPoint || isScrolledToBottom)) {
+            infoBlockCard.classList.add("animate-ready");
+        }
+    }
+
+    // Bind scroll execution tracking loops across both container channels
+    scrollingElement.addEventListener("scroll", executeContactFormReveal);
+    window.addEventListener("scroll", executeContactFormReveal);
+});
+
+</script>
+
+<section class="venue-map-section">
+    <div class="venue-map-container">
+        
+        <!-- Left Column: Context Metadata & Location Details (Slides from Left) -->
+        <div class="map-content-side fly-in-left" id="mapContentSide">
+            <span class="map-badge-pill">CONFERENCE VENUE</span>
+            <h2 class="map-main-headline" id="mapSectionTitle">The Flagship Event Destination Corridor</h2>
+            <p class="map-sub-description">Stackly 2026 takes place at the premier MMR Complex hub. An architectural marvel optimized with hyper-speed tech corridors, high-capacity workshop labs, and immersive staging arenas.</p>
+            
+            <div class="location-details-box">
+                <div class="detail-row">
+                    <div class="detail-icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="detail-text-content">
+                        <h5>VENUE ATELIER LOCATION</h5>
+                        <p>MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button: Launches Precise Google Maps Coordinates Natively -->
+            <a href="https://google.com" target="_blank" rel="noopener noreferrer" class="open-map-location-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+                <span>Open Map Location</span>
+            </a>
+        </div>
+
+        <!-- Right Column: Customized Layout Map Image Frame (Glides up from Bottom) -->
+        <div class="map-visual-side fly-in-bottom" id="mapVisualSide">
+            <div class="map-ambient-glow-blob"></div>
+            <div class="map-image-mask-box">
+                <!-- Visual Map Backdrop Image Tag Placement Slot -->
+                <img src="https://unsplash.com" alt="Stackly architectural city location guide roadmap mapping framework">
+                
+                <!-- Graphic overlay pin marker mimicking interactive maps layout templates -->
+                <div class="map-graphic-pin-marker">
+                    <div class="pulse-ring"></div>
+                    <div class="pin-dot"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.venue-map-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+}
+
+.venue-map-container {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Content Column Configuration */
+.map-content-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    
+    /* Scroll Trigger Initialization Transforms */
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Title Word-by-Word Side Slide Animations */
+.map-content-side.fly-in-left {
+    transform: translateX(-60px); /* Slides horizontally from the left side */
+}
+
+.map-content-side.animate-ready {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.map-badge-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #ffb294; /* Vivid Peach theme branding token color */
+    background: rgba(255, 178, 148, 0.06);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.25rem;
+}
+
+.map-main-headline {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    margin-top: 0;
+}
+
+/* Text Split Parsing Word Rules Hooks */
+.map-main-headline span {
+    display: inline-block;
+    transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.map-main-headline:hover {
+    text-shadow: 0 0 15px rgba(255, 178, 148, 0.3);
+}
+
+.map-sub-description {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 2rem;
+    margin-top: 0;
+}
+
+.location-details-box {
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 1.25rem;
+    align-items: center;
+    width: 100%;
+    background: rgba(33, 20, 37, 0.5); /* Deep translucent plum card layout backdrop */
+    border: 1px solid rgba(255, 178, 148, 0.06);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.detail-icon-circle {
+    width: 44px;
+    height: 44px;
+    background: rgba(33, 20, 37, 0.8);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffb294;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.detail-icon-circle svg {
+    width: 100%;
+    height: 100%;
+}
+
+.detail-text-content h5 {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #b5a4ba;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+    margin-top: 0;
+}
+
+.detail-text-content p {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.45;
+    margin: 0;
+}
+
+/* Hover Content Glow Effect over row items blocks */
+.detail-row:hover {
+    border-color: #ffb294;
+    background: rgba(49, 24, 54, 0.5);
+}
+
+/* Open Map Trigger Launch Button */
+.open-map-location-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffb294; /* Peach theme fill color rules */
+    border: none;
+    border-radius: 30px;
+    padding: 0.9rem 2rem;
+    color: #211425;
+    font-size: 0.98rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 178, 148, 0.25);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.open-map-location-btn svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.open-map-location-btn:hover {
+    background: #ffffff;
+    color: #211425;
+    box-shadow: 0 6px 22px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.open-map-location-btn:hover svg {
+    transform: scale(1.08) rotate(5deg);
+}
+
+/* Right Column: Customized Graphic Map Architecture Frame Box */
+.map-visual-side {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Image Bottom Rise Animation initial setup rules requested */
+.map-visual-side.fly-in-bottom {
+    transform: translateY(60px);
+}
+
+.map-visual-side.animate-ready {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.map-ambient-glow-blob {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.map-image-mask-box {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    aspect-ratio: 16 / 11; /* Wide creative screen framework proportions */
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    background: #190f1d;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.map-image-mask-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.65) contrast(1.1) saturate(0.8); /* Technical schematic map rendering filter */
+    transition: transform 0.6s ease;
+}
+
+/* Interactive Map Card Hover Zoom and Core Outlines Glow */
+.map-image-mask-box:hover {
+    transform: scale(1.02) translateY(-4px);
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.3);
+}
+
+.map-image-mask-box:hover img {
+    transform: scale(1.03);
+}
+
+/* Graphic Pin Animation Layout layers mimicking real tracking markers */
+.map-graphic-pin-marker {
+    position: absolute;
+    top: 48%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.pin-dot {
+    width: 12px;
+    height: 12px;
+    background: #ffb294;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ffb294;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: -14px;
+    left: -14px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ffb294;
+    border-radius: 50%;
+    opacity: 0;
+    animation: mapPinPulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes mapPinPulse {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { opacity: 0.6; }
+    100% { transform: scale(1.2); opacity: 0; }
+}
+
+/* Fluid Responsive Breakpoint Scale Operations (Strict 20px Side Clearances preserved) */
+@media (max-width: 992px) {
+    .venue-map-container {
+        grid-template-columns: 1fr;
+        gap: 3.5rem;
+    }
+    .map-content-side { align-items: center; }
+    .map-main-headline { text-align: center; font-size: 2rem; }
+    .map-sub-description { text-align: center; }
+    .map-image-mask-box { max-width: 400px; margin: 0 auto; }
+    /* Flatten sliding transforms safely to standard vertical arrivals on small layouts stacks */
+    .map-content-side.fly-in-left { transform: translateY(30px); }
+}
+
+@media (max-width: 576px) {
+    .venue-map-section { padding: 40px 20px 20px 20px; }
+    .map-main-headline { font-size: 1.75rem; }
+    .map-sub-description { font-size: 0.95rem; }
+    .detail-row { padding: 1rem; }
+    .detail-text-content p { font-size: 0.88rem; }
+    .open-map-location-btn { width: 100%; text-align: center; justify-content: center; }
+    .map-image-mask-box { max-width: 290px; border-radius: 14px; }
+}
+
+</style>
+
+<script>
+    // Append these snippet lines cleanly within your centralized script setup thread
+const mapTitleElement = document.getElementById("mapSectionTitle");
+if (mapTitleElement) {
+    const words = mapTitleElement.textContent.split(" ");
+    mapTitleElement.textContent = ""; 
+    words.forEach(word => {
+        const span = document.createElement("span");
+        span.textContent = word;
+        mapTitleElement.appendChild(span);
+    });
+}
+
+// Incorporate this sub-tracker block straight into your centralized Scroll tracking functions pass
+const mapContentSide = document.getElementById("mapContentSide");
+const mapVisualSide = document.getElementById("mapVisualSide");
+
+function executeMapSectionScrollReveal() {
+    const windowTriggerBoundsHeight = window.innerHeight * 0.92;
+    const reachedPageBottomLimit = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 180);
+
+    if (mapContentSide && (mapContentSide.getBoundingClientRect().top < windowTriggerBoundsHeight || reachedPageBottomLimit)) {
+        mapContentSide.classList.add("animate-ready");
+    }
+    if (mapVisualSide && (mapVisualSide.getBoundingClientRect().top < windowTriggerBoundsHeight || reachedPageBottomLimit)) {
+        mapVisualSide.classList.add("animate-ready");
+    }
+}
+
+// Bind handlers to scroll channels
+const centralScrollWrapper = document.querySelector(".content-body") || window;
+centralScrollWrapper.addEventListener("scroll", executeMapSectionScrollReveal);
+window.addEventListener("scroll", executeMapSectionScrollReveal);
+
+</script>
+
+<section class="subscribe-section-fullwidth">
+    <!-- Abstract Ambient Tech Overlay Background -->
+    <div class="subscribe-bg-overlay"></div>
+
+    <div class="subscribe-container">
+        <!-- Content Column -->
+        <div class="subscribe-content">
+            <span class="subscribe-badge">STAY UP TO DATE</span>
+            
+            <!-- Title Words Fly in from Left/Right Sides Alternately -->
+            <h2 class="subscribe-title" id="subscribeTitle">Join the Stackly Architecture Loop</h2>
+            
+            <p class="subscribe-subtitle rise-element animate-in">Get deep technical breakdowns, event schedule updates, and flagship track announcements directly in your inbox.</p>
+            
+            <!-- Interactive Subscription Form Shell Framework -->
+            <form class="subscribe-form-matrix rise-element animate-in" id="subscribeForm" novalidate>
+                <div class="input-glow-wrapper">
+                    <input type="email" id="subscriberEmail" placeholder="Enter your enterprise email..." aria-label="Email address field">
+                    <!-- Dynamic client status notification field -->
+                    <div class="form-status-alert" id="formStatusAlert">Please fill in the fields</div>
+                </div>
+                <button type="submit" class="subscribe-submit-btn">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Section Shell Wrapper */
+.subscribe-section-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with generous side edge clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #170d1a 0%, #2d1933 50%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Abstract Radial Ambient Backing Grid Layer */
+.subscribe-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 178, 148, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Internal Alignment Container Shield */
+.subscribe-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px; /* Constrains input content neatly to the readable center fields */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.subscribe-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.subscribe-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Peach Family Accent focus */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Reveal Alternating from Left/Right Sides */
+.subscribe-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+.subscribe-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Initial Directional States for Word Reveal */
+.subscribe-title span.fly-left { transform: translateX(-60px); }
+.subscribe-title span.fly-right { transform: translateX(60px); }
+
+.subscribe-title span.reveal {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Title Hover Accent Glow */
+.subscribe-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.3);
+}
+
+/* Content Rising Elements Setup - Fixed: Visible by default with a smooth micro-scale */
+.rise-element {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rise-element.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.subscribe-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+.subscribe-subtitle:hover {
+    color: #ffffff;
+}
+
+/* Subscription Form Inputs Grid Layout */
+.subscribe-form-matrix {
+    display: flex;
+    width: 100%;
+    max-width: 580px;
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.input-glow-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subscribe-form-matrix input[type="email"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    border-radius: 50px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Input Box Glow Effect on Focus & Hover */
+.subscribe-form-matrix input[type="email"]:hover,
+.subscribe-form-matrix input[type="email"]:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 20px rgba(255, 178, 148, 0.15);
+}
+
+/* Validation Alert Message Box Styling */
+.form-status-alert {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ff7b7b;
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-status-alert.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Subscription CTA Trigger Button */
+.subscribe-submit-btn {
+    background: #ffb294;
+    color: #211425;
+    border: none;
+    padding: 0 2.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 5px 15px rgba(255, 178, 148, 0.2);
+}
+
+.subscribe-submit-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Strict Mobile Scaling Matrix (Preserving edge boundaries) */
+@media (max-width: 768px) {
+    .subscribe-section-fullwidth { padding: 40px 20px 25px 20px; }
+    .subscribe-title { font-size: 2rem; }
+    .subscribe-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+    .subscribe-form-matrix { flex-direction: column; gap: 1.5rem; }
+    .subscribe-submit-btn { padding: 1rem 0; width: 100%; }
+    .form-status-alert { top: auto; bottom: calc(100% + 6px); } /* Flips status position to fit stacked inputs cleanly */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // -------------------------------------------------------------
+    // 1. TEXT PARSING (Alternating side word-by-word entry)
+    // -------------------------------------------------------------
+    const subscribeTitleContainer = document.getElementById("subscribeTitle");
+    if (subscribeTitleContainer) {
+        const words = subscribeTitleContainer.textContent.split(" ");
+        subscribeTitleContainer.textContent = ""; 
+        
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            
+            // Staggers fly-in directions by index coordinates
+            if (index % 2 === 0) {
+                span.classList.add("fly-left");
+            } else {
+                span.classList.add("fly-right");
+            }
+            
+            subscribeTitleContainer.appendChild(span);
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 2. LIVE VALIDATION & REDIRECT SUBMISSION INTERCEPTOR
+    // -------------------------------------------------------------
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const formStatusAlert = document.getElementById("formStatusAlert");
+
+    if (subscribeForm) {
+        subscribeForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Blocks raw webpage page reloading loops
+            
+            const emailValue = subscriberEmail.value.trim();
+
+            if (emailValue === "") {
+                // Input empty context handler
+                formStatusAlert.textContent = "Please fill in the fields";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                // Invalid regex configuration sequence fallback
+                formStatusAlert.textContent = "Please enter a valid email address";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else {
+                // Validation passed completely -> Proceed immediately to 404 URL
+                formStatusAlert.classList.remove("visible");
+                subscriberEmail.style.borderColor = "#ffb294";
+                window.location.href = "404.html";
+            }
+        });
+
+        // Instantly wipe validation boundary errors when text input scales
+        subscriberEmail.addEventListener("input", () => {
+            formStatusAlert.classList.remove("visible");
+            subscriberEmail.style.borderColor = "rgba(255, 255, 255, 0.08)";
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. SCROLL INTERSECTION ENGINE (With bottom gap edge recovery)
+    // -------------------------------------------------------------
+    const scrollShell = document.querySelector(".content-body") || window;
+    const subscribeTitleSpans = document.querySelectorAll(".subscribe-title span");
+    const subscribeRisingElements = document.querySelectorAll(".rise-element");
+
+    function executeSubscribeScrollObserver() {
+        // Generous vertical window evaluation target threshold
+        const triggerHeight = window.innerHeight * 0.95; 
+        
+        // Safety Fallback Check: Evaluates true if page spacing constraints block deeper scrolls
+        const isPageScrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 120);
+
+        // Header Title Sequence Revelations
+        subscribeTitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    span.classList.add("reveal"); 
+                }, index * 80);
+            }
+        });
+
+        // Form fields and buttons sequential riser animations loop
+        subscribeRisingElements.forEach((element, index) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    element.classList.add("animate-in"); 
+                }, 150 * (index + 1)); // 150ms structural staging separation
+            }
+        });
+    }
+
+    // Register section observers on active scrolling frames
+    scrollShell.addEventListener("scroll", executeSubscribeScrollObserver);
+    window.addEventListener("scroll", executeSubscribeScrollObserver);
+    
+    // Safety verification check pass to check visibility constraints instantly on component mounts
+    setTimeout(executeSubscribeScrollObserver, 400);
+});
+
+</script>
+
+<footer class="main-footer">
+    <div class="footer-upper-grid">
+        
+        <!-- Column 1: Brand Info & Social Media Links -->
+        <div class="footer-column brand-summary-col">
+            <a href="#" class="footer-logo-link" id="backToTopTrigger" aria-label="Back to Top">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="footer-brand-img">
+                <span class="footer-brand-text">STACKLY</span>
+            </a>
+            <p class="footer-description">
+                Engineering premier developer conventions and high-fidelity tech ecosystem environments designed to fuel open-source web frameworks.
+            </p>
+            <div class="footer-social-row">
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+               <a href="404.html" class="social-circle-link" aria-label="Twitter X">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+    </svg>
+</a>
+
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Event Tracks Quick Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Explore Tracks</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Edge Micro-Frontends</a></li>
+                <li><a href="404.html">Zero-Trust Infrastructures</a></li>
+                <li><a href="404.html">Generative Layout Systems</a></li>
+                <li><a href="404.html">Cloud Native Sandboxes</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Attendee Support Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Event Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Technical Lab Parameters</a></li>
+                <li><a href="404.html">Registration Badges</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Location & Contact Metadata -->
+        <div class="footer-column info-metadata-col">
+            <h3 class="footer-header-title">Headquarters Location</h3>
+            <div class="metadata-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="meta-text-content">MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</span>
+            </div>
+            <div class="metadata-row phone-link-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span class="meta-text-content">+91 7010792745</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legals Banner -->
+    <div class="footer-bottom-bar">
+        <div class="bottom-bar-inner">
+            <p class="copyright-notice">&copy; 2026 Stackly Industries. All conference rights reserved.</p>
+            <div class="legal-links-row">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Base Framework */
+.main-footer {
+    width: 100%;
+    background-color: #0c0710; /* Rich dark plum base matching platform palette */
+    border-top: 1px solid rgba(255, 178, 148, 0.06);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    margin-top: 4rem;
+}
+
+/* Upper Four-Column Grid Structure */
+.footer-upper-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 50px 20px; /* Precise 20px side padding constraints preserved */
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr 0.9fr 1.1fr;
+    gap: 3.5rem;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Brand Link and Description Styling */
+.footer-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+}
+
+.footer-brand-img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-brand-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    max-width: 320px;
+}
+
+/* Circular Social Icons Row */
+.footer-social-row {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #b5a4ba;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Hover Glowing Interactivity Elements */
+.social-circle-link:hover {
+    color: #ffb294; /* Vivid Peach Accent */
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.05);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Column Header Categories */
+.footer-header-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+/* Custom Underline Accent Line Template */
+.footer-header-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #ffb294;
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(255, 178, 148, 0.6);
+}
+
+/* Navigation Lists Layout */
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: #b5a4ba;
+    font-weight: 500;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #ffb294;
+    transform: translateX(3px);
+}
+
+/* Metadata Rows for Location & Phone info */
+.metadata-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+}
+
+.meta-icon {
+    width: 18px;
+    height: 18px;
+    color: #ffb294;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.meta-text-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    text-align: left;
+}
+
+.phone-link-row .meta-text-content {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Bottom Legals Bar Framework */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 25px 0;
+    background-color: #070409;
+}
+
+.bottom-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright-notice {
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+}
+
+.legal-links-row {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.legal-links-row a {
+    text-decoration: none;
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+    transition: color 0.25s ease;
+}
+
+.legal-links-row a:hover {
+    color: #ffb294;
+}
+
+/* Strict Layout Responsive Adaptation Boundaries */
+@media (max-width: 992px) {
+    .footer-upper-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+    .footer-description { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .footer-upper-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 40px 20px 30px 20px;
+    }
+    .bottom-bar-inner {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    .legal-links-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Back to Top Click Trigger Functionality
+    const backToTopBtn = document.getElementById("backToTopTrigger");
+    
+    // Checks if the internal app container is managing scrolling offsets, or falls back to window object viewport
+    const scrollingElement = document.querySelector(".content-body") || window;
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // Blocks flash anchor resets
+            
+            if (scrollingElement === window) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            } else {
+                scrollingElement.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        });
+    }
+});
+
+</script>

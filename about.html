@@ -1,0 +1,3842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly - Event Experience</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Vector Icons Background -->
+    <div class="floating-icons-container">
+        <svg class="float-icon icon-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+        <svg class="float-icon icon-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <svg class="float-icon icon-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <svg class="float-icon icon-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <svg class="float-icon icon-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+
+    <!-- Preloader Overlay View -->
+    <div class="preloader-overlay" id="preloaderOverlay">
+        <div class="loader-content">
+            <div class="brand-wrapper">
+                <div class="brand-logo-loader">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FFB294" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <h1 class="brand-name-loader">Stackly</h1>
+            </div>
+            <p class="loading-status">Preparing the conference experience...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+            <div class="percentage" id="percentageText">0%</div>
+        </div>
+    </div>
+
+    <!-- Main Workspace (Hidden Initially, Revealed Post-Load) -->
+    <div class="app-workspace" id="appWorkspace">
+        <!-- Floating Transparent Header -->
+        <header class="main-header">
+            <div class="header-inner">
+                <!-- Brand Logo (Img tag references the page loop) -->
+                <a href="#" class="logo-link" onclick="window.location.reload(); return false;">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="brand-img">
+                    <span class="brand-logo-text">Stackly</span>
+                </a>
+
+                <!-- Responsive Navigation Drawer -->
+                <nav class="nav-menu-container" id="navMenuContainer">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-item ">Home</a></li>
+                        <li><a href="About.html" class="nav-item active">About Us</a></li>
+                        <li><a href="services.html" class="nav-item">Services</a></li>
+                        <li><a href="blogs.html" class="nav-item">Blogs</a></li>
+                        <li><a href="contact.html" class="nav-item">Contact Us</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Auth Action Workspace -->
+                <div class="auth-wrapper">
+                    <button class="auth-btn">Register Pass</button>
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation Menu">
+                        <span class="bar bar-top"></span>
+                        <span class="bar bar-mid"></span>
+                        <span class="bar bar-bot"></span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+       
+   
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // =========================================================
+    // 0. PRELOADER SCROLL LOCK
+    // =========================================================
+    // Prevent scrolling while the preloader is visible
+    document.body.classList.add("preloader-active");
+
+
+    // =========================================================
+    // 1. DOM Elements Mapping
+    // =========================================================
+    const progressFill = document.getElementById("progressFill");
+    const percentageText = document.getElementById("percentageText");
+    const preloaderOverlay = document.getElementById("preloaderOverlay");
+    const appWorkspace = document.getElementById("appWorkspace");
+
+
+    // =========================================================
+    // 2. Timeline Variables (2 Seconds)
+    // =========================================================
+    const duration = 2000;
+    const intervalTime = 20;
+    const totalSteps = duration / intervalTime;
+    let currentStep = 0;
+
+
+    // =========================================================
+    // 3. Preloader Progress Loop Execution
+    // =========================================================
+    const loadingInterval = setInterval(() => {
+
+        currentStep++;
+
+        const progress = Math.min(
+            (currentStep / totalSteps) * 100,
+            100
+        );
+
+
+        // Update progress bar
+        if (progressFill) {
+            progressFill.style.width = `${progress}%`;
+        }
+
+
+        // Update percentage
+        if (percentageText) {
+            percentageText.textContent = `${Math.floor(progress)}%`;
+        }
+
+
+        // =====================================================
+        // Loading Complete
+        // =====================================================
+        if (currentStep >= totalSteps) {
+
+            clearInterval(loadingInterval);
+
+
+            // Small delay before starting exit animation
+            setTimeout(() => {
+
+                // Fade and slightly scale the preloader
+                if (preloaderOverlay) {
+
+                    preloaderOverlay.style.opacity = "0";
+                    preloaderOverlay.style.transform = "scale(1.03)";
+                }
+
+
+                // Wait for fade animation to complete
+                setTimeout(() => {
+
+                    // Remove preloader from display
+                    if (preloaderOverlay) {
+                        preloaderOverlay.style.display = "none";
+                    }
+
+
+                    // =================================================
+                    // ENABLE PAGE SCROLLING
+                    // =================================================
+                    document.body.classList.remove("preloader-active");
+                    document.body.classList.add("preloader-finished");
+
+
+                    // =================================================
+                    // REVEAL MAIN WORKSPACE
+                    // =================================================
+                    if (appWorkspace) {
+
+                        appWorkspace.style.opacity = "1";
+
+                        // Trigger feature card reveal animation
+                        initializeHeroFeatures();
+                    }
+
+                }, 500);
+
+            }, 150);
+        }
+
+    }, intervalTime);
+
+
+    // =========================================================
+    // 4. Staggered Feature Entry Sequence
+    // =========================================================
+    function initializeHeroFeatures() {
+
+        const cards = document.querySelectorAll(".feature-card");
+
+
+        cards.forEach((card, index) => {
+
+            setTimeout(() => {
+
+                card.classList.add("reveal");
+
+            }, (index + 1) * 200);
+
+        });
+    }
+
+
+    // =========================================================
+    // 5. Navigation Menu Active & Mobile Toggle Logic
+    // =========================================================
+    const navItems = document.querySelectorAll(".nav-item");
+    const hamburgerToggle = document.getElementById("hamburgerToggle");
+    const navMenuContainer = document.getElementById("navMenuContainer");
+
+
+    // =========================================================
+    // Navigation Item Click
+    // =========================================================
+    navItems.forEach(item => {
+
+        item.addEventListener("click", (e) => {
+
+            // Remove active state from current item
+            document
+                .querySelector(".nav-item.active")
+                ?.classList.remove("active");
+
+
+            // Add active state to clicked item
+            e.currentTarget.classList.add("active");
+
+
+            // Close mobile navigation
+            if (hamburgerToggle && navMenuContainer) {
+
+                hamburgerToggle.classList.remove("open");
+                navMenuContainer.classList.remove("open");
+            }
+
+        });
+
+    });
+
+
+    // =========================================================
+    // 6. Mobile Hamburger Toggle
+    // =========================================================
+    if (hamburgerToggle && navMenuContainer) {
+
+        hamburgerToggle.addEventListener("click", () => {
+
+            hamburgerToggle.classList.toggle("open");
+            navMenuContainer.classList.toggle("open");
+
+        });
+
+    }
+
+});
+    </script>
+
+    <section class="about-hero-section">
+    <div class="about-hero-container">
+        
+        <!-- Left Column: Content Narrative & Staggered Scroll Entrances -->
+        <div class="about-hero-text">
+            <span class="about-hero-badge">OUR MANIFESTO</span>
+            
+            <!-- Title Words Appear Word-by-Word -->
+            <h1 class="about-hero-title" id="aboutHeroTitle">Shaping Global Tech Conversations</h1>
+            
+            <!-- Paragraph Elements Slide In From the Sides with Hover Glow -->
+            <div class="about-hero-paragraphs">
+                <p class="about-hero-para slide-from-left">
+                    At Stackly, we believe that real engineering progress happens when production limits are broken down out in the open. We construct the physical and digital pipelines that let thousands of creators gather, debate, and deploy together.
+                </p>
+                <p class="about-hero-para slide-from-right">
+                    Our platform destroys standard corporate learning formats, turning passive video slide screens into live code sandboxes, collaborative labs, and high-impact developer summits.
+                </p>
+            </div>
+
+            <!-- CTA Buttons Rise Up From the Bottom -->
+            <div class="about-hero-cta rise-from-bottom" id="aboutHeroCta">
+                <a href="#vision" class="about-hero-btn btn-primary">Our Vision</a>
+                <a href="404.html" class="about-hero-btn btn-secondary">Past Highlights</a>
+            </div>
+        </div>
+
+        <!-- Right Column: Automated 2-Second Image Cross-Fade Slideshow -->
+        <div class="about-hero-visual" id="slideshowFrame">
+            <div class="about-hero-glow"></div>
+            <div class="slideshow-container">
+                <!-- Image Tag List: Controlled dynamically by JavaScript -->
+                <img src="https://unsplash.com" alt="Tech Conference Arena Keynote" class="slide-img active">
+                <img src="https://unsplash.com" alt="Collaborative Technical Lab Workspace" class="slide-img">
+                <img src="https://unsplash.com" alt="Software Architecture Engineers Group" class="slide-img">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Layout Canvas Setup */
+.about-hero-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 150px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.about-hero-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Content Column Configuration */
+.about-hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.about-hero-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Peach Theme Accent */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Title Reveal Structure */
+.about-hero-title {
+    font-size: 3.4rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 12px;
+    overflow: hidden;
+}
+
+.about-hero-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    background: linear-gradient(135deg, #ffffff 50%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-hero-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Side Sliding Paragraph Layout Frames */
+.about-hero-paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.about-hero-para {
+    font-size: 1.08rem;
+    line-height: 1.65;
+    color: #b5a4ba;
+    max-width: 550px;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Dynamic Entrance Formats for Text Rows */
+.about-hero-para.slide-from-left { transform: translateX(-60px); }
+.about-hero-para.slide-from-right { transform: translateX(60px); }
+
+.about-hero-para.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Interactive Text Glow Hover Filters to Paragraphs */
+.about-hero-para:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+/* Bottom Rising Action Buttons */
+.about-hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-hero-cta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about-hero-btn {
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 6px 20px rgba(255, 178, 148, 0.15);
+}
+
+.btn-primary:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Right Column: Dynamic Slideshow Container Shell */
+.about-hero-visual {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 1s ease-out, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-hero-visual.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.about-hero-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.1) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 4 / 5;
+    border-radius: 32px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.12);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.4);
+    background: #150d17;
+}
+
+/* Slide Image Core Layers */
+.slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.02);
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    z-index: 1;
+}
+
+/* Active State for Cross-Fading slideshow images */
+.slide-img.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+/* Comprehensive Responsive Grid Systems (Strict 20px Side Padding) */
+@media (max-width: 992px) {
+    .about-hero-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+    }
+    .about-hero-text { align-items: center; }
+    .about-hero-title { justify-content: center; font-size: 2.8rem; }
+    .about-hero-para { margin: 0 auto; }
+    .about-hero-cta { justify-content: center; }
+    .slideshow-container { max-width: 360px; aspect-ratio: 1 / 1; } /* Converts to square frame box on tablets */
+}
+
+@media (max-width: 576px) {
+    .about-hero-section { padding: 40px 20px 20px 20px; }
+    .about-hero-title { font-size: 2.1rem; gap: 0 8px; }
+    .slideshow-container { max-width: 290px; border-radius: 24px; }
+    .about-hero-cta { width: 100%; flex-direction: column; gap: 0.8rem; }
+    .about-hero-btn { text-align: center; width: 100%; }
+    .about-hero-para.slide-from-left, 
+    .about-hero-para.slide-from-right { transform: translateY(30px); } /* Safe vertical swap tracking for small viewports */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Title Segmentation Engine (Word-by-word rising up from bottom)
+    const titleBlock = document.getElementById("aboutHeroTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // Capture component element instances
+    const titleSpans = document.querySelectorAll(".about-hero-title span");
+    const paragraphs = document.querySelectorAll(".about-hero-para");
+    const ctaGroup = document.getElementById("aboutHeroCta");
+    const slideshowFrame = document.getElementById("slideshowFrame");
+
+    // 2. Immediate Entrance Animators Pass
+    function triggerEntranceAnimations() {
+        // Word-by-word title expansion reveal sequence
+        titleSpans.forEach((span, index) => {
+            setTimeout(() => {
+                span.classList.add("reveal");
+            }, index * 90);
+        });
+
+        // Parallel horizontal slide animation reveal triggers for paragraphs
+        paragraphs.forEach((para, index) => {
+            setTimeout(() => {
+                para.classList.add("animate-in");
+            }, 150 * (index + 1));
+        });
+
+        // Bottom rising CTA buttons trigger execution
+        setTimeout(() => {
+            if (ctaGroup) ctaGroup.classList.add("animate-in");
+        }, 450);
+
+        // Slide frame zoom entry reveal trigger
+        setTimeout(() => {
+            if (slideshowFrame) slideshowFrame.classList.add("animate-in");
+        }, 200);
+    }
+
+    // Fire entrance stack immediately upon loading scripts
+    setTimeout(triggerEntranceAnimations, 100);
+
+    // -------------------------------------------------------------
+    // 3. AUTOMATED 2-SECOND AUTOMATED IMAGE SLIDESHOW ENGINE
+    // -------------------------------------------------------------
+    const slideImages = document.querySelectorAll(".slideshow-container .slide-img");
+    let currentSlideIndex = 0;
+
+    function transitionSlideshow() {
+        if (slideImages.length <= 1) return; // Aborts rotation if list has insufficient frames
+
+        // Clear active display tag from previous instance image frame
+        slideImages[currentSlideIndex].classList.remove("active");
+
+        // Increment index step mapping wrap boundaries natively
+        currentSlideIndex = (currentSlideIndex + 1) % slideImages.length;
+
+        // Add active showcase state tag onto next picture element block
+        slideImages[currentSlideIndex].classList.add("active");
+    }
+
+    // Set precise execution runtime thread intervals locked exactly at 2000 milliseconds
+    setInterval(transitionSlideshow, 2000);
+});
+
+</script>
+
+<section class="why-stackly-section">
+    <!-- Letter-by-Letter Scroll Triggered Title -->
+    <h2 class="why-main-title" id="whyMainTitle">Engineered For Creators</h2>
+
+    <div class="why-grid-container">
+        
+        <!-- Left Column: Core Value Points Matrix -->
+        <div class="why-content-side">
+            <ul class="why-points-list" id="whyPointsList">
+                <li class="why-point-item">
+                    <div class="why-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    </div>
+                    <div class="why-point-text">
+                        <h3>Multi-Track Live Sandboxes</h3>
+                        <p>Ditch the passive screen share loops. Spin up remote isolated test instances inside live keynote streams directly.</p>
+                    </div>
+                </li>
+
+                <li class="why-point-item">
+                    <div class="why-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <div class="why-point-text">
+                        <h3>Verified Architectural Networks</h3>
+                        <p>Connect immediately with over 5,000+ certified production engineers and systems software leads globally.</p>
+                    </div>
+                </li>
+
+                <li class="why-point-item">
+                    <div class="why-icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div class="why-point-text">
+                        <h3>Sub-Millisecond Hydration Labs</h3>
+                        <p>Participate in fast diagnostic hackathons focused strictly on deployment optimizations and web runtime security.</p>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- CTA Actions Rising from Bottom -->
+            <div class="why-cta-wrapper entry-element" id="whyCtaWrapper">
+                <a href="404.html" class="why-action-btn fill-peach">Download Prospectus</a>
+            </div>
+        </div>
+
+        <!-- Right Column: Visual Image Glides up from Bottom -->
+        <div class="why-visual-side entry-element" id="whyVisualSide">
+            <div class="why-ambient-glow"></div>
+            <div class="why-image-mask">
+                <img src="https://unsplash.com" alt="Engineers analyzing network metrics in real-time labs">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Containers */
+.why-stackly-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+/* Letter-by-Letter Header Styling */
+.why-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 2px;
+    margin-bottom: 3.5rem;
+}
+
+.why-main-title div {
+    display: flex;
+}
+
+.why-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-main-title span.active {
+    opacity: 1;
+    transform: translateY(0);
+    text-shadow: 0 0 15px rgba(255, 178, 148, 0.35);
+}
+
+/* Main Content Grid Framework */
+.why-grid-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+}
+
+.why-content-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Bullet Points Matrix List */
+.why-points-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.why-point-item {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    width: 100%;
+    cursor: default;
+    
+    /* Scroll Trigger Offsets */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-point-item.animate-ready {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.why-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 178, 148, 0.08);
+    color: #ffb294; /* Vivid Peach Accent */
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 178, 148, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-icon-wrapper svg {
+    width: 100%;
+    height: 100%;
+}
+
+.why-point-text h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+    transition: color 0.3s ease;
+}
+
+.why-point-text p {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: #b5a4ba;
+    transition: color 0.3s ease;
+}
+
+/* Bullet Rows Focus Hover & Content Glow Filters */
+.why-point-item:hover .why-icon-wrapper {
+    background: #ffb294;
+    color: #211425;
+    border-color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.4);
+}
+
+.why-point-item:hover .why-point-text h3 {
+    color: #ffb294;
+}
+
+.why-point-item:hover .why-point-text p {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+/* Bottom Rising CTA Action Buttons */
+.why-cta-wrapper {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-action-btn {
+    text-decoration: none;
+    padding: 0.9rem 2.2rem;
+    font-size: 0.98rem;
+    font-weight: 700;
+    border-radius: 30px;
+    display: inline-block;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fill-peach {
+    background: #ffb294;
+    color: #211425;
+    box-shadow: 0 6px 20px rgba(255, 178, 148, 0.15);
+}
+
+.fill-peach:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Right Column: Visual Frame Glides up from Bottom */
+.why-visual-side {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.why-cta-wrapper.animate-in,
+.why-visual-side.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.why-ambient-glow {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.why-image-mask {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.12);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    background: #1a0f1d;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.why-image-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.02);
+    transition: transform 0.6s ease;
+}
+
+.why-image-mask:hover {
+    transform: scale(1.02) translateY(-4px);
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.3);
+}
+
+.why-image-mask:hover img {
+    transform: scale(1.04);
+}
+
+/* Fluid Responsive Breakpoints Layout Matrix */
+@media (max-width: 992px) {
+    .why-grid-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    .why-visual-side { order: 2; } /* Shifts image below bullet content fields on small layouts */
+    .why-content-side { order: 1; align-items: center; }
+    .why-main-title { font-size: 2.3rem; }
+    .why-cta-wrapper { justify-content: center; }
+}
+
+@media (max-width: 576px) {
+    .why-stackly-section { padding: 40px 20px 20px 20px; }
+    .why-main-title { font-size: 1.9rem; }
+    .why-point-item { gap: 1rem; }
+    .why-icon-wrapper { width: 38px; height: 38px; padding: 8px; }
+    .why-point-text h3 { font-size: 1.05rem; }
+    .why-point-text p { font-size: 0.9rem; }
+    .why-image-mask { max-width: 290px; border-radius: 20px; }
+    .why-action-btn { text-align: center; width: 100%; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Engine: Split header into individual animatable character sets
+    const mainTitleBlock = document.getElementById("whyMainTitle");
+    if (mainTitleBlock) {
+        const words = mainTitleBlock.textContent.split(" ");
+        mainTitleBlock.textContent = ""; 
+        
+        words.forEach((word, wIdx) => {
+            const wordShell = document.createElement("div");
+            
+            [...word].forEach(char => {
+                const span = document.createElement("span");
+                span.textContent = char;
+                wordShell.appendChild(span);
+            });
+            
+            mainTitleBlock.appendChild(wordShell);
+            if (wIdx < words.length - 1) {
+                const space = document.createElement("span");
+                space.innerHTML = "&nbsp;";
+                mainTitleBlock.appendChild(space);
+            }
+        });
+    }
+
+    // Identify current template scroll frames
+    const scrollTrackerHost = document.querySelector(".content-body") || window;
+    const characterSpans = document.querySelectorAll(".why-main-title span");
+    const bulletItems = document.querySelectorAll(".why-point-item");
+    const ctaWrapperBlock = document.getElementById("whyCtaWrapper");
+    const visualSideBlock = document.getElementById("whyVisualSide");
+
+    function executeWhyChooseScrollObserver() {
+        const structuralTriggerPoint = window.innerHeight * 0.90;
+
+        // Letter-by-letter header character reveal paths
+        characterSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    span.classList.add("active");
+                }, index * 30); // Fast incremental typing step delays
+            }
+        });
+
+        // Bullet rows fade in one-by-one sequentially on scroll
+        bulletItems.forEach((item, index) => {
+            const rect = item.getBoundingClientRect();
+            if (rect.top < structuralTriggerPoint) {
+                setTimeout(() => {
+                    item.classList.add("animate-ready");
+                }, index * 120); // 120ms consecutive stagger gaps
+            }
+        });
+
+        // CTA buttons rise from bottom trigger matching scroll intersection bounds
+        if (ctaWrapperBlock) {
+            const rect = ctaWrapperBlock.getBoundingClientRect();
+            if (rect.top < structuralTriggerPoint || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    ctaWrapperBlock.classList.add("animate-in");
+                }, 400);
+            }
+        }
+
+        // Framework showcase support graphic glides up from bottom
+        if (visualSideBlock) {
+            const rect = visualSideBlock.getBoundingClientRect();
+            if (rect.top < structuralTriggerPoint || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    visualSideBlock.classList.add("animate-in");
+                }, 200);
+            }
+        }
+    }
+
+    // Attach tracking scroll handles across viewport channels
+    scrollTrackerHost.addEventListener("scroll", executeWhyChooseScrollObserver);
+    window.addEventListener("scroll", executeWhyChooseScrollObserver);
+    
+    // Initial verification trigger pass checks
+    setTimeout(executeWhyChooseScrollObserver, 400);
+});
+
+</script>
+
+<section class="perks-section">
+    <!-- Fluid Abstract Glowing Background Blob behind the cards -->
+    <div class="perks-ambient-glow"></div>
+
+    <div class="perks-container">
+        <!-- Word-by-Word Scroll Triggered Section Header -->
+        <h2 class="perks-main-title" id="perksTitle">What Will You Get From The Summit</h2>
+
+        <!-- High-End Three-Column Responsive Matrix Grid -->
+        <div class="perks-grid">
+            
+            <!-- Card 1: Electric Neon Blue Theme -->
+            <div class="perk-card perk-blue-theme">
+                <div class="perk-top-header">
+                    <div class="perk-thumbnail">
+                        <img src="https://unsplash.com" alt="Live Tech Sessions">
+                    </div>
+                    <!-- Polygonal 404 Trigger Arrow Button -->
+                    <a href="404.html" class="perk-arrow-btn" aria-label="Explore Live Sessions Track">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
+                </div>
+                <div class="perk-meta-content">
+                    <div class="perk-title-row">
+                        <div class="perk-badge-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7a2 2 0 0 0-2-2h-4l-3-3H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h15a2 2 0 0 0 2-2z"/></svg>
+                        </div>
+                        <h3>Live sessions</h3>
+                    </div>
+                    <p>Production specialists will take the main arena stage and present their runtime knowledge, experiences, and strategies.</p>
+                </div>
+            </div>
+
+            <!-- Card 2: Deep Plum Glassmorphic Theme -->
+            <div class="perk-card perk-plum-theme">
+                <div class="perk-top-header">
+                    <div class="perk-thumbnail">
+                        <img src="https://unsplash.com" alt="Technical Exhibitions">
+                    </div>
+                    <a href="404.html" class="perk-arrow-btn" aria-label="Explore Technical Exhibitions">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
+                </div>
+                <div class="perk-meta-content">
+                    <div class="perk-title-row">
+                        <div class="perk-badge-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                        </div>
+                        <h3>Exhibitions</h3>
+                    </div>
+                    <p>Explore production visual ecosystems, diagnostic hardware labs, and edge architecture showcase networks setup by open web companies.</p>
+                </div>
+            </div>
+
+            <!-- Card 3: Deep Coral / Rose Accent Theme -->
+            <div class="perk-card perk-rose-theme">
+                <div class="perk-top-header">
+                    <div class="perk-thumbnail">
+                        <img src="https://unsplash.com" alt="Stackly Production Studios">
+                    </div>
+                    <a href="404.html" class="perk-arrow-btn" aria-label="Explore Stackly Studios">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    </a>
+                </div>
+                <div class="perk-meta-content">
+                    <div class="perk-title-row">
+                        <div class="perk-badge-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2" ry="2"/><line x1="6" y1="6" x2="18" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="18" x2="14" y2="18"/></svg>
+                        </div>
+                        <h3>Stackly studios</h3>
+                    </div>
+                    <p>Step directly into high-fidelity code generation pods, sandbox testing zones, and interactive design workspace centers.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Section Settings */
+.perks-section {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+/* Layered colorful ambient blur backdrop matching reference image background */
+.perks-ambient-glow {
+    position: absolute;
+    width: 60%;
+    height: 70%;
+    top: 20%;
+    left: 20%;
+    background: radial-gradient(circle, rgba(230, 92, 123, 0.12) 0%, rgba(144, 58, 255, 0.15) 40%, transparent 75%);
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.perks-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Word-by-Word Header Reveal Formatting */
+.perks-main-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase; /* Matches the uppercase aesthetic in screenshot header */
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 12px;
+}
+
+.perks-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.perks-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 3-Column Asymmetric Grid Configuration */
+.perks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Base Glassmorphic Capsule Layout structures mimicking image curves */
+.perk-card {
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    
+    /* Animation Hooks: Hidden by default */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.5s ease;
+}
+
+.perk-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom Base Themes remapped from the color block fields in screenshot */
+.perk-blue-theme { background: linear-gradient(135deg, rgba(0, 85, 255, 0.65) 0%, rgba(12, 7, 20, 0.8) 70%); }
+.perk-plum-theme { background: linear-gradient(135deg, rgba(50, 25, 60, 0.7) 0%, rgba(12, 7, 20, 0.85) 70%); }
+.perk-rose-theme { background: linear-gradient(135deg, rgba(65, 25, 45, 0.7) 0%, rgba(12, 7, 20, 0.85) 70%); }
+
+/* Upper Row Content Settings */
+.perk-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+/* Squircle / Rounded corner inner thumb frames */
+.perk-thumbnail {
+    width: 110px;
+    height: 110px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.perk-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85);
+    transition: transform 0.5s ease;
+}
+
+/* Angular Vector Arrow Navigation Buttons from reference */
+.perk-arrow-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.perk-arrow-btn svg {
+    width: 16px;
+    height: 16px;
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+/* Dynamic custom theme color injections for arrow blocks matching screenshot */
+.perk-blue-theme .perk-arrow-btn { background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.2); }
+.perk-plum-theme .perk-arrow-btn { background: rgba(144, 58, 255, 0.4); border: 1px solid rgba(144, 58, 255, 0.5); }
+.perk-rose-theme .perk-arrow-btn { background: rgba(230, 92, 123, 0.5); border: 1px solid rgba(230, 92, 123, 0.6); }
+
+/* Text Blocks Configurations */
+.perk-meta-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.perk-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.8rem;
+}
+
+.perk-badge-icon {
+    width: 20px;
+    height: 20px;
+    color: #ffb294; /* Premium Peach accent family */
+    flex-shrink: 0;
+}
+
+.perk-badge-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.perk-meta-content h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    text-transform: capitalize;
+    transition: color 0.3s ease;
+}
+
+.perk-meta-content p {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    transition: color 0.3s ease;
+}
+
+/* Collective Hover Actions & Glowing Outline Filters */
+.perk-card:hover {
+    transform: translateY(-6px);
+    border-color: #ffb294;
+    box-shadow: 0 15px 35px rgba(255, 178, 148, 0.2);
+}
+
+.perk-card:hover .perk-thumbnail img {
+    transform: scale(1.04);
+}
+
+.perk-card:hover .perk-meta-content h3 {
+    color: #ffb294;
+}
+
+.perk-card:hover .perk-meta-content p {
+    color: #ffffff;
+}
+
+.perk-card:hover .perk-arrow-btn {
+    background: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.perk-card:hover .perk-arrow-btn svg {
+    color: #120714;
+    transform: translate(2px, -2px); /* Moves arrow dynamically inside 45-degree angle tracks */
+}
+
+/* Fluid Layout Responsive Adaptations (Strict 20px margins preserved) */
+@media (max-width: 992px) {
+    .perks-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 680px) {
+    .perks-section { padding: 40px 20px 20px 20px; }
+    .perks-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .perks-main-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+    }
+    .perk-thumbnail { width: 90px; height: 90px; }
+    .perk-meta-content h3 { font-size: 1.2rem; }
+    .perk-meta-content p { font-size: 0.9rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Text Parsing Splitter Engine (Word-by-word reveal sequence)
+    const titleBlock = document.getElementById("perksTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // Capture scrolling layout parameters
+    const scrollContainerFrame = document.querySelector(".content-body") || window;
+    const splitWordsSpans = document.querySelectorAll(".perks-main-title span");
+    const perkCardsList = document.querySelectorAll(".perk-card");
+
+    function executePerksScrollObserver() {
+        const intersectionLineHeight = window.innerHeight * 0.92;
+
+        // Header word-by-word staggered reveal loop
+        splitWordsSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < intersectionLineHeight) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 100); // 100ms text sequential delay
+            }
+        });
+
+        // Glassmorphic perk cards arrival loop (One-by-one sequential staging)
+        perkCardsList.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.top < intersectionLineHeight) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                }, index * 140); // 140ms sequential stride gaps
+            }
+        });
+    }
+
+    // Attach tracking observers to viewport boundaries
+    scrollContainerFrame.addEventListener("scroll", executePerksScrollObserver);
+    window.addEventListener("scroll", executePerksScrollObserver);
+    
+    // Safety fallback initialization check pass
+    setTimeout(executePerksScrollObserver, 450);
+});
+
+</script>
+
+<section class="about-cta-banner-fullwidth">
+    <!-- Moving Abstract Geometric Tech Backdrop -->
+    <div class="banner-mesh-backdrop"></div>
+
+    <div class="banner-alignment-container">
+        <!-- Left Side: 2 Lines of Content Narrative -->
+        <div class="banner-narrative-block">
+            <!-- Line 1: Word-by-Word Scroll Revealed Title -->
+            <h2 class="banner-title" id="bannerCtaTitle">Ready to Architecture the Future?</h2>
+            
+            <!-- Line 2: Word-by-Word Scroll Revealed Description Subtitle -->
+            <p class="banner-subtitle" id="bannerCtaSubtitle">Claim your enterprise access badge today and join 5,000+ software creators.</p>
+        </div>
+
+        <!-- Right Side: Dual Actions Sliding from the Sides -->
+        <div class="banner-actions-block" id="bannerActionsBlock">
+            <a href="404.html" class="banner-btn btn-slide-left">Get Tickets</a>
+            <a href="404.html" class="banner-btn btn-slide-right">View Schedule</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Breakout Banner Wrapper */
+.about-cta-banner-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with 2rem side edge safety clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #170d1a 0%, #311836 50%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+}
+
+/* Background Highlight Radial Canvas Layer */
+.banner-mesh-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 80% 50%, rgba(255, 178, 148, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Internal Inner Content Alignment Shield */
+.banner-alignment-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Narrative Block (2 Lines) Layout */
+.banner-narrative-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+/* Line 1: Word-by-Word Title Wrapper Styles */
+.banner-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+/* Line 2: Word-by-Word Subtitle Wrapper Styles */
+.banner-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+/* Universal Text Word Reveal Animation Configurations */
+.banner-title span,
+.banner-subtitle span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.banner-title span {
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.banner-title span.reveal,
+.banner-subtitle span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover Content Glow Effect */
+.banner-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.35);
+}
+
+.banner-subtitle:hover {
+    color: #ffffff;
+}
+
+/* Right Side Actions Layout Structure */
+.banner-actions-block {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.banner-btn {
+    text-decoration: none;
+    padding: 0.85rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 50px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* CTA Buttons Slide-In Direction Frames */
+.banner-btn.btn-slide-left { transform: translateX(-50px); background: #ffb294; color: #211425; }
+.banner-btn.btn-slide-right { transform: translateX(50px); background: transparent; color: #ffffff; border: 1.5px solid rgba(255, 255, 255, 0.2); }
+
+/* Animation Ready Revelations */
+.banner-actions-block.animate-in .banner-btn {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* CTA Button Active Hover Enhancements */
+.btn-slide-left:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+.btn-slide-right:hover {
+    border-color: #ffb294;
+    color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Responsive Scaling Breakpoints Matrix (Strict 20px side margin preservation) */
+@media (max-width: 992px) {
+    .banner-alignment-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+    .banner-narrative-block { align-items: center; }
+    .banner-title, .banner-subtitle { justify-content: center; }
+    .banner-actions-block { justify-content: center; }
+    .banner-title { font-size: 2.1rem; }
+}
+
+@media (max-width: 576px) {
+    .about-cta-banner-fullwidth { padding: 40px 20px 25px 20px; }
+    .banner-title { font-size: 1.8rem; }
+    .banner-subtitle { font-size: 0.95rem; }
+    .banner-actions-block { flex-direction: column; width: 100%; gap: 0.8rem; }
+    .banner-btn { text-align: center; width: 100%; }
+    /* Reconvert horizontal slider shifts to clean vertical transitions for mobile stacks */
+    .banner-btn.btn-slide-left, .banner-btn.btn-slide-right { transform: translateY(30px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Title Segmentation Engine (Word-by-word title processing)
+    const titleBlock = document.getElementById("bannerCtaTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleBlock.appendChild(span);
+        });
+    }
+
+    // 2. Subtitle Segmentation Engine (Word-by-word paragraph processing)
+    const subtitleBlock = document.getElementById("bannerCtaSubtitle");
+    if (subtitleBlock) {
+        const words = subtitleBlock.textContent.split(" ");
+        subtitleBlock.textContent = ""; 
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            subtitleBlock.appendChild(span);
+        });
+    }
+
+    // Capture localized scrolling shell tracking variables
+    const scrollContainer = document.querySelector(".content-body") || window;
+    
+    const bannerTitleSpans = document.querySelectorAll(".banner-title span");
+    const bannerSubtitleSpans = document.querySelectorAll(".banner-subtitle span");
+    const actionsWrapper = document.getElementById("bannerActionsBlock");
+
+    function executeBannerCtaScrollObserver() {
+        const triggerPointHeight = window.innerHeight * 0.92;
+
+        // Line 1: Word-by-word headline reveal trigger
+        bannerTitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerPointHeight) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 90);
+            }
+        });
+
+        // Line 2: Word-by-word subtitle description reveal trigger
+        bannerSubtitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerPointHeight) {
+                // Add initial operational latency offset delay so subtitle waits for title to commence mapping
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, (index * 60) + 300);
+            }
+        });
+
+        // Buttons side glide triggers
+        if (actionsWrapper) {
+            const rect = actionsWrapper.getBoundingClientRect();
+            // Force active visibility state if block rolls in view or layout spacing restricts tracking loops
+            if (rect.top < triggerPointHeight || (document.body.scrollHeight <= window.innerHeight)) {
+                setTimeout(() => {
+                    actionsWrapper.classList.add("animate-in");
+                }, 400);
+            }
+        }
+    }
+
+    // Register handlers to scroll tracks
+    scrollContainer.addEventListener("scroll", executeBannerCtaScrollObserver);
+    window.addEventListener("scroll", executeBannerCtaScrollObserver);
+    
+    // Safety processing validation loop pass
+    setTimeout(executeBannerCtaScrollObserver, 400);
+});
+
+</script>
+
+<section class="metrics-section">
+    <!-- Word-by-Word Scroll Triggered Section Header (Appears from all sides) -->
+    <h2 class="metrics-main-title" id="metricsMainTitle">Stackly Summit In Numbers</h2>
+
+    <!-- Asymmetric Mosaic Metrics Grid Mapping -->
+    <div class="metrics-mosaic-grid">
+        
+        <!-- Grid Item 1: Translucent Card with CTA Links -->
+        <div class="metric-card card-text-cta fade-up-card">
+            <p class="card-desc">Our integrated event pipelines are engineered to maximize performance metrics, connect developers, and scale open-web architectures seamlessly.</p>
+            <div class="card-actions-row">
+                <a href="404.html" class="action-btn-filled">Get Started</a>
+                <a href="404.html" class="action-btn-text">Contact Us &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Grid Item 2: Compact Numeric Statistics Box (Peach Family) -->
+        <div class="metric-card card-stat-box counter-card">
+            <div class="stat-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            </div>
+            <div class="stat-number"><span class="count-target" data-target="5.7">0</span>K+</div>
+            <div class="stat-label">Attendees Active</div>
+        </div>
+
+        <!-- Grid Item 3: Vivid Theme Accent Card (Solid Deep Plum to Vivid Peach Base Context) -->
+        <div class="metric-card card-theme-solid fade-up-card">
+            <p class="card-desc white-text">Our advanced architectural structures are optimized to enhance tracking speeds, drive core framework changes, and transform interactive experiences.</p>
+            <div class="card-actions-row">
+                <a href="404.html" class="action-btn-filled bg-white-hover">Get Started</a>
+                <a href="404.html" class="action-btn-text white-text">Contact Us &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Grid Item 4: Dark Accent Outline Card with Embedded Buttons -->
+        <div class="metric-card card-dark-outlined fade-up-card">
+            <p class="card-desc">Our collaborative workshop environments are configured to deliver micro-frontend diagnostics, runtime benchmarks, and live cloud sandboxes.</p>
+            <div class="card-actions-row">
+                <a href="404.html" class="action-btn-bordered">Get Started</a>
+                <a href="404.html" class="action-btn-text">Contact Us &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Grid Item 5: Experience Numeric Statistics Box -->
+        <div class="metric-card card-stat-box counter-card">
+            <div class="stat-label-top">Years of Experience</div>
+            <div class="stat-number"><span class="count-target" data-target="17">0</span>+</div>
+        </div>
+
+        <!-- Grid Item 6: Structured Brand Theme Box -->
+        <div class="metric-card card-theme-branded fade-up-card">
+            <div class="brand-header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <h3 class="brand-title">Machine Learning Labs</h3>
+            <p class="card-desc sub-opaque">Empower your software systems with predictive models that learn, adapt, and process high-throughput deployment operations instantly.</p>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Base Layout Configuration */
+.metrics-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+/* Word-by-Word Header Reveal from Alternating Sides */
+.metrics-main-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 14px;
+}
+
+.metrics-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.metrics-main-title span.fly-left   { transform: translateX(-60px); }
+.metrics-main-title span.fly-right  { transform: translateX(60px); }
+.metrics-main-title span.fly-top    { transform: translateY(-40px); }
+.metrics-main-title span.fly-bottom { transform: translateY(40px); }
+
+.metrics-main-title span.reveal {
+    opacity: 1;
+    transform: translate(0, 0);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Mosaic Grid Layout */
+.metrics-mosaic-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.metrics-mosaic-grid .metric-card:nth-child(1) { grid-column: span 4; }
+.metrics-mosaic-grid .metric-card:nth-child(2) { grid-column: span 3; }
+.metrics-mosaic-grid .metric-card:nth-child(3) { grid-column: span 5; }
+.metrics-mosaic-grid .metric-card:nth-child(4) { grid-column: span 5; }
+.metrics-mosaic-grid .metric-card:nth-child(5) { grid-column: span 3; }
+.metrics-mosaic-grid .metric-card:nth-child(6) { grid-column: span 4; }
+
+/* RE-ENGINEERED: Card Blueprint Definitions using strict Stackly Theme Tones */
+.metric-card {
+    background: rgba(33, 20, 37, 0.6); /* Translucent Deep Plum Layer */
+    border: 1.5px solid rgba(255, 178, 148, 0.05); /* Soft Peach boundary border */
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.metric-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Specific Theme-Unified Variations (No random blur color leaks) */
+.card-text-cta { background: rgba(33, 20, 37, 0.4); }
+.card-stat-box { background: rgba(33, 20, 37, 0.85); }
+
+/* Primary High-Contrast solid variant using corporate Vivid Peach background color rules */
+.card-theme-solid { 
+    background: #ffb294; 
+    border-color: #ffb294;
+}
+.card-theme-solid .card-desc { color: #211425 !important; font-weight: 500; }
+
+.card-dark-outlined { background: transparent; border: 1.5px dashed rgba(255, 178, 148, 0.15); }
+.card-theme-branded { background: rgba(33, 20, 37, 0.95); border-color: rgba(255, 178, 148, 0.15); }
+
+/* Typography Sub-elements */
+.card-desc {
+    font-size: 0.96rem;
+    line-height: 1.55;
+    color: #b5a4ba;
+    margin-bottom: 1.5rem;
+}
+.white-text { color: #211425 !important; } /* High contrast slate for light background */
+.sub-opaque { color: rgba(255, 255, 255, 0.75) !important; }
+
+/* Numeric Dashboard Components */
+.stat-icon-wrapper {
+    width: 24px;
+    height: 24px;
+    color: #ffb294; /* Peach Family Stat Icon */
+    margin-bottom: 1rem;
+}
+.stat-icon-wrapper svg { width: 100%; height: 100%; }
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #b5a4ba;
+}
+.stat-label-top {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #b5a4ba;
+    margin-bottom: 0.8rem;
+}
+
+/* Branded Lab Elements */
+.brand-header-icon {
+    width: 32px;
+    height: 32px;
+    color: #ffb294;
+    margin-bottom: 1rem;
+}
+.brand-header-icon svg { width: 100%; height: 100%; }
+.brand-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+}
+
+/* Buttons Infrastructure */
+.card-actions-row {
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+}
+
+.action-btn-filled,
+.action-btn-bordered {
+    text-decoration: none;
+    padding: 0.6rem 1.4rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 30px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.action-btn-filled { background: #211425; color: #ffb294; border: 1px solid rgba(255, 178, 148, 0.2); }
+.action-btn-filled:hover { background: #ffffff; color: #211425; }
+
+.bg-peach { background: #211425 !important; color: #ffb294 !important; border: 1px solid rgba(33, 20, 37, 0.2); }
+.action-btn-filled.bg-peach:hover { background: #211425 !important; color: #ffffff !important; box-shadow: 0 0 15px rgba(33, 20, 37, 0.3); }
+
+.action-btn-bordered { background: transparent; color: #ffffff; border: 1.5px solid rgba(255, 255, 255, 0.2); }
+.action-btn-bordered:hover { border-color: #ffb294; color: #ffb294; }
+
+.action-btn-text {
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    transition: color 0.3s ease;
+}
+.action-btn-text:hover { color: #ffb294 !important; }
+.white-text.action-btn-text { color: #211425 !important; }
+.white-text.action-btn-text:hover { color: #ffffff !important; }
+
+/* Interactive Hover Content Glow Fields (Using strict Peach theme shadows) */
+.metric-card:hover {
+    border-color: #ffb294;
+    background: rgba(49, 24, 54, 0.8);
+    box-shadow: 0 0 30px rgba(255, 178, 148, 0.25);
+    transform: translateY(-4px);
+}
+.card-theme-solid:hover {
+    background: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 0 35px rgba(255, 255, 255, 0.3);
+}
+.metric-card:hover .stat-number {
+    color: #ffb294;
+    text-shadow: 0 0 15px rgba(255, 178, 148, 0.4);
+}
+
+/* Responsive Matrix Scale Breakpoints */
+@media (max-width: 1024px) {
+    .metrics-mosaic-grid .metric-card:nth-child(1),
+    .metrics-mosaic-grid .metric-card:nth-child(2),
+    .metrics-mosaic-grid .metric-card:nth-child(3),
+    .metrics-mosaic-grid .metric-card:nth-child(4),
+    .metrics-mosaic-grid .metric-card:nth-child(5),
+    .metrics-mosaic-grid .metric-card:nth-child(6) { grid-column: span 6; }
+}
+
+@media (max-width: 680px) {
+    .metrics-section { padding: 40px 20px 20px 20px; }
+    .metrics-mosaic-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+    .metrics-main-title { font-size: 1.9rem; gap: 0 8px; margin-bottom: 2.5rem; }
+    .stat-number { font-size: 2.8rem; }
+    .card-actions-row { flex-wrap: wrap; gap: 1rem; }
+    .metrics-main-title span.fly-left, 
+    .metrics-main-title span.fly-right, 
+    .metrics-main-title span.fly-top, 
+    .metrics-main-title span.fly-bottom { transform: translateY(25px); }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const titleBlock = document.getElementById("metricsMainTitle");
+    if (titleBlock) {
+        const words = titleBlock.textContent.split(" ");
+        titleBlock.textContent = ""; 
+        const directions = ["fly-left", "fly-top", "fly-right", "fly-bottom"];
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            const selectedDirection = directions[index % directions.length];
+            span.classList.add(selectedDirection);
+            titleBlock.appendChild(span);
+        });
+    }
+
+    const scrollContainerFrame = document.querySelector(".content-body") || window;
+    const titleWordSpans = document.querySelectorAll(".metrics-main-title span");
+    const mosaicCards = document.querySelectorAll(".metric-card");
+
+    function executeMetricsScrollObserver() {
+        const intersectionTriggerLine = window.innerHeight * 0.92;
+
+        titleWordSpans.forEach((span, index) => {
+            if (span.getBoundingClientRect().top < intersectionTriggerLine) {
+                setTimeout(() => { span.classList.add("reveal"); }, index * 90);
+            }
+        });
+
+        mosaicCards.forEach((card, index) => {
+            if (card.getBoundingClientRect().top < intersectionTriggerLine) {
+                setTimeout(() => {
+                    card.classList.add("animate-in");
+                    if (card.classList.contains("counter-card")) {
+                        triggerLiveNumericalCounter(card);
+                    }
+                }, index * 120);
+            }
+        });
+    }
+
+    function triggerLiveNumericalCounter(cardElement) {
+        const targetNumberSpan = cardElement.querySelector(".count-target");
+        if (!targetNumberSpan || targetNumberSpan.classList.contains("counted")) return;
+        
+        targetNumberSpan.classList.add("counted");
+        const finalValue = parseFloat(targetNumberSpan.getAttribute("data-target"));
+        const containsDecimalIndex = targetNumberSpan.getAttribute("data-target").includes(".");
+        
+        let initialStartValue = 0;
+        const totalDurationTime = 1500; 
+        const frameIntervalTime = 30;
+        const totalStepsCount = totalDurationTime / frameIntervalTime;
+        const incrementStepsValue = finalValue / totalStepsCount;
+
+        const counterTimer = setInterval(() => {
+            initialStartValue += incrementStepsValue;
+            if (initialStartValue >= finalValue) {
+                clearInterval(counterTimer);
+                targetNumberSpan.textContent = finalValue;
+                return;
+            }
+            targetNumberSpan.textContent = containsDecimalIndex ? initialStartValue.toFixed(1) : Math.floor(initialStartValue);
+        }, frameIntervalTime);
+    }
+
+    scrollContainerFrame.addEventListener("scroll", executeMetricsScrollObserver);
+    window.addEventListener("scroll", executeMetricsScrollObserver);
+    setTimeout(executeMetricsScrollObserver, 450);
+});
+
+</script>
+
+<section class="events-table-section">
+    <div class="table-alignment-container">
+        
+        <!-- Word-by-Word Scroll Triggered Section Header -->
+        <h2 class="table-main-title" id="tableMainTitle">The Gathering Of The Tech & Innovation Experts</h2>
+        
+        <div class="powered-by-tag">POWERED BY: <span>STACKLY SUITE</span></div>
+        <span class="section-sub-badge">NEXT EVENTS</span>
+
+        <!-- Event Row Schedule Matrix -->
+        <div class="events-matrix" id="eventsMatrix">
+            
+            <!-- Event Row 1 -->
+            <div class="event-matrix-row reveal-row">
+                <div class="event-meta-info">
+                    <span class="event-location-text">Brooklyn, NY</span>
+                    <span class="event-separator">/</span>
+                    <span class="event-date-text">OCT 12TH 2026</span>
+                </div>
+                
+                <!-- Floating Image Component: Shows ONLY on Row Hover -->
+                <div class="floating-hover-card">
+                    <img src="https://unsplash.com" alt="Brooklyn Summit Arena Keynote">
+                </div>
+
+                <div class="event-action-cell">
+                    <a href="404.html" class="angular-register-btn">Register Now</a>
+                </div>
+            </div>
+
+            <!-- Event Row 2 -->
+            <div class="event-matrix-row reveal-row">
+                <div class="event-meta-info">
+                    <span class="event-location-text">San Francisco, CA</span>
+                    <span class="event-separator">/</span>
+                    <span class="event-date-text">NOV 04TH 2026</span>
+                </div>
+                
+                <div class="floating-hover-card">
+                    <img src="https://unsplash.com" alt="San Francisco Technical Lab Collaborative">
+                </div>
+
+                <div class="event-action-cell">
+                    <a href="404.html" class="angular-register-btn">Register Now</a>
+                </div>
+            </div>
+
+            <!-- Event Row 3 -->
+            <div class="event-matrix-row reveal-row">
+                <div class="event-meta-info">
+                    <span class="event-location-text">Philadelphia, PA</span>
+                    <span class="event-separator">/</span>
+                    <span class="event-date-text">NOV 18TH 2026</span>
+                </div>
+                
+                <div class="floating-hover-card">
+                    <img src="https://unsplash.com" alt="Philadelphia Software Engineering Group">
+                </div>
+
+                <div class="event-action-cell">
+                    <a href="404.html" class="angular-register-btn">Register Now</a>
+                </div>
+            </div>
+
+            <!-- Event Row 4 -->
+            <div class="event-matrix-row reveal-row">
+                <div class="event-meta-info">
+                    <span class="event-location-text">New York, NY</span>
+                    <span class="event-separator">/</span>
+                    <span class="event-date-text">DEC 02ND 2026</span>
+                </div>
+                
+                <div class="floating-hover-card">
+                    <img src="https://unsplash.com" alt="New York Enterprise Summit Arena">
+                </div>
+
+                <div class="event-action-cell">
+                    <a href="404.html" class="angular-register-btn">Register Now</a>
+                </div>
+            </div>
+
+            <!-- Event Row 5 -->
+            <div class="event-matrix-row reveal-row">
+                <div class="event-meta-info">
+                    <span class="event-location-text">Phoenix, AZ</span>
+                    <span class="event-separator">/</span>
+                    <span class="event-date-text">DEC 16TH 2026</span>
+                </div>
+                
+                <div class="floating-hover-card">
+                    <img src="https://unsplash.com" alt="Phoenix Open Web Network Exhibitions">
+                </div>
+
+                <div class="event-action-cell">
+                    <a href="404.html" class="angular-register-btn">Register Now</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Base Canvas Layout Framework */
+.events-table-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+    color: #ffffff;
+}
+
+.table-alignment-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Word-by-Word Header Reveal Structure */
+.table-main-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 14px;
+}
+
+.table-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.table-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.powered-by-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    letter-spacing: 0.15em;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.powered-by-tag span {
+    color: #ffb294;
+}
+
+.section-sub-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    letter-spacing: 0.1em;
+    text-align: left;
+    width: 100%;
+    border-bottom: 1.5px solid rgba(255, 178, 148, 0.1);
+    padding-bottom: 0.8rem;
+}
+
+/* Table Matrix Grid Blocks */
+.events-matrix {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.event-matrix-row {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease;
+}
+
+.event-matrix-row.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Meta Text Columns Formatting */
+.event-meta-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 5;
+}
+
+.event-location-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.event-separator {
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: rgba(255, 178, 148, 0.4);
+}
+
+.event-date-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #b5a4ba;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    transition: color 0.3s ease;
+}
+
+/* Hidden Floating Image Component on Row Hover */
+.floating-hover-card {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.8) rotate(6deg);
+    width: 140px;
+    aspect-ratio: 1 / 1;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 178, 148, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    background: #140816;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 10;
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+}
+
+.floating-hover-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.event-action-cell {
+    z-index: 5;
+}
+
+/* RE-ENGINEERED BUTTON INTERACTION HOOKS */
+.angular-register-btn {
+    text-decoration: none;
+    display: inline-block;
+    background: transparent; /* All buttons hollow by default now */
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.15); /* Sleek thin outline border */
+    padding: 0.75rem 2rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, 100% 0, 93% 100%, 0% 100%);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* BUTTON TRANSFORMS ONLY ON HOVER STATES */
+.event-matrix-row:hover .angular-register-btn {
+    background: #e65c7b; /* Solid hot pink fill locks onto buttons ONLY on row hover */
+    border-color: #e65c7b;
+    color: #ffffff;
+    box-shadow: 0 5px 15px rgba(230, 92, 123, 0.35);
+}
+
+.angular-register-btn:hover {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #211425 !important;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Grid Row Background Changes on Hover */
+.event-matrix-row:hover {
+    background: linear-gradient(90deg, rgba(255, 178, 148, 0.04) 0%, rgba(33, 20, 37, 0) 100%);
+    border-bottom-color: rgba(255, 178, 148, 0.25);
+}
+
+.event-matrix-row:hover .event-location-text {
+    color: #ffb294;
+    text-shadow: 0 0 12px rgba(255, 178, 148, 0.3);
+}
+
+.event-matrix-row:hover .event-date-text {
+    color: #ffffff;
+}
+
+.event-matrix-row:hover .floating-hover-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1) rotate(-4deg);
+}
+
+/* Fluid Layout Responsive Scale Frameworks */
+@media (max-width: 868px) {
+    .event-location-text { font-size: 1.4rem; }
+    .event-separator { font-size: 1.4rem; }
+    .event-date-text { font-size: 0.95rem; }
+    .floating-hover-card { left: 55%; width: 110px; }
+}
+
+@media (max-width: 600px) {
+    .events-table-section { padding: 40px 20px 20px 20px; }
+    .table-main-title { font-size: 1.8rem; gap: 0 8px; }
+    .event-matrix-row { flex-direction: column; align-items: flex-start; gap: 1.2rem; padding: 1.5rem 0; }
+    .event-action-cell { width: 100%; }
+    .angular-register-btn { width: 100%; text-align: center; }
+    .floating-hover-card { display: none !important; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const titleContainer = document.getElementById("tableMainTitle");
+    if (titleContainer) {
+        const words = titleContainer.textContent.split(" ");
+        titleContainer.textContent = ""; 
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleContainer.appendChild(span);
+        });
+    }
+
+    const scrollMonitorHost = document.querySelector(".content-body") || window;
+    const headlineWordsSpans = document.querySelectorAll(".table-main-title span");
+    const dynamicMatrixRows = document.querySelectorAll(".events-matrix .event-matrix-row");
+
+    function executeTableScrollObserver() {
+        const triggerLineLineHeight = window.innerHeight * 0.92;
+
+        headlineWordsSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerLineLineHeight) {
+                setTimeout(() => { span.classList.add("reveal"); }, index * 95);
+            }
+        });
+
+        dynamicMatrixRows.forEach((row, index) => {
+            const rect = row.getBoundingClientRect();
+            if (rect.top < triggerLineLineHeight) {
+                setTimeout(() => { row.classList.add("animate-in"); }, index * 120);
+            }
+        });
+    }
+
+    scrollMonitorHost.addEventListener("scroll", executeTableScrollObserver);
+    window.addEventListener("scroll", executeTableScrollObserver);
+    setTimeout(executeTableScrollObserver, 400);
+});
+
+</script>
+
+<section class="partners-carousel-section">
+    <!-- Word-by-Word Scroll Triggered Section Header -->
+    <h2 class="partners-main-title" id="partnersTitle">Companies Attending</h2>
+
+    <!-- Infinite Auto-Scrolling Ticker Viewport Container -->
+    <div class="marquee-viewport">
+        
+        <!-- Track Row 1: Smoothly scrolls to the Left -->
+        <div class="marquee-track track-left-direction">
+            <!-- Set 1 of Tech Brand Vectors -->
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 16V8a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/></svg>
+                <span>Vercel</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>Docker</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>Stackly</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3h14c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2z"/><path d="M12 7v10M7 12h10"/></svg>
+                <span>Figma</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <span>Supabase</span>
+            </div>
+
+            <!-- Set 2 (Duplicate clone set for clean seamless looping) -->
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                <span>GitHub</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 16V8a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z"/></svg>
+                <span>Vercel</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>Docker</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>Stackly</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3h14c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2z"/><path d="M12 7v10M7 12h10"/></svg>
+                <span>Figma</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                <span>Supabase</span>
+            </div>
+        </div>
+
+        <!-- Track Row 2: Smoothly scrolls to the Right -->
+        <div class="marquee-track track-right-direction">
+            <!-- Set 1 of Tech Brand Vectors -->
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>Linear</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.5 16.5c-1.5 1.26-2.5 3.19-2.5 5h20c0-1.81-1-3.74-2.5-5M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+                <span>Mapbox</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Netlify</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16.5 9.4 7.55 4.24a1.79 1.79 0 0 0-2.5 1.55v12.42a1.79 1.79 0 0 0 2.5 1.55l8.95-5.17a1.79 1.79 0 0 0 0-3.1z"/></svg>
+                <span>Postman</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                <span>PlanetScale</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM6 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/></svg>
+                <span>Sentry</span>
+            </div>
+
+            <!-- Set 2 (Duplicate clone set for clean seamless looping) -->
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                <span>Linear</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.5 16.5c-1.5 1.26-2.5 3.19-2.5 5h20c0-1.81-1-3.74-2.5-5M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+                <span>Mapbox</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Netlify</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16.5 9.4 7.55 4.24a1.79 1.79 0 0 0-2.5 1.55v12.42a1.79 1.79 0 0 0 2.5 1.55l8.95-5.17a1.79 1.79 0 0 0 0-3.1z"/></svg>
+                <span>Postman</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                <span>PlanetScale</span>
+            </div>
+            <div class="brand-capsule">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM6 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/></svg>
+                <span>Sentry</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Section Base Container Settings */
+.partners-carousel-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 50px 0 30px 0; /* Strict 50px Top and 30px Bottom Spacing Constraints */
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    overflow: hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Scroll Triggered Title Style Elements */
+.partners-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-transform: uppercase; /* Replicates reference screenshot capitalized text format */
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 12px;
+}
+
+.partners-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.partners-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Outer Shell Viewport Boundary Mask */
+.marquee-viewport {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+}
+
+/* Infinite Scrolling Tracks System */
+.marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 3rem;
+    align-items: center;
+    will-change: transform;
+}
+
+/* Dual Direction Loop Implementations */
+.track-left-direction {
+    animation: scrollLeftTrack 22s linear infinite;
+}
+
+.track-right-direction {
+    animation: scrollRightTrack 22s linear infinite;
+}
+
+@keyframes scrollLeftTrack {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes scrollRightTrack {
+    0% { transform: translate3d(-50%, 0, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+}
+
+/* collective pause logic on mouse enter contexts */
+.marquee-viewport:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+/* Brand Capsule Architecture */
+.brand-capsule {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: default;
+    opacity: 0.4;
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+    color: #b5a4ba; /* Opaque slate tone default */
+}
+
+.brand-capsule svg {
+    width: 22px;
+    height: 22px;
+    transition: filter 0.3s ease;
+}
+
+.brand-capsule span {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* Collective Highlight Dimming Mask Actions */
+.marquee-track:hover .brand-capsule {
+    opacity: 0.2;
+}
+
+/* Highlight Target Hover & Content Glow Filters requested */
+.marquee-track .brand-capsule:hover {
+    opacity: 1 !important;
+    color: #ffb294; /* Vivid Peach focus highlight */
+    transform: scale(1.06);
+    text-shadow: 0 0 15px rgba(255, 178, 148, 0.4);
+}
+
+/* Fluid Breakpoint Scaling Layout Matrix */
+@media (max-width: 768px) {
+    .partners-carousel-section { padding: 40px 0 20px 0; gap: 2rem; }
+    .partners-main-title { font-size: 1.8rem; }
+    .brand-capsule span { font-size: 1.05rem; }
+    .brand-capsule svg { width: 18px; height: 18px; }
+    .marquee-track { gap: 2rem; }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Split Header title string array into animatable words on scroll
+    const titleElement = document.getElementById("partnersTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleElement.appendChild(span);
+        });
+    }
+
+    // Capture localized page scrolling frame layouts
+    const scrollContainerHost = document.querySelector(".content-body") || window;
+    const titleWordsSpans = document.querySelectorAll(".partners-main-title span");
+
+    function executePartnersScrollObserver() {
+        const triggerBoundsLine = window.innerHeight * 0.92;
+
+        // Word-by-word title fade execution loops
+        titleWordsSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerBoundsLine) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 100); // 100ms row sequential delays
+            }
+        });
+    }
+
+    // Attach tracking handlers
+    scrollContainerHost.addEventListener("scroll", executePartnersScrollObserver);
+    window.addEventListener("scroll", executePartnersScrollObserver);
+    
+    // Safety check sequence passes
+    setTimeout(executePartnersScrollObserver, 400);
+});
+
+</script>
+
+<section class="faq-section">
+    <div class="faq-container">
+        
+        <!-- Left Column: FAQ Accordion Content Matrix -->
+        <div class="faq-content-side">
+            <!-- Word-by-Word Scroll Triggered Title -->
+            <h2 class="faq-main-title" id="faqTitle">Frequently Asked Questions</h2>
+            
+            <div class="faq-accordion-group" id="faqAccordionGroup">
+                
+                <!-- FAQ Item 1 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">How do I access the virtual track sandboxes?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>All virtual pass holders will receive a personal secure login link via email 48 hours prior to the keynote launch. This gives you instant access to the Stackly cloud sandbox instances directly through your browser dashboard framework.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Can I switch my registration tier after purchasing?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>Yes, you can upgrade your attendance access tier at any point up to 7 days before the conference begins. Simply navigate to your dashboard workspace or reach out to registration support to process the tier adjustment variance.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">Are the technical labs record sessions available on-demand?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>Absolutely. Every diagnostic hackathon, technical lab track, and main arena keynote is recorded. The digital video assets and associated codebase repositories will be archived inside the workspace dashboard for 12 months post-event.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-card reveal-item">
+                    <button class="faq-trigger" aria-expanded="false">
+                        <span class="faq-question">What are the local venue parking guidelines?</span>
+                        <span class="faq-icon-marker"></span>
+                    </button>
+                    <div class="faq-panel">
+                        <div class="faq-panel-inner">
+                            <p>Complimentary subterranean parking is available at the Grand Arena structure for all VIP and General Admission ticket holders. Present your digital entry badge matrix to the gate attendant for seamless access loops.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Column: Image Slides in from the Right Side -->
+        <div class="faq-visual-side slide-from-right" id="faqVisualSide">
+            <div class="faq-visual-glow"></div>
+            <div class="faq-image-mask">
+                <img src="https://unsplash.com" alt="Stackly Support Help Desk Matrix">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    /* Core Section Layout Framework */
+.faq-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px 30px 20px; /* Strict 50px Top, 30px Bottom, 20px Side Padding Constraints */
+    background: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+.faq-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4.5rem;
+    align-items: center;
+    width: 100%;
+}
+
+/* Left Column Content Layout */
+.faq-content-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Word-by-Word Reveal Header Styling */
+.faq-main-title {
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
+}
+
+.faq-main-title span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px);
+    background: linear-gradient(135deg, #ffffff 60%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-main-title span.reveal {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.faq-accordion-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+/* Interactive Accordion Card Structures */
+.faq-card {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+    
+    /* Scroll animation hooks */
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Trigger Button Configuration */
+.faq-trigger {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+}
+
+.faq-question {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    padding-right: 1.5rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Vector Toggle Indicator Icon */
+.faq-icon-marker {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-icon-marker::before,
+.faq-icon-marker::after {
+    content: '';
+    position: absolute;
+    background-color: #b5a4ba;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+/* Horizontal line component */
+.faq-icon-marker::before {
+    top: 8px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+}
+
+/* Vertical line component */
+.faq-icon-marker::after {
+    top: 0;
+    left: 8px;
+    width: 2px;
+    height: 100%;
+}
+
+/* Interactive Accordion Panel Content Panels */
+.faq-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-panel-inner {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+}
+
+/* Hover Actions & Active Glow Filters */
+.faq-card:hover {
+    border-color: #ffb294; /* Peach Family Accent focus border */
+    box-shadow: 0 0 25px rgba(255, 178, 148, 0.15);
+}
+
+.faq-card:hover .faq-question {
+    color: #ffb294;
+    text-shadow: 0 0 8px rgba(255, 178, 148, 0.2);
+}
+
+.faq-card:hover .faq-icon-marker::before,
+.faq-card:hover .faq-icon-marker::after {
+    background-color: #ffb294;
+}
+
+/* Open Panel Active Layout Transformations */
+.faq-card.open {
+    border-color: rgba(255, 178, 148, 0.4);
+    background: rgba(255, 178, 148, 0.02);
+}
+
+.faq-card.open .faq-icon-marker {
+    transform: rotate(45deg); /* Flips icon mapping plus sign into close X format */
+}
+
+.faq-card.open .faq-icon-marker::before,
+.faq-card.open .faq-icon-marker::after {
+    background-color: #ffb294;
+}
+
+/* Right Column Image Shell Architecture */
+.faq-visual-side {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+/* Right Side Entrance Transition Directive */
+.faq-visual-side.slide-from-right {
+    transform: translateX(80px);
+}
+
+.faq-visual-side.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-visual-glow {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.08) 0%, rgba(33, 20, 37, 0) 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.faq-image-mask {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 5;
+    border-radius: 28px;
+    overflow: hidden;
+    z-index: 2;
+    border: 1.5px solid rgba(255, 178, 148, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    background: #1a0f1d;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.faq-image-mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.8) contrast(1.02);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Image Cluster Hover Transform Framework */
+.faq-image-mask:hover {
+    transform: scale(1.02) translateY(-4px);
+    border-color: #ffb294;
+    box-shadow: 0 0 35px rgba(255, 178, 148, 0.3);
+}
+
+.faq-image-mask:hover img {
+    transform: scale(1.04);
+}
+
+/* Global Media Responsive Adjustments (Strict 20px Side Margins) */
+@media (max-width: 992px) {
+    .faq-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    .faq-visual-side {
+        order: 2; /* Shifts support graphic down underneath card rows on mobile display views */
+    }
+    .faq-content-side {
+        order: 1;
+        align-items: center;
+    }
+    .faq-main-title {
+        justify-content: center;
+        font-size: 2.3rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .faq-section { padding: 40px 20px 20px 20px; }
+    .faq-main-title { font-size: 1.9rem; }
+    .faq-trigger { padding: 1.25rem; }
+    .faq-question { font-size: 1rem; }
+    .faq-panel-inner { padding: 0 1.25rem 1.25rem 1.25rem; font-size: 0.92rem; }
+    .fly-from-right { transform: translateY(40px); } /* Reconvert to clean structural layout vertical shift for layout stacks */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Split FAQ Header title string into individual animatable words
+    const titleElement = document.getElementById("faqTitle");
+    if (titleElement) {
+        const words = titleElement.textContent.split(" ");
+        titleElement.textContent = ""; 
+        
+        words.forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            titleElement.appendChild(span);
+        });
+    }
+
+    // 2. Interactive Toggle Accordion Expansion Logic
+    const faqTriggers = document.querySelectorAll(".faq-trigger");
+
+    faqTriggers.forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            const currentCard = trigger.closest(".faq-card");
+            const currentPanel = currentCard.querySelector(".faq-panel");
+            const isCurrentlyOpen = currentCard.classList.contains("open");
+
+            // Close all other sibling items across grid contexts for accordion behavior
+            document.querySelectorAll(".faq-card.open").forEach(openCard => {
+                if (openCard !== currentCard) {
+                    openCard.classList.remove("open");
+                    openCard.querySelector(".faq-panel").style.maxHeight = "0";
+                    openCard.querySelector(".faq-trigger").setAttribute("aria-expanded", "false");
+                }
+            });
+
+            // Toggle expansion metrics on target entry item
+            if (isCurrentlyOpen) {
+                currentCard.classList.remove("open");
+                currentPanel.style.maxHeight = "0";
+                trigger.setAttribute("aria-expanded", "false");
+            } else {
+                currentCard.classList.add("open");
+                currentPanel.style.maxHeight = currentPanel.scrollHeight + "px"; // Sets to full layout bounding container requirements dynamically
+                trigger.setAttribute("aria-expanded", "true");
+            }
+        });
+    });
+
+    // 3. Scroll Intersection Entrance Animators
+    const scrollHost = document.querySelector(".content-body") || window;
+    const titleSpans = document.querySelectorAll(".faq-main-title span");
+    const faqItems = document.querySelectorAll(".faq-card");
+    const rightVisualSide = document.getElementById("faqVisualSide");
+
+    function executeFaqScrollObserver() {
+        const structuralTriggerBounds = window.innerHeight * 0.92;
+
+        // Word-by-word title expand reveal
+        titleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < structuralTriggerBounds) {
+                setTimeout(() => {
+                    span.classList.add("reveal");
+                }, index * 95);
+            }
+        });
+
+        // FAQ accordion item grid rows fly-in stagger (one-by-one sequential display)
+        faqItems.forEach((item, index) => {
+            const rect = item.getBoundingClientRect();
+            if (rect.top < structuralTriggerBounds) {
+                setTimeout(() => {
+                    item.classList.add("animate-in");
+                }, index * 120); // 120ms execution gaps
+            }
+        });
+
+        // Support image framework slide entry
+        if (rightVisualSide) {
+            const rect = rightVisualSide.getBoundingClientRect();
+            if (rect.top < structuralTriggerBounds) {
+                setTimeout(() => {
+                    rightVisualSide.classList.add("animate-in");
+                }, 200);
+            }
+        }
+    }
+
+    // Attach listener triggers
+    scrollHost.addEventListener("scroll", executeFaqScrollObserver);
+    window.addEventListener("scroll", executeFaqScrollObserver);
+    
+    // Safety verification check pass
+    setTimeout(executeFaqScrollObserver, 450);
+});
+
+</script>
+
+<section class="subscribe-section-fullwidth">
+    <!-- Abstract Ambient Tech Overlay Background -->
+    <div class="subscribe-bg-overlay"></div>
+
+    <div class="subscribe-container">
+        <!-- Content Column -->
+        <div class="subscribe-content">
+            <span class="subscribe-badge">STAY UP TO DATE</span>
+            
+            <!-- Title Words Fly in from Left/Right Sides Alternately -->
+            <h2 class="subscribe-title" id="subscribeTitle">Join the Stackly Architecture Loop</h2>
+            
+            <p class="subscribe-subtitle rise-element animate-in">Get deep technical breakdowns, event schedule updates, and flagship track announcements directly in your inbox.</p>
+            
+            <!-- Interactive Subscription Form Shell Framework -->
+            <form class="subscribe-form-matrix rise-element animate-in" id="subscribeForm" novalidate>
+                <div class="input-glow-wrapper">
+                    <input type="email" id="subscriberEmail" placeholder="Enter your enterprise email..." aria-label="Email address field">
+                    <!-- Dynamic client status notification field -->
+                    <div class="form-status-alert" id="formStatusAlert">Please fill in the fields</div>
+                </div>
+                <button type="submit" class="subscribe-submit-btn">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Edge-to-Edge Full-Width Section Shell Wrapper */
+.subscribe-section-fullwidth {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    
+    /* Padding settings: Strict 50px top, 30px bottom, with generous side edge clearance */
+    padding: 50px 2rem 30px 2rem; 
+    
+    background: linear-gradient(135deg, #170d1a 0%, #2d1933 50%, #170d1a 100%);
+    border-top: 1px solid rgba(255, 178, 148, 0.08);
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Abstract Radial Ambient Backing Grid Layer */
+.subscribe-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 50% 50%, rgba(255, 178, 148, 0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Internal Alignment Container Shield */
+.subscribe-container {
+    position: relative;
+    z-index: 2;
+    max-width: 800px; /* Constrains input content neatly to the readable center fields */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.subscribe-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.subscribe-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ffb294; /* Peach Family Accent focus */
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+/* Word-by-Word Reveal Alternating from Left/Right Sides */
+.subscribe-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+    cursor: default;
+    transition: text-shadow 0.3s ease;
+}
+
+.subscribe-title span {
+    display: inline-block;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Initial Directional States for Word Reveal */
+.subscribe-title span.fly-left { transform: translateX(-60px); }
+.subscribe-title span.fly-right { transform: translateX(60px); }
+
+.subscribe-title span.reveal {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Title Hover Accent Glow */
+.subscribe-title:hover {
+    text-shadow: 0 0 20px rgba(255, 178, 148, 0.3);
+}
+
+/* Content Rising Elements Setup - Fixed: Visible by default with a smooth micro-scale */
+.rise-element {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rise-element.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.subscribe-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+.subscribe-subtitle:hover {
+    color: #ffffff;
+}
+
+/* Subscription Form Inputs Grid Layout */
+.subscribe-form-matrix {
+    display: flex;
+    width: 100%;
+    max-width: 580px;
+    gap: 1rem;
+    position: relative;
+    z-index: 10;
+}
+
+.input-glow-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subscribe-form-matrix input[type="email"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    border-radius: 50px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Input Box Glow Effect on Focus & Hover */
+.subscribe-form-matrix input[type="email"]:hover,
+.subscribe-form-matrix input[type="email"]:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 20px rgba(255, 178, 148, 0.15);
+}
+
+/* Validation Alert Message Box Styling */
+.form-status-alert {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ff7b7b;
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-status-alert.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Subscription CTA Trigger Button */
+.subscribe-submit-btn {
+    background: #ffb294;
+    color: #211425;
+    border: none;
+    padding: 0 2.2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 5px 15px rgba(255, 178, 148, 0.2);
+}
+
+.subscribe-submit-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Strict Mobile Scaling Matrix (Preserving edge boundaries) */
+@media (max-width: 768px) {
+    .subscribe-section-fullwidth { padding: 40px 20px 25px 20px; }
+    .subscribe-title { font-size: 2rem; }
+    .subscribe-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+    .subscribe-form-matrix { flex-direction: column; gap: 1.5rem; }
+    .subscribe-submit-btn { padding: 1rem 0; width: 100%; }
+    .form-status-alert { top: auto; bottom: calc(100% + 6px); } /* Flips status position to fit stacked inputs cleanly */
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // -------------------------------------------------------------
+    // 1. TEXT PARSING (Alternating side word-by-word entry)
+    // -------------------------------------------------------------
+    const subscribeTitleContainer = document.getElementById("subscribeTitle");
+    if (subscribeTitleContainer) {
+        const words = subscribeTitleContainer.textContent.split(" ");
+        subscribeTitleContainer.textContent = ""; 
+        
+        words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            
+            // Staggers fly-in directions by index coordinates
+            if (index % 2 === 0) {
+                span.classList.add("fly-left");
+            } else {
+                span.classList.add("fly-right");
+            }
+            
+            subscribeTitleContainer.appendChild(span);
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 2. LIVE VALIDATION & REDIRECT SUBMISSION INTERCEPTOR
+    // -------------------------------------------------------------
+    const subscribeForm = document.getElementById("subscribeForm");
+    const subscriberEmail = document.getElementById("subscriberEmail");
+    const formStatusAlert = document.getElementById("formStatusAlert");
+
+    if (subscribeForm) {
+        subscribeForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Blocks raw webpage page reloading loops
+            
+            const emailValue = subscriberEmail.value.trim();
+
+            if (emailValue === "") {
+                // Input empty context handler
+                formStatusAlert.textContent = "Please fill in the fields";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                // Invalid regex configuration sequence fallback
+                formStatusAlert.textContent = "Please enter a valid email address";
+                formStatusAlert.classList.add("visible");
+                subscriberEmail.style.borderColor = "#ff7b7b";
+            } else {
+                // Validation passed completely -> Proceed immediately to 404 URL
+                formStatusAlert.classList.remove("visible");
+                subscriberEmail.style.borderColor = "#ffb294";
+                window.location.href = "404.html";
+            }
+        });
+
+        // Instantly wipe validation boundary errors when text input scales
+        subscriberEmail.addEventListener("input", () => {
+            formStatusAlert.classList.remove("visible");
+            subscriberEmail.style.borderColor = "rgba(255, 255, 255, 0.08)";
+        });
+    }
+
+    // -------------------------------------------------------------
+    // 3. SCROLL INTERSECTION ENGINE (With bottom gap edge recovery)
+    // -------------------------------------------------------------
+    const scrollShell = document.querySelector(".content-body") || window;
+    const subscribeTitleSpans = document.querySelectorAll(".subscribe-title span");
+    const subscribeRisingElements = document.querySelectorAll(".rise-element");
+
+    function executeSubscribeScrollObserver() {
+        // Generous vertical window evaluation target threshold
+        const triggerHeight = window.innerHeight * 0.95; 
+        
+        // Safety Fallback Check: Evaluates true if page spacing constraints block deeper scrolls
+        const isPageScrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 120);
+
+        // Header Title Sequence Revelations
+        subscribeTitleSpans.forEach((span, index) => {
+            const rect = span.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    span.classList.add("reveal"); 
+                }, index * 80);
+            }
+        });
+
+        // Form fields and buttons sequential riser animations loop
+        subscribeRisingElements.forEach((element, index) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top < triggerHeight || isPageScrolledToBottom) {
+                setTimeout(() => { 
+                    element.classList.add("animate-in"); 
+                }, 150 * (index + 1)); // 150ms structural staging separation
+            }
+        });
+    }
+
+    // Register section observers on active scrolling frames
+    scrollShell.addEventListener("scroll", executeSubscribeScrollObserver);
+    window.addEventListener("scroll", executeSubscribeScrollObserver);
+    
+    // Safety verification check pass to check visibility constraints instantly on component mounts
+    setTimeout(executeSubscribeScrollObserver, 400);
+});
+
+</script>
+
+<footer class="main-footer">
+    <div class="footer-upper-grid">
+        
+        <!-- Column 1: Brand Info & Social Media Links -->
+        <div class="footer-column brand-summary-col">
+            <a href="#" class="footer-logo-link" id="backToTopTrigger" aria-label="Back to Top">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="footer-brand-img">
+                <span class="footer-brand-text">STACKLY</span>
+            </a>
+            <p class="footer-description">
+                Engineering premier developer conventions and high-fidelity tech ecosystem environments designed to fuel open-source web frameworks.
+            </p>
+            <div class="footer-social-row">
+                <a href="404.html" class="social-circle-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+               <a href="404.html" class="social-circle-link" aria-label="Twitter X">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+    </svg>
+</a>
+
+                <a href="404.html" class="social-circle-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/></svg>
+                </a>
+                <a href="404.html" class="social-circle-link" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- Column 2: Event Tracks Quick Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Explore Tracks</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Edge Micro-Frontends</a></li>
+                <li><a href="404.html">Zero-Trust Infrastructures</a></li>
+                <li><a href="404.html">Generative Layout Systems</a></li>
+                <li><a href="404.html">Cloud Native Sandboxes</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Attendee Support Links -->
+        <div class="footer-column links-col">
+            <h3 class="footer-header-title">Event Support</h3>
+            <ul class="footer-links-list">
+                <li><a href="404.html">Technical Lab Parameters</a></li>
+                <li><a href="404.html">Registration Badges</a></li>
+                <li><a href="404.html">Help & FAQ Center</a></li>
+                <li><a href="404.html">Safety Certifications</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Location & Contact Metadata -->
+        <div class="footer-column info-metadata-col">
+            <h3 class="footer-header-title">Headquarters Location</h3>
+            <div class="metadata-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span class="meta-text-content">MMR Complex, Periyakollappatty, Chinna Thirupathi, Salem, Tamil Nadu 636008</span>
+            </div>
+            <div class="metadata-row phone-link-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="meta-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span class="meta-text-content">+91 7010792745</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Legals Banner -->
+    <div class="footer-bottom-bar">
+        <div class="bottom-bar-inner">
+            <p class="copyright-notice">&copy; 2026 Stackly Industries. All conference rights reserved.</p>
+            <div class="legal-links-row">
+                <a href="404.html">Privacy Policy</a>
+                <a href="404.html">Terms of Service</a>
+                <a href="404.html">Cookie Management</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Footer Base Framework */
+.main-footer {
+    width: 100%;
+    background-color: #0c0710; /* Rich dark plum base matching platform palette */
+    border-top: 1px solid rgba(255, 178, 148, 0.06);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #ffffff;
+    margin-top: 4rem;
+}
+
+/* Upper Four-Column Grid Structure */
+.footer-upper-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px 50px 20px; /* Precise 20px side padding constraints preserved */
+    display: grid;
+    grid-template-columns: 1.3fr 0.9fr 0.9fr 1.1fr;
+    gap: 3.5rem;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Brand Link and Description Styling */
+.footer-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+}
+
+.footer-brand-img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-brand-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+.footer-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 1.8rem;
+    max-width: 320px;
+}
+
+/* Circular Social Icons Row */
+.footer-social-row {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.social-circle-link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #b5a4ba;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-circle-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Hover Glowing Interactivity Elements */
+.social-circle-link:hover {
+    color: #ffb294; /* Vivid Peach Accent */
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.05);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Column Header Categories */
+.footer-header-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+}
+
+/* Custom Underline Accent Line Template */
+.footer-header-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: #ffb294;
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(255, 178, 148, 0.6);
+}
+
+/* Navigation Lists Layout */
+.footer-links-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.footer-links-list a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: #b5a4ba;
+    font-weight: 500;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-block;
+}
+
+.footer-links-list a:hover {
+    color: #ffb294;
+    transform: translateX(3px);
+}
+
+/* Metadata Rows for Location & Phone info */
+.metadata-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1.2rem;
+}
+
+.meta-icon {
+    width: 18px;
+    height: 18px;
+    color: #ffb294;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.meta-text-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    text-align: left;
+}
+
+.phone-link-row .meta-text-content {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Bottom Legals Bar Framework */
+.footer-bottom-bar {
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 25px 0;
+    background-color: #070409;
+}
+
+.bottom-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright-notice {
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+}
+
+.legal-links-row {
+    display: flex;
+    gap: 1.8rem;
+}
+
+.legal-links-row a {
+    text-decoration: none;
+    font-size: 0.88rem;
+    color: rgba(181, 164, 186, 0.6);
+    transition: color 0.25s ease;
+}
+
+.legal-links-row a:hover {
+    color: #ffb294;
+}
+
+/* Strict Layout Responsive Adaptation Boundaries */
+@media (max-width: 992px) {
+    .footer-upper-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+    .footer-description { max-width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .footer-upper-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        padding: 40px 20px 30px 20px;
+    }
+    .bottom-bar-inner {
+        flex-direction: column;
+        gap: 1.2rem;
+        text-align: center;
+    }
+    .legal-links-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+    }
+}
+
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+    // 1. Back to Top Click Trigger Functionality
+    const backToTopBtn = document.getElementById("backToTopTrigger");
+    
+    // Checks if the internal app container is managing scrolling offsets, or falls back to window object viewport
+    const scrollingElement = document.querySelector(".content-body") || window;
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // Blocks flash anchor resets
+            
+            if (scrollingElement === window) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            } else {
+                scrollingElement.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            }
+        });
+    }
+});
+
+</script>

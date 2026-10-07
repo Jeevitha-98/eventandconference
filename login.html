@@ -1,0 +1,655 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stackly Terminal – Authenticate Deployment Workspace</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="stackly-login-body">
+
+    <div class="login-split-canvas-wrapper">
+        
+        <!-- Left Column: Branding Showcase & Geometric Architecture -->
+        <div class="login-branding-side">
+            <div class="branding-ambient-glow"></div>
+            <div class="branding-inner-content">
+                <span class="branding-tag-pill">ENGINEERING CONVENTIONS</span>
+                <h1 class="branding-main-title">Build Fast.<br><span class="peach-text">Deploy Faster.</span></h1>
+                <p class="branding-subtext">Access high-fidelity conference tracks, spin up modular sandbox development pods, and collaborate with 5,000+ enterprise systems architects globally.</p>
+                
+                <!-- Layout Image Showcase Frame -->
+                <div class="branding-image-mask-box">
+                    <img src="https://unsplash.com" alt="Stackly tech conference arena stage framework setup">
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Interactive Authentication Form Panel -->
+        <div class="login-panel-side">
+            <!-- Navigation back to home base index file -->
+            <a href="index.html" class="back-to-home-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                <span>Back to Home</span>
+            </a>
+
+            <div class="auth-panel-inner">
+                <h2 class="auth-headline">Welcome Back</h2>
+                <p class="auth-sub-description">Sign in to manage your tracks, event dashboard settings, and sandbox session accounts.</p>
+
+                <!-- Authentication Form Shell -->
+                <form class="auth-stack-form" id="stacklyAuthForm" novalidate>
+                    
+                    <!-- Role Dropdown Filter -->
+                    <div class="auth-field-wrapper">
+                        <label for="loginRole">Login As</label>
+                        <div class="input-vector-shell select-shell">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="input-leading-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                            <select id="loginRole" aria-label="Select platform authorization profile role">
+                                <option value="" disabled selected hidden>Select account type</option>
+                                <option value="partner">Partner Dashboard Profile</option>
+                                <option value="client">Client Attendee Profile</option>
+                            </select>
+                            <div class="custom-select-arrow">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="auth-field-wrapper">
+                        <label for="authEmail">Email Address</label>
+                        <div class="input-vector-shell">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="input-leading-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <input type="email" id="authEmail" placeholder="Enter your enterprise email..." required>
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="auth-field-wrapper">
+                        <label for="authPassword">Password</label>
+                        <div class="input-vector-shell">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="input-leading-icon"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <input type="password" id="authPassword" placeholder="Enter your deployment credential..." required>
+                            <!-- Password Visibility Toggle Vector Trigger -->
+                            <button type="button" class="password-toggle-eye" id="passwordToggleBtn" aria-label="Toggle password view state">
+                                <svg id="eyeOpenIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="forgot-redirect-row">
+                        <a href="404.html" class="forgot-link-anchor">Forgot Password?</a>
+                    </div>
+
+                    <!-- Client Side Warning Indicator -->
+                    <div class="auth-status-alert-box" id="authStatusAlert">Please fill in the fields</div>
+
+                    <!-- Primary Terminal Sign In Action Trigger -->
+                    <button type="submit" class="auth-submit-trigger-btn">Sign In</button>
+                </form>
+
+                <!-- Social Sign In Integrations Row Divider -->
+                <div class="social-divider-line">
+                    <span>OR CONTINUE WITH</span>
+                </div>
+
+                <!-- Custom Vector Integrated Social Buttons Matrix mapped to standard 404.html anchors -->
+                <div class="social-auth-matrix-grid">
+                    <a href="404.html" class="social-auth-tile-btn">
+                        <!-- Custom Google Branding Vector Icon -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" xmlns="http://w3.org"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-3.3 3.28-8.16 3.28-13.39z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        <span>Google</span>
+                    </a>
+                    <a href="404.html" class="social-auth-tile-btn">
+                        <!-- Custom Facebook Branding Vector Icon -->
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="#1877F2" xmlns="http://w3.org"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        <span>Facebook</span>
+                    </a>
+                </div>
+
+                <!-- Footer Redirection pointing strictly to signup.html -->
+                <div class="auth-panel-footer">
+                    <p>Don't have an account? <a href="signup.html" class="signup-link-anchor">Create Account</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+   <style>
+    /* Core Viewport Canvas Resets */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.stackly-login-body {
+    width: 100vw;
+    min-height: 100vh;
+    background: #0c0710; /* Stackly signature Deep Plum base canvas environment */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Split Column Framework Setup */
+.login-split-canvas-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr; /* Symmetrical split matrix proportions */
+}
+
+/* Left Column Branding Display */
+.login-branding-side {
+    position: relative;
+    background: linear-gradient(135deg, #1b0f24 0%, #0d0712 100%);
+    border-right: 1px solid rgba(255, 178, 148, 0.05);
+    padding: 4rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: hidden;
+}
+
+.branding-ambient-glow {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(255, 178, 148, 0.05) 0%, transparent 70%);
+    top: -10%;
+    left: -10%;
+    pointer-events: none;
+}
+
+.branding-inner-content {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 520px;
+}
+
+.branding-tag-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #ffb294;
+    background: rgba(255, 178, 148, 0.06);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.branding-main-title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+}
+
+.peach-text {
+    background: linear-gradient(135deg, #ffffff 30%, #ffb294 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.branding-subtext {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #b5a4ba;
+    margin-bottom: 3rem;
+}
+
+/* Image Mask Framework */
+.branding-image-mask-box {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1.5px solid rgba(255, 178, 148, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    background: #140816;
+}
+
+.branding-image-mask-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.75) contrast(1.02);
+}
+
+/* Right Column: Interaction Authentication Panel */
+.login-panel-side {
+    background: #0f0914; /* Pure dark workspace fill layer */
+    padding: 4rem 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Sticky Header Home Navigation Anchor Link */
+.back-to-home-link {
+    position: absolute;
+    top: 2.5rem;
+    left: 4.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #b5a4ba;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.back-to-home-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.back-to-home-link:hover {
+    color: #ffb294; /* Peach active focus hover highlights */
+}
+
+.back-to-home-link:hover svg {
+    transform: translateX(-3px);
+}
+
+/* Auth Card Panel Main Configurations */
+.auth-panel-inner {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-headline {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.auth-sub-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #b5a4ba;
+    margin-bottom: 2.5rem;
+}
+
+.auth-stack-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.auth-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.auth-field-wrapper label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+}
+
+.input-vector-shell {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-leading-icon {
+    position: absolute;
+    left: 1.2rem;
+    width: 16px;
+    height: 16px;
+    color: #b5a4ba;
+    pointer-events: none;
+}
+
+.input-vector-shell input,
+.input-vector-shell select {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 178, 148, 0.15);
+    border-radius: 8px;
+    padding: 0.95rem 1.2rem 0.95rem 2.8rem;
+    font-size: 0.95rem;
+    color: #ffffff;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Custom Role Select Dropdown Architecture Adjustments */
+.input-vector-shell select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.input-vector-shell select option {
+    background: #0f0914;
+    color: #ffffff;
+}
+
+.custom-select-arrow {
+    position: absolute;
+    right: 1.2rem;
+    width: 16px;
+    height: 16px;
+    color: #b5a4ba;
+    pointer-events: none;
+}
+
+/* Input Focus Glow Filters */
+.input-vector-shell input:focus,
+.input-vector-shell select:focus {
+    border-color: #ffb294;
+    background: rgba(255, 178, 148, 0.02);
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.2);
+}
+
+/* Interactive Password Visibility Toggle Actions Overlay */
+.password-toggle-eye {
+    position: absolute;
+    right: 1.2rem;
+    background: transparent;
+    border: none;
+    color: #b5a4ba;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    outline: none;
+}
+
+.password-toggle-eye svg {
+    width: 18px;
+    height: 18px;
+}
+
+.password-toggle-eye:hover {
+    color: #ffb294;
+}
+
+/* Forgot Anchor Setup */
+.forgot-redirect-row {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: -0.25rem;
+}
+
+.forgot-link-anchor {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffb294;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-link-anchor:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+/* Client Warnings Alert Indication Banner */
+.auth-status-alert-box {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    background: rgba(255, 123, 123, 0.08);
+    border: 1px dashed #ff7b7b;
+    color: #ff7b7b;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    display: none; /* Suppressed by default */
+}
+
+.auth-status-alert-box.visible {
+    display: block;
+}
+
+/* Sign In Submit Button */
+.auth-submit-trigger-btn {
+    width: 100%;
+    background: #ffb294; /* Solid Peach corporate background trigger fill */
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 0;
+    color: #211425;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(255, 178, 148, 0.2);
+    margin-top: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.auth-submit-trigger-btn:hover {
+    background: #ffffff;
+    box-shadow: 0 6px 22px rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* Row Dividers Line */
+.social-divider-line {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.social-divider-line::before,
+.social-divider-line::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.social-divider-line span {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: rgba(181, 164, 186, 0.4);
+    letter-spacing: 0.1em;
+}
+
+/* Social Buttons Grid Frame Rows */
+.social-auth-matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.social-auth-tile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 0.85rem 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.social-auth-tile-btn:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: #ffb294;
+    box-shadow: 0 0 15px rgba(255, 178, 148, 0.15);
+}
+
+/* Create Account Footer Links redirection */
+.auth-panel-footer {
+    text-align: center;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.auth-panel-footer p {
+    font-size: 0.92rem;
+    color: #b5a4ba;
+}
+
+.signup-link-anchor {
+    text-decoration: none;
+    color: #ffb294;
+    font-weight: 700;
+    border-bottom: 1.5px solid transparent;
+    transition: all 0.25s ease;
+}
+
+.signup-link-anchor:hover {
+    color: #ffffff;
+    border-bottom-color: #ffffff;
+}
+
+/* Responsive Adaptation Framework Breakpoint Matrix Mapping (Strict 20px Side Clearances) */
+@media (max-width: 1024px) {
+    .login-split-canvas-wrapper {
+        grid-template-columns: 1fr; /* Completely dissolves left branding column layout on tablets/mobiles */
+    }
+    .login-branding-side {
+        display: none !important; /* Conceals side display nodes to speed mobile data rendering tracks */
+    }
+    .login-panel-side {
+        padding: 6rem 20px 4rem 20px; /* Locked strict safety clearances */
+        min-height: 100vh;
+    }
+    .back-to-home-link {
+        left: 20px;
+        top: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-headline { font-size: 1.85rem; }
+    .auth-sub-description { font-size: 0.88rem; margin-bottom: 2rem; }
+    .social-auth-matrix-grid { grid-template-columns: 1fr; gap: 0.8rem; } /* Stacks buttons into clean single cells rows */
+}
+
+   </style>
+
+   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const authForm = document.getElementById("stacklyAuthForm");
+    const loginRole = document.getElementById("loginRole");
+    const authEmail = document.getElementById("authEmail");
+    const authPassword = document.getElementById("authPassword");
+    const authStatusAlert = document.getElementById("authStatusAlert");
+    
+    const passwordToggleBtn = document.getElementById("passwordToggleBtn");
+
+    // 1. Password Visibility Eye Toggle Mechanism Loop
+    if (passwordToggleBtn && authPassword) {
+        passwordToggleBtn.addEventListener("click", () => {
+            const isMaskedPasswordType = authPassword.getAttribute("type") === "password";
+            
+            // Toggle type value explicitly
+            authPassword.setAttribute("type", isMaskedPasswordType ? "text" : "password");
+            
+            // Adjust opacity feedback metrics natively
+            passwordToggleBtn.style.opacity = isMaskedPasswordType ? "1" : "0.5";
+        });
+    }
+
+    // 2. Active Form Check Validation & localStore Routing Execution
+    if (authForm) {
+        authForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Catch raw page reload cycles
+            
+            // Reset status warning views instantly
+            authStatusAlert.classList.remove("visible");
+            loginRole.style.borderColor = "rgba(255, 178, 148, 0.15)";
+            authEmail.style.borderColor = "rgba(255, 178, 148, 0.15)";
+            authPassword.style.borderColor = "rgba(255, 178, 148, 0.15)";
+
+            const selectedRole = loginRole.value;
+            const emailTextValue = authEmail.value.trim();
+            const passwordTextValue = authPassword.value.trim();
+
+            // Strict Validation Checker Loop
+            if (selectedRole === "" || emailTextValue === "" || passwordTextValue === "") {
+                authStatusAlert.textContent = "Please fill in the fields";
+                authStatusAlert.classList.add("visible");
+                
+                // Highlight empty objects fields gracefully in warning red vectors lines
+                if (selectedRole === "") loginRole.style.borderColor = "#ff7b7b";
+                if (emailTextValue === "") authEmail.style.borderColor = "#ff7b7b";
+                if (passwordTextValue === "") authPassword.style.borderColor = "#ff7b7b";
+                return;
+            }
+
+            // Email Pattern Syntax Verification Loop
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTextValue)) {
+                authStatusAlert.textContent = "Please enter a valid email address";
+                authStatusAlert.classList.add("visible");
+                authEmail.style.borderColor = "#ff7b7b";
+                return;
+            }
+
+            // SUCCESS ENVIRONMENT TRIGGER: Store verified email string inside browser storage array loops
+            // Strips trailing domains if needed or saves full string as username mapping tokens
+            localStorage.setItem("stackly_active_username", emailTextValue);
+
+            // Conditional Routing Engine Channels redirection mapping from request
+            if (selectedRole === "partner") {
+                window.location.href = "partner-dashboard.html";
+            } else if (selectedRole === "client") {
+                window.location.href = "client-dashboard.html";
+            }
+        });
+
+        // Instant validation warning wipes as soon as users re-engage input key tracking passes
+        [loginRole, authEmail, authPassword].forEach(element => {
+            element.addEventListener("input", () => {
+                authStatusAlert.classList.remove("visible");
+                element.style.borderColor = "rgba(255, 178, 148, 0.15)";
+            });
+        });
+        loginRole.addEventListener("change", () => {
+            authStatusAlert.classList.remove("visible");
+            loginRole.style.borderColor = "rgba(255, 178, 148, 0.15)";
+        });
+    }
+});
+
+   </script>
+</body>
+</html>
