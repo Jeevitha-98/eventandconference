@@ -17,8 +17,7 @@
             <div class="sidebar-brand-wrapper">
                 <!-- Branding logo with localized view refresh function pass -->
                 <a href="#" class="sidebar-brand-link" id="dashboardRefreshTrigger" aria-label="Refresh Dashboard Matrix State">
-                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Terminal Core Logo" class="brand-vector-logo">
-                    <span class="brand-title-text">STACKLY</span>
+                     <span class="brand-title-text">STACKLY</span>
                 </a>
             </div>
 
@@ -40,10 +39,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     <span>Lab Certifications</span>
                 </button>
-                <button class="nav-segment-item" data-target-section="profile-settings">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    <span>Profile Settings</span>
-                </button>
+                
             </nav>
 
             <!-- Logout action button linked right back to login.html path rules -->
@@ -76,14 +72,11 @@
                 <!-- Right Action Arrays (Bell, Notifications & Profile Avatar) -->
                 <div class="header-utilities-row">
                     <!-- Notification Bell Trigger with active ping dot -->
-                    <button class="utility-bell-btn" id="notificationBellTrigger" aria-label="View Active Notification Streams">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                        <div class="notification-ping-dot"></div>
-                    </button>
+                <button class="utility-bell-btn" id="notificationBellTrigger" aria-label="View Active Notification Streams" onclick="window.location.href='404.html';" > <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/> <path d="M13.73 21a2 2 0 0 1-3.46 0"/> </svg> <div class="notification-ping-dot"></div> </button>
 
                     <!-- Interactive User Settings Profile Avatar -->
                     <div class="utility-user-profile-avatar">
-                        <img src="https://unsplash.com" alt="Active Account Session Profile">
+                        <img src="./assests/arjun.webp" alt="Active Account Session Profile">
                     </div>
                 </div>
             </header>
@@ -92,40 +85,3617 @@
             <div class="workspace-dynamic-viewport" id="workspaceViewport">
                 
                 <!-- Section Frame 1: My Access Passes -->
-                <div class="workspace-section-view active-view" id="section-my-pass">
-                    <div class="section-title-label">SECTION CONTENT VIEW: MY ACCESS PASSES</div>
-                    <div class="placeholder-metric-row-cards">
-                        <div class="metric-mini-card"><h5>Current Ticket Status</h5><p>Enterprise Pass</p></div>
-                        <div class="metric-mini-card"><h5>Badge Code Verified</h5><p>STK-9482-X</p></div>
-                        <div class="metric-mini-card"><h5>Seat Assignments</h5><p>Row A / Pod 04</p></div>
-                    </div>
+                <!-- Section Frame 1: Simplified My Access Passes Credential Area -->
+<div class="workspace-section-view active-view" id="section-my-pass">
+    
+    <!-- Passes Control Header Ribbon -->
+    <div class="simple-pass-header">
+        <div class="header-title-box">
+            <span class="pass-mini-badge">CONFERENCE SECURITY PROFILE</span>
+            <h3 class="pass-main-heading">My Digital Event Credentials</h3>
+        </div>
+        <div class="header-action-box">
+            <a href="404.html" class="simple-download-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download Pass</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Simplified Layout Grid Row Stack -->
+    <div class="simple-passes-metrics-grid">
+        
+        <!-- Access Pass Metric 1 -->
+        <div class="simple-pass-metric-card focus-peach-accent">
+            <div class="card-meta-upper">
+                <div class="card-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="16" y1="2" x2="16" y2="4"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 </div>
+                <span class="pass-status-indicator active-node">ACTIVE</span>
+            </div>
+            <div class="card-meta-lower">
+                <h5>Current Ticket Status</h5>
+                <p class="pass-highlight-text">Enterprise Pass</p>
+            </div>
+        </div>
+
+        <!-- Access Pass Metric 2 -->
+        <div class="simple-pass-metric-card">
+            <div class="card-meta-upper">
+                <div class="card-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <span class="pass-status-indicator verified-node">VERIFIED</span>
+            </div>
+            <div class="card-meta-lower">
+                <h5>Badge Code Verified</h5>
+                <p class="pass-mono-text">STK-9482-X</p>
+            </div>
+        </div>
+
+        <!-- Access Pass Metric 3 -->
+        <div class="simple-pass-metric-card">
+            <div class="card-meta-upper">
+                <div class="card-icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6 17h14M4 19.5A2.5 2.5 0 0 0 6 22h14M4 20V3.5A2.5 2.5 0 0 1 6 1H20v16H6a2.5 2.5 0 0 0-2.5 2.5z"/></svg>
+                </div>
+                <span class="pass-status-indicator mapped-node">ALLOCATED</span>
+            </div>
+            <div class="card-meta-lower">
+                <h5>Seat Assignments</h5>
+                <p class="pass-highlight-text">Row A / Pod 04</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+    /* -------------------------------------------------------------
+   SIMPLIFIED MY ACCESS PASSES MODULE STYLING
+   ------------------------------------------------------------- */
+.simple-pass-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    margin-bottom: 2rem;
+}
+
+.pass-mini-badge {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: #ffb294; /* Vivid Peach theme branding variable */
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.35rem;
+}
+
+.pass-main-heading {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+}
+
+.simple-download-btn {
+    text-decoration: none;
+    background-color: rgba(255, 178, 148, 0.04);
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    color: #ffb294;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.simple-download-btn svg { width: 14px; height: 14px; }
+
+.simple-download-btn:hover {
+    background-color: #ffb294;
+    color: #211425;
+    border-color: #ffb294;
+    box-shadow: 0 4px 12px rgba(255, 178, 148, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Three-Column Simplified Metrics Cards Grid */
+.simple-passes-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.simple-pass-metric-card {
+    background-color: rgba(33, 20, 37, 0.4); /* Translucent corporate Deep Plum backdrop variable */
+    border: 1px solid rgba(255, 178, 148, 0.04);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.simple-pass-metric-card:hover {
+    border-color: rgba(255, 178, 148, 0.2);
+    background-color: rgba(49, 24, 54, 0.5);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.focus-peach-accent {
+    border-color: rgba(255, 178, 148, 0.12);
+}
+
+.card-meta-upper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.card-icon-wrapper {
+    width: 20px;
+    height: 20px;
+    color: #ffb294;
+}
+
+.card-icon-wrapper svg { width: 100%; height: 100%; }
+
+/* Local Status Chips Markers */
+.pass-status-indicator {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+}
+
+.active-node { background-color: rgba(0, 170, 108, 0.08); color: #00aa6c; }
+.verified-node { background-color: rgba(0, 85, 255, 0.08); color: #3b82f6; }
+.mapped-node { background-color: rgba(144, 58, 255, 0.08); color: #a855f7; }
+
+.card-meta-lower {
+    text-align: left;
+    width: 100%;
+}
+
+.card-meta-lower h5 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b5a4ba;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+}
+
+.pass-highlight-text {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+.pass-mono-text {
+    font-family: monospace;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+}
+
+/* -------------------------------------------------------------
+   FLUID RESPONSIVE BREAKPOINT SCALE CONSTRAINTS (Strict 20px Clearance)
+   ------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .simple-passes-metrics-grid {
+        grid-template-columns: repeat(2, 1fr); /* Scales to 2 symmetrical column blocks on intermediate screens */
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 650px) {
+    .simple-pass-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    .simple-download-btn { width: 100%; justify-content: center; }
+    .simple-passes-metrics-grid {
+        grid-template-columns: 1fr; /* Downscales to full-width vertical layout single column stack paths */
+        gap: 1rem;
+    }
+    .simple-pass-metric-card { padding: 1.25rem 20px; min-height: auto; } /* Enforces absolute 20px clearance bounds */
+    .card-meta-upper { margin-bottom: 1.5rem; }
+    .pass-highlight-text, .pass-mono-text { font-size: 1.15rem; }
+}
+
+</style>
 
                 <!-- Section Frame 2: Saved Agenda Tracks -->
-                <div class="workspace-section-view" id="section-saved-schedule">
-                    <div class="section-title-label">SECTION CONTENT VIEW: SAVED AGENDA TRACKS</div>
+               <!-- Section Frame 2: Elaborate Saved Agenda Tracks Workspace Console -->
+<div class="workspace-section-view" id="section-saved-schedule">
+    
+    <!-- Itinerary Header Control Ribbon -->
+    <div class="agenda-summary-ribbon">
+        <div class="ribbon-text-block">
+            <span class="ribbon-badge-tag">MY SELECTIONS MATRIX</span>
+            <h3 class="ribbon-headline">Saved Itinerary & Schedule Tracks</h3>
+        </div>
+        <div class="agenda-quick-actions">
+            <!-- Global Action Triggers with 404 Interceptors -->
+            <a href="404.html" class="agenda-util-btn btn-hollow-gray">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Export Calendar (.ICS)</span>
+            </a>
+            <a href="404.html" class="agenda-util-btn btn-peach-filled">
+                <span>Browse Full Schedule</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Interactive Vertical Timeline Schedule Stack Matrix -->
+    <div class="saved-tracks-timeline-stack">
+        
+        <!-- Timeline Slot Item 1 -->
+        <div class="timeline-track-row focus-peach-glow">
+            <!-- Left Grid Parameter: Time Indicators Track -->
+            <div class="timeline-time-block">
+                <div class="time-stamp-wrapper">
+                    <span class="time-start">09:00 AM</span>
+                    <span class="time-arrow">&darr;</span>
+                    <span class="time-end">12:00 PM</span>
+                </div>
+                <div class="timeline-vertical-node-line">
+                    <div class="node-bullet active-pulse-green"></div>
+                </div>
+            </div>
+
+            <!-- Right Grid Parameter: Content Analytics Details Card -->
+            <div class="timeline-content-card">
+                <div class="card-upper-meta">
+                    <span class="track-location-badge">MAIN ARENA • TRACK A</span>
+                    <span class="track-status-pill status-live">LIVE NOW</span>
+                </div>
+                <div class="card-center-body">
+                    <h4 class="track-title-heading">Scaling Distributed Edge Infrastructure & Micro-Hydration</h4>
+                    <p class="track-brief-abstract">An exhaustive deep-dive exploring progressive server-side reconciliation loops, asset streaming optimization matrices, and layout stability protocols built to completely neutralize cumulative shifts.</p>
+                    
+                    <!-- Associated Speaker Profile Avatar Badge -->
+                    <div class="track-speaker-avatar-badge">
+                        <img src="./assests/rose.webp" alt="Sarah Jenkins Keynote Speaker" class="speaker-avatar">
+                        <div class="speaker-meta">
+                            <h5>Sarah Jenkins</h5>
+                            <p>Lead Web Architect @ Framework.io</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-lower-actions">
+                    <a href="404.html" class="card-action-btn hollow-action">View Session Slides</a>
+                    <a href="404.html" class="card-action-btn filled-peach-action">Join Sandbox Pod</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Slot Item 2 -->
+        <div class="timeline-track-row">
+            <div class="timeline-time-block">
+                <div class="time-stamp-wrapper">
+                    <span class="time-start">01:00 PM</span>
+                    <span class="time-arrow">&darr;</span>
+                    <span class="time-end">03:00 PM</span>
+                </div>
+                <div class="timeline-vertical-node-line">
+                    <div class="node-bullet"></div>
+                </div>
+            </div>
+
+            <div class="timeline-content-card">
+                <div class="card-upper-meta">
+                    <span class="track-location-badge">SANDBOX POD • TRACK B</span>
+                    <span class="track-status-pill status-upcoming">UPCOMING</span>
+                </div>
+                <div class="card-center-body">
+                    <h4 class="track-title-heading">Zero-Trust Isolation Primitives inside Web Sandboxes</h4>
+                    <p class="track-brief-abstract">A comprehensive technical diagnostic session breaking down lightweight container sandbox environments, kernel segregation primitives, and input text compilation filters.</p>
+                    
+                    <div class="track-speaker-avatar-badge">
+                        <img src="./assests/aris.webp" alt="Marcus Chen Speaker" class="speaker-avatar">
+                        <div class="speaker-meta">
+                            <h5>Marcus Chen</h5>
+                            <p>Principal DevOps Engineer @ Stack</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-lower-actions">
+                    <a href="404.html" class="card-action-btn hollow-action">Pre-read Materials</a>
+                    <a href="404.html" class="card-action-btn filled-peach-action">Reserve Instance</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* -------------------------------------------------------------
+   ELABORATE SAVED AGENDA TRACK TIMELINE STYLING
+   ------------------------------------------------------------- */
+/* Header Summary Ribbon Setup */
+.agenda-summary-ribbon {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 178, 148, 0.08);
+    margin-bottom: 2.5rem;
+}
+
+.agenda-quick-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.agenda-util-btn {
+    text-decoration: none;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.agenda-util-btn svg { width: 14px; height: 14px; }
+
+.agenda-quick-actions .btn-hollow-gray {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.agenda-quick-actions .btn-hollow-gray:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.agenda-quick-actions .btn-peach-filled {
+    background-color: #ffb294;
+    color: #211425;
+    box-shadow: 0 4px 12px rgba(255, 178, 148, 0.15);
+}
+
+.agenda-quick-actions .btn-peach-filled:hover {
+    background-color: #ffffff;
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+/* Master Vertical Timeline Matrix Container Layout */
+.saved-tracks-timeline-stack {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.timeline-track-row {
+    display: grid;
+    grid-template-columns: 140px 1fr; /* Rigid separation between timeline logs and detail cards */
+    gap: 1.5rem;
+    width: 100%;
+    position: relative;
+}
+
+/* Time indicator sidebar nodes pipelines layout */
+.timeline-time-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 1.8rem;
+    position: relative;
+}
+
+.time-stamp-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    width: 90px;
+}
+
+.time-start { font-size: 0.95rem; font-weight: 800; color: #ffffff; font-variant-numeric: tabular-nums; }
+.time-arrow { font-size: 0.8rem; color: rgba(181, 164, 186, 0.4); margin: 0.15rem 0; line-height: 1; }
+.time-end { font-size: 0.85rem; font-weight: 600; color: #b5a4ba; font-variant-numeric: tabular-nums; }
+
+.timeline-vertical-node-line {
+    position: relative;
+    width: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Structural continuing connecting vector pipelines rules lines */
+.timeline-vertical-node-line::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; width: 2px;
+    background-color: rgba(255, 178, 148, 0.06);
+    z-index: 1;
+}
+
+.timeline-track-row:last-of-type .timeline-vertical-node-line::after {
+    bottom: calc(100% - 2.5rem); /* Limits final overflow border pipelines line clip */
+}
+
+.node-bullet {
+    position: absolute;
+    top: 2.2rem;
+    width: 10px;
+    height: 10px;
+    background-color: #25162a;
+    border: 2px solid rgba(255, 178, 148, 0.3);
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.active-pulse-green {
+    border-color: #00aa6c !important;
+    background-color: #00aa6c !important;
+    box-shadow: 0 0 8px #00aa6c;
+}
+
+/* Right Side: Structural Detail Layout Cards Blueprint */
+.timeline-content-card {
+    background-color: rgba(33, 20, 37, 0.5); /* Corporate Deep Plum fill backdrop variable */
+    border: 1px solid rgba(255, 178, 148, 0.05);
+    border-radius: 16px;
+    padding: 1.8rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.focus-peach-glow .timeline-content-card {
+    border-color: rgba(255, 178, 148, 0.18);
+    box-shadow: 0 0 25px rgba(255, 178, 148, 0.04), 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-track-row:hover .timeline-content-card {
+    border-color: #ffb294; /* Vivid Peach focus outline glow filter overlay */
+    background-color: rgba(49, 24, 54, 0.6);
+    box-shadow: 0 15px 40px rgba(255, 178, 148, 0.18);
+    transform: translateY(-2px);
+}
+
+.card-upper-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.track-location-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ffb294;
+    border: 1px solid rgba(255, 178, 148, 0.2);
+    padding: 0.35rem 0.85rem;
+    border-radius: 30px;
+    letter-spacing: 0.02em;
+}
+
+.track-status-pill {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.3rem 0.7rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+}
+
+.status-live { background-color: rgba(0, 170, 108, 0.08); color: #00aa6c; border: 1px solid rgba(0, 170, 108, 0.15); }
+.status-upcoming { background-color: rgba(255, 255, 255, 0.04); color: #b5a4ba; border: 1px solid rgba(255, 255, 255, 0.08); }
+
+.card-center-body {
+    text-align: left;
+    width: 100%;
+}
+
+.track-title-heading {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+}
+
+.track-brief-abstract {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #b5a4ba;
+    margin-bottom: 1.5rem;
+    max-width: 740px;
+}
+
+/* Combined Speakers Profile Avatar Sub-badging */
+.track-speaker-avatar-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    display: inline-flex;
+    margin-bottom: 1.8rem;
+    box-sizing: border-box;
+}
+
+.speaker-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 178, 148, 0.2);
+    object-fit: cover;
+}
+
+.speaker-meta h5 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.speaker-meta p { font-size: 0.75rem; color: #b5a4ba; margin: 0; }
+
+/* Action Trigger Buttons Options Footer Row */
+.card-lower-actions {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 1.25rem;
+}
+
+.card-action-btn {
+    text-decoration: none;
+    padding: 0.65rem 1.5rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hollow-action {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+}
+
+.hollow-action:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.filled-peach-action {
+    background-color: #ffb294;
+    color: #211425;
+}
+
+.filled-peach-action:hover {
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+/* -------------------------------------------------------------
+   COMPREHENSIVE RESPONSIVE FLUID MEDIA BREAKPOINTS MATRIX 
+   ------------------------------------------------------------- */
+@media (max-width: 868px) {
+    .timeline-track-row {
+        grid-template-columns: 1fr; /* Collapses structural timeline indicators row split entirely down on tablets */
+        gap: 0;
+    }
+    .timeline-time-block {
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1.25rem;
+        padding-top: 0;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .time-stamp-wrapper { align-items: flex-start; text-align: left; width: auto; flex-direction: row; gap: 8px; }
+    .time-arrow { transform: rotate(-90deg); margin: 0 2px; } /* Swaps node parameters directional paths horizontally */
+    .timeline-vertical-node-line { display: none; } /* Suppresses loose vector connecting bars lines to clear space clearances */
+    .timeline-content-card { margin-bottom: 1.5rem; }
+}
+
+@media (max-width: 650px) {
+    .agenda-summary-ribbon { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+    .agenda-quick-actions { width: 100%; flex-direction: column; gap: 0.8rem; }
+    .agenda-util-btn { width: 100%; text-align: center; justify-content: center; }
+    .timeline-content-card { padding: 1.25rem 20px; border-radius: 12px; } /* Standard strict 20px clearances limits */
+    .card-upper-meta { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .track-title-heading { font-size: 1.15rem; }
+    .track-brief-abstract { font-size: 0.88rem; }
+    .card-lower-actions { flex-direction: column; gap: 0.8rem; }
+    .card-action-btn { width: 100%; text-align: center; }
+}
+
+</style>
+
+              <!-- ================================================================
+     SECTION FRAME 3: MY SANDBOX PODS
+================================================================ -->
+
+<div class="workspace-section-view" id="section-workspaces">
+
+    <!-- Section Header -->
+    <div class="sandbox-section-header">
+
+        <div class="sandbox-section-heading">
+            <span class="sandbox-eyebrow">
+                MY SELECTIONS MATRIX
+            </span>
+
+            <h2>
+                Saved Itinerary &amp; Schedule Tracks
+            </h2>
+        </div>
+
+        <div class="sandbox-header-actions">
+
+            <a href="404.html" class="sandbox-btn sandbox-btn-outline">
+                <span class="sandbox-btn-icon">↓</span>
+                Export Calendar (.ICS)
+            </a>
+
+            <a href="404.html" class="sandbox-btn sandbox-btn-primary">
+                Browse Full Schedule
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Schedule Timeline -->
+    <div class="sandbox-schedule">
+
+        <!-- ========================================================
+             TRACK 01
+        ========================================================= -->
+
+        <div class="sandbox-schedule-row">
+
+            <!-- Time Column -->
+            <div class="sandbox-time-column">
+
+                <div class="sandbox-time">
+                    09:00 AM
                 </div>
 
-                <!-- Section Frame 3: My Sandbox Pods -->
-                <div class="workspace-section-view" id="section-workspaces">
-                    <div class="section-title-label">SECTION CONTENT VIEW: MY SANDBOX PODS</div>
+                <div class="sandbox-time-arrow">
+                    ↓
                 </div>
 
-                <!-- Section Frame 4: Lab Certifications -->
-                <div class="workspace-section-view" id="section-certificates">
-                    <div class="section-title-label">SECTION CONTENT VIEW: LAB CERTIFICATIONS</div>
+                <div class="sandbox-time-end">
+                    12:00 PM
                 </div>
 
-                <!-- Section Frame 5: Profile Settings -->
-                <div class="workspace-section-view" id="section-profile-settings">
-                    <div class="section-title-label">SECTION CONTENT VIEW: PROFILE SETTINGS</div>
+                <span class="sandbox-timeline-dot active"></span>
+
+            </div>
+
+
+            <!-- Session Card -->
+            <div class="sandbox-session-card">
+
+                <div class="sandbox-session-top">
+
+                    <span class="sandbox-track-label">
+                        MAIN ARENA • TRACK A
+                    </span>
+
+                    <span class="sandbox-status live">
+                        LIVE NOW
+                    </span>
+
                 </div>
 
+
+                <h3 class="sandbox-session-title">
+                    Scaling Distributed Edge Infrastructure &amp;
+                    Micro-Hydration
+                </h3>
+
+
+                <p class="sandbox-session-description">
+                    An exhaustive deep-dive exploring progressive
+                    server-side reconciliation loops, asset streaming
+                    optimization matrices, and layout stability
+                    protocols built to completely neutralize cumulative
+                    shifts.
+                </p>
+
+
+                <!-- Speaker -->
+                <div class="sandbox-speaker">
+
+                    <div class="sandbox-speaker-avatar">
+                        <img
+                            src="./assests/rose.webp"
+                            alt="Sarah Jenkins"
+                            onerror="this.style.display='none';"
+                        >
+                    </div>
+
+                    <div class="sandbox-speaker-info">
+
+                        <strong>
+                            Sarah Jenkins
+                        </strong>
+
+                        <span>
+                            Lead Web Architect @ Framework.io
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Card Footer -->
+                <div class="sandbox-session-footer">
+
+                    <a
+                        href="404.html"
+                        class="sandbox-btn sandbox-btn-outline"
+                    >
+                        View Session Slides
+                    </a>
+
+                    <a
+                        href="404.html"
+                        class="sandbox-btn sandbox-btn-primary"
+                    >
+                        Join Sandbox Pod
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================
+             TRACK 02
+        ========================================================= -->
+
+        <div class="sandbox-schedule-row">
+
+            <!-- Time Column -->
+            <div class="sandbox-time-column">
+
+                <div class="sandbox-time">
+                    01:00 PM
+                </div>
+
+                <div class="sandbox-time-arrow">
+                    ↓
+                </div>
+
+                <div class="sandbox-time-end">
+                    03:00 PM
+                </div>
+
+                <span class="sandbox-timeline-dot"></span>
+
+            </div>
+
+
+            <!-- Session Card -->
+            <div class="sandbox-session-card">
+
+                <div class="sandbox-session-top">
+
+                    <span class="sandbox-track-label">
+                        SANDBOX POD • TRACK B
+                    </span>
+
+                    <span class="sandbox-status upcoming">
+                        UPCOMING
+                    </span>
+
+                </div>
+
+
+                <h3 class="sandbox-session-title">
+                    Zero-Trust Isolation Primitives inside Web
+                    Sandboxes
+                </h3>
+
+
+                <p class="sandbox-session-description">
+                    A comprehensive technical diagnostic session
+                    breaking down lightweight container sandbox
+                    environments, isolation strategies and secure
+                    browser execution patterns.
+                </p>
+
+
+                <!-- Speaker -->
+                <div class="sandbox-speaker">
+
+                    <div class="sandbox-speaker-avatar">
+                        <img
+                            src="./assests/aris.webp"
+                            alt="Alex Morgan"
+                            onerror="this.style.display='none';"
+                        >
+                    </div>
+
+                    <div class="sandbox-speaker-info">
+
+                        <strong>
+                            Alex Morgan
+                        </strong>
+
+                        <span>
+                            Security Engineer @ Sandbox Labs
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Card Footer -->
+                <div class="sandbox-session-footer">
+
+                    <a
+                        href="404.html"
+                        class="sandbox-btn sandbox-btn-outline"
+                    >
+                        View Session Slides
+                    </a>
+
+                    <a
+                        href="404.html"
+                        class="sandbox-btn sandbox-btn-primary"
+                    >
+                        Join Sandbox Pod
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================================
+             TRACK 03
+        ========================================================= -->
+
+        <div class="sandbox-schedule-row">
+
+            <!-- Time Column -->
+            <div class="sandbox-time-column">
+
+                <div class="sandbox-time">
+                    04:00 PM
+                </div>
+
+                <div class="sandbox-time-arrow">
+                    ↓
+                </div>
+
+                <div class="sandbox-time-end">
+                    05:30 PM
+                </div>
+
+                <span class="sandbox-timeline-dot"></span>
+
+            </div>
+
+
+            <!-- Session Card -->
+            <div class="sandbox-session-card">
+
+                <div class="sandbox-session-top">
+
+                    <span class="sandbox-track-label">
+                        WORKSHOP • TRACK C
+                    </span>
+
+                    <span class="sandbox-status upcoming">
+                        UPCOMING
+                    </span>
+
+                </div>
+
+
+                <h3 class="sandbox-session-title">
+                    Building Resilient Frontend Systems at Scale
+                </h3>
+
+
+                <p class="sandbox-session-description">
+                    Explore practical patterns for scalable frontend
+                    architecture, component isolation, responsive
+                    interfaces and maintainable application systems.
+                </p>
+
+
+                <div class="sandbox-speaker">
+
+                    <div class="sandbox-speaker-avatar">
+                        <img
+                            src="./assests/devon mill.webp"
+                            alt="David Carter"
+                            onerror="this.style.display='none';"
+                        >
+                    </div>
+
+                    <div class="sandbox-speaker-info">
+
+                        <strong>
+                            David Carter
+                        </strong>
+
+                        <span>
+                            Principal Frontend Engineer @ Stack Systems
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sandbox-session-footer">
+
+                    <a
+                        href="404.html"
+                        class="sandbox-btn sandbox-btn-outline"
+                    >
+                        View Session Slides
+                    </a>
+
+                    <a
+                        href="404.html"
+                        class="sandbox-btn sandbox-btn-primary"
+                    >
+                        Join Sandbox Pod
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<style>
+    /* ================================================================
+   MY SANDBOX PODS
+   EVENT / SCHEDULE MATRIX
+================================================================ */
+
+
+/* ================================================================
+   ROOT SECTION
+================================================================ */
+
+#section-workspaces {
+    width: 100%;
+    min-height: 100%;
+
+    box-sizing: border-box;
+
+    padding: 48px 48px 70px;
+
+    background: #080509;
+
+    color: #ffffff;
+
+    overflow: hidden;
+}
+
+
+/* ================================================================
+   SECTION HEADER
+================================================================ */
+
+.sandbox-section-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 32px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+.sandbox-section-heading {
+    min-width: 0;
+}
+
+
+.sandbox-eyebrow {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #f2edf2;
+
+    font-size: 18px;
+    font-weight: 500;
+
+    line-height: 1.3;
+}
+
+
+.sandbox-section-heading h2 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    line-height: 1.25;
+
+    letter-spacing: -0.5px;
+}
+
+
+/* ================================================================
+   HEADER BUTTONS
+================================================================ */
+
+.sandbox-header-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    flex-shrink: 0;
+}
+
+
+/* ================================================================
+   COMMON BUTTON
+================================================================ */
+
+.sandbox-btn {
+    min-height: 50px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    padding: 0 28px;
+
+    border-radius: 13px;
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Outline Button */
+
+.sandbox-btn-outline {
+    color: #ffffff;
+
+    background: transparent;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+
+.sandbox-btn-outline:hover {
+    background: rgba(255, 255, 255, 0.045);
+
+    border-color: rgba(255, 173, 145, 0.45);
+
+    transform: translateY(-1px);
+}
+
+
+/* Primary Button */
+
+.sandbox-btn-primary {
+    color: #160d11;
+
+    background: #ffad91;
+
+    border: 1px solid #ffad91;
+}
+
+
+.sandbox-btn-primary:hover {
+    background: #ffbca5;
+
+    border-color: #ffbca5;
+
+    transform: translateY(-1px);
+}
+
+
+/* Download Icon */
+
+.sandbox-btn-icon {
+    margin-right: 10px;
+
+    font-size: 20px;
+    font-weight: 400;
+
+    line-height: 0;
+}
+
+
+/* ================================================================
+   SCHEDULE
+================================================================ */
+
+.sandbox-schedule {
+    width: 100%;
+
+    margin-top: 50px;
+}
+
+
+/* ================================================================
+   SCHEDULE ROW
+================================================================ */
+
+.sandbox-schedule-row {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 165px minmax(0, 1fr);
+
+    gap: 40px;
+
+    position: relative;
+
+    margin-bottom: 40px;
+}
+
+
+/* ================================================================
+   TIME COLUMN
+================================================================ */
+
+.sandbox-time-column {
+    position: relative;
+
+    min-height: 450px;
+
+    padding-top: 40px;
+
+    text-align: right;
+
+    box-sizing: border-box;
+}
+
+
+.sandbox-time {
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    line-height: 1.2;
+}
+
+
+.sandbox-time-arrow {
+    margin-top: 6px;
+
+    color: rgba(255, 255, 255, 0.3);
+
+    font-size: 16px;
+
+    line-height: 1;
+}
+
+
+.sandbox-time-end {
+    margin-top: 8px;
+
+    color: #aaa1ae;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    line-height: 1.2;
+}
+
+
+/* ================================================================
+   TIMELINE LINE
+================================================================ */
+
+.sandbox-time-column::after {
+    content: "";
+
+    position: absolute;
+
+    top: 36px;
+    right: -2px;
+
+    width: 3px;
+    height: calc(100% - 36px);
+
+    background: rgba(255, 255, 255, 0.065);
+}
+
+
+/* ================================================================
+   TIMELINE DOT
+================================================================ */
+
+.sandbox-timeline-dot {
+    position: absolute;
+
+    top: 80px;
+    right: -9px;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #2a1723;
+
+    border: 2px solid #69465a;
+
+    box-sizing: content-box;
+
+    z-index: 2;
+}
+
+
+.sandbox-timeline-dot.active {
+    background: #00b879;
+
+    border-color: #00b879;
+
+    box-shadow:
+        0 0 0 5px rgba(0, 184, 121, 0.08);
+}
+
+
+/* ================================================================
+   SESSION CARD
+================================================================ */
+
+.sandbox-session-card {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 36px;
+
+    box-sizing: border-box;
+
+    border-radius: 20px;
+
+    background: #120c14;
+
+    border: 1px solid #392638;
+
+    overflow: hidden;
+}
+
+
+.sandbox-session-card:hover {
+    border-color: #513849;
+}
+
+
+/* ================================================================
+   CARD TOP
+================================================================ */
+
+.sandbox-session-top {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+
+/* Track Label */
+
+.sandbox-track-label {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 37px;
+
+    padding: 0 17px;
+
+    border: 1px solid #5b3548;
+
+    border-radius: 20px;
+
+    color: #ffad91;
+
+    background: rgba(255, 173, 145, 0.015);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+
+    line-height: 1;
+}
+
+
+/* ================================================================
+   STATUS
+================================================================ */
+
+.sandbox-status {
+    display: inline-flex;
+    align-items: center;
+
+    min-height: 31px;
+
+    padding: 0 14px;
+
+    border-radius: 4px;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    letter-spacing: 0.4px;
+
+    white-space: nowrap;
+}
+
+
+.sandbox-status.live {
+    color: #00b879;
+
+    background: rgba(0, 184, 121, 0.06);
+
+    border: 1px solid rgba(0, 184, 121, 0.18);
+}
+
+
+.sandbox-status.upcoming {
+    color: #aaa1ae;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+/* ================================================================
+   SESSION TITLE
+================================================================ */
+
+.sandbox-session-title {
+    max-width: 1000px;
+
+    margin: 0 0 14px;
+
+    color: #ffffff;
+
+    font-size: clamp(24px, 2vw, 29px);
+
+    font-weight: 800;
+
+    line-height: 1.25;
+
+    letter-spacing: -0.7px;
+}
+
+
+/* ================================================================
+   DESCRIPTION
+================================================================ */
+
+.sandbox-session-description {
+    max-width: 970px;
+
+    margin: 0;
+
+    color: #aaa1ae;
+
+    font-size: 16px;
+
+    font-weight: 400;
+
+    line-height: 1.9;
+}
+
+
+/* ================================================================
+   SPEAKER
+================================================================ */
+
+.sandbox-speaker {
+    width: fit-content;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-top: 30px;
+
+    padding: 12px 18px 12px 12px;
+
+    border-radius: 8px;
+
+    background: rgba(0, 0, 0, 0.13);
+}
+
+
+.sandbox-speaker-avatar {
+    width: 43px;
+    height: 43px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background: #211722;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+
+.sandbox-speaker-avatar img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.sandbox-speaker-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.sandbox-speaker-info strong {
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 800;
+
+    line-height: 1.25;
+}
+
+
+.sandbox-speaker-info span {
+    color: #aaa1ae;
+
+    font-size: 13px;
+    font-weight: 400;
+
+    line-height: 1.3;
+}
+
+
+/* ================================================================
+   SESSION FOOTER
+================================================================ */
+
+.sandbox-session-footer {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    margin-top: 34px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+
+/* ================================================================
+   TABLET
+================================================================ */
+
+@media (max-width: 1000px) {
+
+    #section-workspaces {
+        padding: 35px 28px 55px;
+    }
+
+
+    .sandbox-section-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .sandbox-header-actions {
+        width: 100%;
+    }
+
+
+    .sandbox-header-actions .sandbox-btn {
+        flex: 1;
+    }
+
+
+    .sandbox-schedule-row {
+        grid-template-columns: 120px minmax(0, 1fr);
+
+        gap: 30px;
+    }
+
+
+    .sandbox-session-card {
+        padding: 28px;
+    }
+
+
+    .sandbox-session-title {
+        font-size: 24px;
+    }
+
+}
+
+
+/* ================================================================
+   MOBILE
+================================================================ */
+
+@media (max-width: 700px) {
+
+    #section-workspaces {
+        padding: 25px 16px 45px;
+    }
+
+
+    /* Header */
+
+    .sandbox-section-header {
+        padding-bottom: 24px;
+
+        gap: 22px;
+    }
+
+
+    .sandbox-eyebrow {
+        font-size: 15px;
+    }
+
+
+    .sandbox-section-heading h2 {
+        font-size: 21px;
+    }
+
+
+    .sandbox-header-actions {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .sandbox-header-actions .sandbox-btn {
+        width: 100%;
+    }
+
+
+    /* Schedule */
+
+    .sandbox-schedule {
+        margin-top: 28px;
+    }
+
+
+    .sandbox-schedule-row {
+        display: block;
+
+        margin-bottom: 25px;
+    }
+
+
+    /* Time */
+
+    .sandbox-time-column {
+        min-height: auto;
+
+        display: flex;
+        align-items: center;
+
+        gap: 8px;
+
+        padding: 0 0 13px;
+
+        text-align: left;
+    }
+
+
+    .sandbox-time-column::after {
+        display: none;
+    }
+
+
+    .sandbox-time-arrow {
+        margin: 0;
+
+        font-size: 13px;
+    }
+
+
+    .sandbox-time-end {
+        margin: 0;
+
+        font-size: 13px;
+    }
+
+
+    .sandbox-timeline-dot {
+        display: none;
+    }
+
+
+    /* Card */
+
+    .sandbox-session-card {
+        padding: 22px;
+
+        border-radius: 15px;
+    }
+
+
+    .sandbox-session-top {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .sandbox-track-label {
+        min-height: 33px;
+
+        padding: 0 13px;
+
+        font-size: 11px;
+    }
+
+
+    .sandbox-status {
+        min-height: 28px;
+
+        font-size: 10px;
+    }
+
+
+    .sandbox-session-title {
+        font-size: 21px;
+
+        line-height: 1.35;
+
+        letter-spacing: -0.3px;
+    }
+
+
+    .sandbox-session-description {
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+
+    /* Speaker */
+
+    .sandbox-speaker {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        margin-top: 22px;
+
+        padding: 10px;
+    }
+
+
+    .sandbox-speaker-info strong {
+        font-size: 14px;
+    }
+
+
+    .sandbox-speaker-info span {
+        font-size: 11px;
+    }
+
+
+    /* Footer */
+
+    .sandbox-session-footer {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 10px;
+
+        margin-top: 25px;
+
+        padding-top: 20px;
+    }
+
+
+    .sandbox-session-footer .sandbox-btn {
+        width: 100%;
+    }
+
+}
+
+
+/* ================================================================
+   SMALL MOBILE
+================================================================ */
+
+@media (max-width: 420px) {
+
+    #section-workspaces {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .sandbox-section-heading h2 {
+        font-size: 19px;
+    }
+
+
+    .sandbox-session-card {
+        padding: 18px;
+    }
+
+
+    .sandbox-session-title {
+        font-size: 19px;
+    }
+
+
+    .sandbox-session-description {
+        font-size: 12px;
+    }
+
+
+    .sandbox-btn {
+        min-height: 46px;
+
+        padding-left: 18px;
+        padding-right: 18px;
+
+        font-size: 13px;
+    }
+
+}
+</style>
+
+             <!-- ================================================================
+     SECTION FRAME 4: LAB CERTIFICATIONS
+================================================================ -->
+
+<div class="workspace-section-view" id="section-certificates">
+
+    <!-- ============================================================
+         CERTIFICATION HEADER
+    ============================================================= -->
+
+    <div class="cert-section-header">
+
+        <div class="cert-heading-block">
+
+            <span class="cert-eyebrow">
+                VERIFIED LAB RECORD
+            </span>
+
+            <h2>
+                Lab Certifications
+            </h2>
+
+            <p>
+                Verified credentials, technical achievements and
+                completed laboratory learning tracks.
+            </p>
+
+        </div>
+
+
+        <div class="cert-header-badge">
+
+            <span class="cert-header-badge-icon">
+                ✓
+            </span>
+
+            <div>
+                <strong>
+                    All Credentials Verified
+                </strong>
+
+                <span>
+                    Last synchronized today
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         CERTIFICATION OVERVIEW
+    ============================================================= -->
+
+    <div class="cert-overview-grid">
+
+        <!-- Total Certifications -->
+
+        <div class="cert-stat-card">
+
+            <span class="cert-stat-label">
+                TOTAL CERTIFICATIONS
+            </span>
+
+            <strong class="cert-stat-number">
+                08
+            </strong>
+
+            <span class="cert-stat-description">
+                Verified laboratory credentials
+            </span>
+
+        </div>
+
+
+        <!-- Completed Labs -->
+
+        <div class="cert-stat-card">
+
+            <span class="cert-stat-label">
+                LABS COMPLETED
+            </span>
+
+            <strong class="cert-stat-number">
+                24
+            </strong>
+
+            <span class="cert-stat-description">
+                Practical technical sessions
+            </span>
+
+        </div>
+
+
+        <!-- Score -->
+
+        <div class="cert-stat-card cert-score-card">
+
+            <div class="cert-score-ring">
+
+                <div class="cert-score-inner">
+                    <strong>94</strong>
+                    <span>%</span>
+                </div>
+
+            </div>
+
+            <div class="cert-score-content">
+
+                <span class="cert-stat-label">
+                    LAB SCORE
+                </span>
+
+                <span class="cert-stat-description">
+                    Overall assessment
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Status -->
+
+        <div class="cert-stat-card">
+
+            <span class="cert-stat-label">
+                CURRENT STATUS
+            </span>
+
+            <strong class="cert-active-status">
+                ACTIVE
+            </strong>
+
+            <span class="cert-stat-description">
+                No credentials expiring
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         FEATURED CERTIFICATION
+    ============================================================= -->
+
+    <div class="cert-featured-card">
+
+        <div class="cert-featured-left">
+
+            <div class="cert-seal">
+
+                <span class="cert-seal-star">
+                    ★
+                </span>
+
+                <span class="cert-seal-text">
+                    VERIFIED
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="cert-featured-content">
+
+            <span class="cert-featured-label">
+                FEATURED CREDENTIAL
+            </span>
+
+            <h3>
+                Advanced Web Systems &amp;
+                Infrastructure Laboratory
+            </h3>
+
+            <p>
+                A comprehensive technical certification covering
+                scalable frontend architecture, distributed systems,
+                responsive engineering and production-ready
+                application workflows.
+            </p>
+
+
+            <div class="cert-featured-meta">
+
+                <div>
+                    <span>ISSUED BY</span>
+                    <strong>Stackly Technical Labs</strong>
+                </div>
+
+                <div>
+                    <span>ISSUED ON</span>
+                    <strong>08 OCT 2026</strong>
+                </div>
+
+                <div>
+                    <span>CREDENTIAL ID</span>
+                    <strong>STL-AX94-2048</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="cert-featured-action">
+
+            <span class="cert-verified-mark">
+                ✓ VERIFIED
+            </span>
+
+            <a
+                href="404.html"
+                class="cert-primary-button"
+            >
+                View Credential →
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         CERTIFICATION LIST HEADER
+    ============================================================= -->
+
+    <div class="cert-list-header">
+
+        <div>
+            <span class="cert-eyebrow">
+                CREDENTIAL ARCHIVE
+            </span>
+
+            <h3>
+                Completed Certifications
+            </h3>
+        </div>
+
+        <a
+            href="404.html"
+            class="cert-filter-button"
+        >
+            View All Credentials
+        </a>
+
+    </div>
+
+
+    <!-- ============================================================
+         CERTIFICATION GRID
+    ============================================================= -->
+
+    <div class="certification-grid">
+
+
+        <!-- ========================================================
+             CERTIFICATE 01
+        ======================================================== -->
+
+        <article class="certificate-card">
+
+            <div class="certificate-card-top">
+
+                <div class="certificate-icon">
+                    <span>01</span>
+                </div>
+
+                <span class="certificate-status">
+                    VERIFIED
+                </span>
+
+            </div>
+
+
+            <div class="certificate-card-content">
+
+                <span class="certificate-category">
+                    FRONTEND ENGINEERING
+                </span>
+
+                <h4>
+                    Responsive Interface Systems
+                </h4>
+
+                <p>
+                    Advanced responsive layouts, component systems
+                    and cross-device interface engineering.
+                </p>
+
+            </div>
+
+
+            <div class="certificate-details">
+
+                <div>
+                    <span>ISSUER</span>
+                    <strong>Stackly Labs</strong>
+                </div>
+
+                <div>
+                    <span>DATE</span>
+                    <strong>SEP 2026</strong>
+                </div>
+
+            </div>
+
+
+            <a
+                href="404.html"
+                class="certificate-link"
+            >
+                View Certificate
+                <span>→</span>
+            </a>
+
+        </article>
+
+
+        <!-- ========================================================
+             CERTIFICATE 02
+        ======================================================== -->
+
+        <article class="certificate-card">
+
+            <div class="certificate-card-top">
+
+                <div class="certificate-icon">
+                    <span>02</span>
+                </div>
+
+                <span class="certificate-status">
+                    VERIFIED
+                </span>
+
+            </div>
+
+
+            <div class="certificate-card-content">
+
+                <span class="certificate-category">
+                    JAVASCRIPT LAB
+                </span>
+
+                <h4>
+                    Modern JavaScript Architecture
+                </h4>
+
+                <p>
+                    Practical JavaScript architecture, DOM systems,
+                    asynchronous workflows and application logic.
+                </p>
+
+            </div>
+
+
+            <div class="certificate-details">
+
+                <div>
+                    <span>ISSUER</span>
+                    <strong>Stackly Labs</strong>
+                </div>
+
+                <div>
+                    <span>DATE</span>
+                    <strong>AUG 2026</strong>
+                </div>
+
+            </div>
+
+
+            <a
+                href="404.html"
+                class="certificate-link"
+            >
+                View Certificate
+                <span>→</span>
+            </a>
+
+        </article>
+
+
+        <!-- ========================================================
+             CERTIFICATE 03
+        ======================================================== -->
+
+        <article class="certificate-card">
+
+            <div class="certificate-card-top">
+
+                <div class="certificate-icon">
+                    <span>03</span>
+                </div>
+
+                <span class="certificate-status">
+                    VERIFIED
+                </span>
+
+            </div>
+
+
+            <div class="certificate-card-content">
+
+                <span class="certificate-category">
+                    REACT SYSTEMS
+                </span>
+
+                <h4>
+                    React Application Engineering
+                </h4>
+
+                <p>
+                    Component-driven application design, state
+                    management and reusable frontend architecture.
+                </p>
+
+            </div>
+
+
+            <div class="certificate-details">
+
+                <div>
+                    <span>ISSUER</span>
+                    <strong>Stackly Labs</strong>
+                </div>
+
+                <div>
+                    <span>DATE</span>
+                    <strong>JUL 2026</strong>
+                </div>
+
+            </div>
+
+
+            <a
+                href="404.html"
+                class="certificate-link"
+            >
+                View Certificate
+                <span>→</span>
+            </a>
+
+        </article>
+
+
+        <!-- ========================================================
+             CERTIFICATE 04
+        ======================================================== -->
+
+        <article class="certificate-card">
+
+            <div class="certificate-card-top">
+
+                <div class="certificate-icon">
+                    <span>04</span>
+                </div>
+
+                <span class="certificate-status">
+                    VERIFIED
+                </span>
+
+            </div>
+
+
+            <div class="certificate-card-content">
+
+                <span class="certificate-category">
+                    UI SYSTEMS
+                </span>
+
+                <h4>
+                    Design System Foundations
+                </h4>
+
+                <p>
+                    Interface consistency, reusable visual patterns,
+                    accessibility and scalable design systems.
+                </p>
+
+            </div>
+
+
+            <div class="certificate-details">
+
+                <div>
+                    <span>ISSUER</span>
+                    <strong>Stackly Labs</strong>
+                </div>
+
+                <div>
+                    <span>DATE</span>
+                    <strong>JUN 2026</strong>
+                </div>
+
+            </div>
+
+
+            <a
+                href="404.html"
+                class="certificate-link"
+            >
+                View Certificate
+                <span>→</span>
+            </a>
+
+        </article>
+
+    </div>
+
+</div>
+
+<style>
+    /* ================================================================
+   SECTION FRAME 4
+   LAB CERTIFICATIONS
+   MEDIUM TYPOGRAPHY VERSION
+================================================================ */
+
+#section-certificates {
+    width: 100%;
+    min-height: 100%;
+
+    box-sizing: border-box;
+
+    padding: 48px 48px 70px;
+
+    background: #080509;
+
+    color: #ffffff;
+
+    overflow: hidden;
+}
+
+
+/* ================================================================
+   HEADER
+================================================================ */
+
+.cert-section-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 35px;
+
+    padding-bottom: 30px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cert-heading-block {
+    min-width: 0;
+}
+
+.cert-eyebrow {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #aaa1ae;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    line-height: 1.4;
+}
+
+.cert-heading-block h2 {
+    margin: 0 0 10px;
+
+    color: #ffffff;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    letter-spacing: -0.7px;
+
+    line-height: 1.2;
+}
+
+.cert-heading-block p {
+    max-width: 700px;
+
+    margin: 0;
+
+    color: #aaa1ae;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* ================================================================
+   HEADER VERIFIED BADGE
+================================================================ */
+
+.cert-header-badge {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    flex-shrink: 0;
+
+    padding: 13px 18px;
+
+    border: 1px solid rgba(255, 173, 145, 0.2);
+
+    border-radius: 10px;
+
+    background: rgba(255, 173, 145, 0.035);
+}
+
+.cert-header-badge-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #ffad91;
+
+    color: #160d11;
+
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.cert-header-badge div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.cert-header-badge strong {
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.cert-header-badge span {
+    color: #8f8592;
+
+    font-size: 11px;
+}
+
+
+/* ================================================================
+   OVERVIEW GRID
+================================================================ */
+
+.cert-overview-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-top: 28px;
+}
+
+
+/* ================================================================
+   STAT CARD
+================================================================ */
+
+.cert-stat-card {
+    min-width: 0;
+
+    min-height: 150px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #30212f;
+
+    border-radius: 13px;
+
+    background: #100a12;
+}
+
+.cert-stat-card:hover {
+    border-color: #493243;
+}
+
+.cert-stat-label {
+    color: #8f8592;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.3px;
+
+    line-height: 1.4;
+}
+
+.cert-stat-number {
+    margin-top: 10px;
+
+    color: #ffffff;
+
+    font-size: 38px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+.cert-stat-description {
+    margin-top: 10px;
+
+    color: #8f8592;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.cert-active-status {
+    margin-top: 12px;
+
+    color: #00b879;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    line-height: 1;
+}
+
+
+/* ================================================================
+   SCORE CARD
+================================================================ */
+
+.cert-score-card {
+    flex-direction: row;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.cert-score-ring {
+    width: 74px;
+    height: 74px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #ffad91 0deg 338deg,
+            #332530 338deg 360deg
+        );
+}
+
+.cert-score-ring::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 7px;
+
+    border-radius: 50%;
+
+    background: #100a12;
+}
+
+.cert-score-inner {
+    position: relative;
+
+    display: flex;
+    align-items: baseline;
+}
+
+.cert-score-inner strong {
+    color: #ffffff;
+
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.cert-score-inner span {
+    color: #aaa1ae;
+
+    font-size: 11px;
+}
+
+.cert-score-content {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+
+/* ================================================================
+   FEATURED CERTIFICATION
+================================================================ */
+
+.cert-featured-card {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: 110px minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 30px;
+
+    margin-top: 28px;
+
+    padding: 32px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #49303f;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #160d14 0%,
+            #120a11 60%,
+            #100a12 100%
+        );
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.cert-featured-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: #ffad91;
+}
+
+
+/* ================================================================
+   CERTIFICATE SEAL
+================================================================ */
+
+.cert-featured-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cert-seal {
+    width: 96px;
+    height: 96px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #6a4053;
+
+    border-radius: 50%;
+
+    background: #180e16;
+
+    position: relative;
+}
+
+.cert-seal::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 7px;
+
+    border: 1px dashed #634054;
+
+    border-radius: 50%;
+}
+
+.cert-seal-star {
+    position: relative;
+
+    color: #ffad91;
+
+    font-size: 23px;
+
+    line-height: 1;
+}
+
+.cert-seal-text {
+    position: relative;
+
+    margin-top: 6px;
+
+    color: #aaa1ae;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+/* ================================================================
+   FEATURED CONTENT
+================================================================ */
+
+.cert-featured-content {
+    min-width: 0;
+}
+
+.cert-featured-label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #ffad91;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.3px;
+}
+
+.cert-featured-content h3 {
+    max-width: 800px;
+
+    margin: 0 0 12px;
+
+    color: #ffffff;
+
+    font-size: 26px;
+    font-weight: 800;
+
+    line-height: 1.3;
+
+    letter-spacing: -0.4px;
+}
+
+.cert-featured-content p {
+    max-width: 850px;
+
+    margin: 0;
+
+    color: #aaa1ae;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* ================================================================
+   FEATURED META
+================================================================ */
+
+.cert-featured-meta {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 32px;
+
+    margin-top: 23px;
+}
+
+.cert-featured-meta div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.cert-featured-meta span {
+    color: #756b77;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.cert-featured-meta strong {
+    color: #ded7df;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* ================================================================
+   FEATURED ACTION
+================================================================ */
+
+.cert-featured-action {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    gap: 18px;
+
+    min-width: 175px;
+}
+
+.cert-verified-mark {
+    color: #00b879;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.cert-primary-button {
+    min-height: 48px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 22px;
+
+    box-sizing: border-box;
+
+    border-radius: 9px;
+
+    background: #ffad91;
+
+    border: 1px solid #ffad91;
+
+    color: #160d11;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cert-primary-button:hover {
+    background: #ffbca5;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================================
+   LIST HEADER
+================================================================ */
+
+.cert-list-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 44px;
+    margin-bottom: 21px;
+}
+
+.cert-list-header h3 {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 22px;
+    font-weight: 800;
+
+    line-height: 1.3;
+}
+
+.cert-filter-button {
+    color: #aaa1ae;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    padding-bottom: 5px;
+}
+
+.cert-filter-button:hover {
+    color: #ffad91;
+
+    border-color: #ffad91;
+}
+
+
+/* ================================================================
+   CERTIFICATION GRID
+================================================================ */
+
+.certification-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+
+/* ================================================================
+   CERTIFICATE CARD
+================================================================ */
+
+.certificate-card {
+    min-width: 0;
+
+    padding: 25px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #30212f;
+
+    border-radius: 14px;
+
+    background: #100a12;
+
+    transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.certificate-card:hover {
+    border-color: #513748;
+
+    transform: translateY(-2px);
+}
+
+
+/* ================================================================
+   CARD TOP
+================================================================ */
+
+.certificate-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.certificate-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: rgba(255, 173, 145, 0.07);
+
+    border: 1px solid rgba(255, 173, 145, 0.2);
+}
+
+.certificate-icon span {
+    color: #ffad91;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.certificate-status {
+    color: #00b879;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+/* ================================================================
+   CARD CONTENT
+================================================================ */
+
+.certificate-card-content {
+    margin-top: 21px;
+}
+
+.certificate-category {
+    color: #756b77;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.1px;
+}
+
+.certificate-card-content h4 {
+    margin: 8px 0 10px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 800;
+
+    line-height: 1.35;
+}
+
+.certificate-card-content p {
+    min-height: 52px;
+
+    margin: 0;
+
+    color: #938994;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* ================================================================
+   CARD DETAILS
+================================================================ */
+
+.certificate-details {
+    display: flex;
+
+    gap: 38px;
+
+    margin-top: 23px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.certificate-details div {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.certificate-details span {
+    color: #665c68;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.certificate-details strong {
+    color: #cfc7d0;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* ================================================================
+   CARD LINK
+================================================================ */
+
+.certificate-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 21px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.055);
+
+    color: #ffad91;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.certificate-link span {
+    font-size: 17px;
+
+    transition: transform 0.2s ease;
+}
+
+.certificate-link:hover span {
+    transform: translateX(4px);
+}
+
+
+/* ================================================================
+   LARGE TABLET
+================================================================ */
+
+@media (max-width: 1100px) {
+
+    #section-certificates {
+        padding: 38px 30px 55px;
+    }
+
+    .cert-overview-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .cert-featured-card {
+        grid-template-columns:
+            90px minmax(0, 1fr);
+    }
+
+    .cert-featured-action {
+        grid-column: 2;
+
+        align-items: flex-start;
+
+        flex-direction: row;
+
+        margin-top: 5px;
+    }
+}
+
+
+/* ================================================================
+   TABLET
+================================================================ */
+
+@media (max-width: 800px) {
+
+    .cert-section-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .cert-header-badge {
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+    .cert-featured-card {
+        grid-template-columns:
+            75px minmax(0, 1fr);
+
+        gap: 22px;
+
+        padding: 26px;
+    }
+
+    .cert-featured-action {
+        grid-column: 1 / -1;
+
+        padding-top: 20px;
+
+        border-top: 1px solid rgba(255, 255, 255, 0.055);
+    }
+
+    .certification-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ================================================================
+   MOBILE
+================================================================ */
+
+@media (max-width: 600px) {
+
+    #section-certificates {
+        padding: 25px 16px 45px;
+    }
+
+
+    /* Header */
+
+    .cert-section-header {
+        gap: 20px;
+
+        padding-bottom: 23px;
+    }
+
+    .cert-eyebrow {
+        font-size: 11px;
+    }
+
+    .cert-heading-block h2 {
+        font-size: 27px;
+    }
+
+    .cert-heading-block p {
+        font-size: 13px;
+    }
+
+    .cert-header-badge {
+        padding: 11px 14px;
+    }
+
+    .cert-header-badge strong {
+        font-size: 12px;
+    }
+
+    .cert-header-badge span {
+        font-size: 10px;
+    }
+
+
+    /* Overview */
+
+    .cert-overview-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+
+        margin-top: 20px;
+    }
+
+    .cert-stat-card {
+        min-height: 130px;
+
+        padding: 18px;
+    }
+
+    .cert-stat-label {
+        font-size: 10px;
+    }
+
+    .cert-stat-number {
+        font-size: 30px;
+    }
+
+    .cert-stat-description {
+        font-size: 11px;
+    }
+
+    .cert-active-status {
+        font-size: 21px;
+    }
+
+    .cert-score-card {
+        gap: 11px;
+    }
+
+    .cert-score-ring {
+        width: 58px;
+        height: 58px;
+    }
+
+    .cert-score-ring::before {
+        inset: 6px;
+    }
+
+    .cert-score-inner strong {
+        font-size: 17px;
+    }
+
+
+    /* Featured */
+
+    .cert-featured-card {
+        display: flex;
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 20px;
+
+        margin-top: 20px;
+
+        padding: 23px;
+    }
+
+    .cert-featured-left {
+        justify-content: flex-start;
+    }
+
+    .cert-seal {
+        width: 75px;
+        height: 75px;
+    }
+
+    .cert-seal-star {
+        font-size: 18px;
+    }
+
+    .cert-featured-label {
+        font-size: 10px;
+    }
+
+    .cert-featured-content h3 {
+        font-size: 22px;
+    }
+
+    .cert-featured-content p {
+        font-size: 13px;
+
+        line-height: 1.75;
+    }
+
+    .cert-featured-meta {
+        flex-direction: column;
+
+        gap: 14px;
+
+        margin-top: 19px;
+    }
+
+    .cert-featured-meta span {
+        font-size: 9px;
+    }
+
+    .cert-featured-meta strong {
+        font-size: 11px;
+    }
+
+    .cert-featured-action {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        width: 100%;
+
+        margin-top: 0;
+
+        padding-top: 18px;
+    }
+
+    .cert-verified-mark {
+        font-size: 10px;
+    }
+
+    .cert-primary-button {
+        width: 100%;
+
+        min-height: 48px;
+
+        font-size: 13px;
+    }
+
+
+    /* List */
+
+    .cert-list-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        margin-top: 34px;
+    }
+
+    .cert-list-header h3 {
+        font-size: 20px;
+    }
+
+    .cert-filter-button {
+        font-size: 11px;
+    }
+
+
+    /* Cards */
+
+    .certificate-card {
+        padding: 21px;
+    }
+
+    .certificate-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .certificate-status {
+        font-size: 9px;
+    }
+
+    .certificate-category {
+        font-size: 9px;
+    }
+
+    .certificate-card-content h4 {
+        font-size: 19px;
+    }
+
+    .certificate-card-content p {
+        min-height: auto;
+
+        font-size: 12px;
+
+        line-height: 1.7;
+    }
+
+    .certificate-details {
+        gap: 27px;
+    }
+
+    .certificate-details span {
+        font-size: 9px;
+    }
+
+    .certificate-details strong {
+        font-size: 11px;
+    }
+
+    .certificate-link {
+        font-size: 12px;
+    }
+}
+
+
+/* ================================================================
+   SMALL MOBILE
+================================================================ */
+
+@media (max-width: 390px) {
+
+    #section-certificates {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .cert-overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cert-stat-card {
+        min-height: 110px;
+    }
+
+    .cert-score-card {
+        justify-content: flex-start;
+    }
+
+    .cert-featured-card {
+        padding: 19px;
+    }
+
+    .certificate-card {
+        padding: 18px;
+    }
+
+    .certificate-card-content h4 {
+        font-size: 18px;
+    }
+}
+</style>
+
+           
             </div>
         </main>
 
     </div>
 
+    <style>
+/* =============================================================
+   MOBILE HAMBURGER
+   BACKGROUND BLUR + SCROLL LOCK
+   ============================================================= */
+
+@media (max-width: 992px) {
+
+    /* Blur the complete background workspace */
+    body.mobile-menu-open .dashboard-main-canvas {
+        filter: blur(5px);
+        transition: filter 0.3s ease;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    /* Keep the opened sidebar sharp and interactive */
+    body.mobile-menu-open .dashboard-sidebar-console {
+        filter: none;
+        pointer-events: auto;
+        z-index: 1000;
+    }
+
+    /* Keep hamburger sharp */
+    body.mobile-menu-open .hamburger-menu-toggle-btn {
+        filter: none;
+        z-index: 1100;
+    }
+
+    /* Completely prevent background scrolling */
+    body.mobile-menu-open,
+    body.mobile-menu-open .dashboard-root-body {
+        overflow: hidden !important;
+        height: 100vh;
+        touch-action: none;
+        overscroll-behavior: none;
+    }
+}
+</style>
    <style>
     /* Core Layout Box Variables Resets */
 *, *::before, *::after {
@@ -506,8 +4076,8 @@
    </style>
 
    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    
+document.addEventListener("DOMContentLoaded", () => {
+
     // -------------------------------------------------------------
     // 1. DYNAMIC SESSION EMAIL PREFIX NICKNAME CALCULATOR
     // -------------------------------------------------------------
@@ -526,37 +4096,76 @@
 
     // -------------------------------------------------------------
     // 2. DASHBOARD VIEWPORT REFRESH LOGIC ACTION
+    //    PRESERVES CURRENT SIDEBAR SECTION AFTER REFRESH
     // -------------------------------------------------------------
     const refreshTriggerLink = document.getElementById("dashboardRefreshTrigger");
-    
+
     if (refreshTriggerLink) {
         refreshTriggerLink.addEventListener("click", (e) => {
-            e.preventDefault(); 
-            window.location.reload(); // Re-loads current active workspace window node context cleanly
-        });
-    }
+            e.preventDefault();
 
-    // -------------------------------------------------------------
-    // 3. RESPONSIVE HAMBURGER VIEW DRAWER CONTROLS
-    // -------------------------------------------------------------
-    const hamburgerMenuToggle = document.getElementById("hamburgerMenuToggle");
-    const sidebarConsole = document.getElementById("sidebarConsole");
+            // Find the currently active sidebar menu item
+            const activeNavigationItem = document.querySelector(
+                ".nav-segment-item.active"
+            );
 
-    if (hamburgerMenuToggle && sidebarConsole) {
-        hamburgerMenuToggle.addEventListener("click", (e) => {
-            e.stopPropagation(); 
-            hamburgerMenuToggle.classList.toggle("open");
-            sidebarConsole.classList.toggle("open");
-        });
+            if (activeNavigationItem) {
+                const activeSectionTarget =
+                    activeNavigationItem.getAttribute("data-target-section");
 
-        document.addEventListener("click", (e) => {
-            if (!sidebarConsole.contains(e.target) && !hamburgerMenuToggle.contains(e.target)) {
-                hamburgerMenuToggle.classList.remove("open");
-                sidebarConsole.classList.remove("open");
+                if (activeSectionTarget) {
+                    sessionStorage.setItem(
+                        "stackly_active_dashboard_section",
+                        activeSectionTarget
+                    );
+                }
             }
+
+            // Re-load current dashboard page
+            window.location.reload();
         });
     }
 
+ 
+/* -------------------------------------------------------------
+   3. RESPONSIVE HAMBURGER VIEW DRAWER CONTROLS
+   ------------------------------------------------------------- */
+
+const hamburgerMenuToggle = document.getElementById("hamburgerMenuToggle");
+const sidebarConsole = document.getElementById("sidebarConsole");
+
+if (hamburgerMenuToggle && sidebarConsole) {
+
+    hamburgerMenuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        const isOpening = !sidebarConsole.classList.contains("open");
+
+        hamburgerMenuToggle.classList.toggle("open", isOpening);
+        sidebarConsole.classList.toggle("open", isOpening);
+
+        /* Blur background + lock scrolling */
+        document.body.classList.toggle(
+            "mobile-menu-open",
+            isOpening
+        );
+    });
+
+    document.addEventListener("click", (e) => {
+
+        if (
+            !sidebarConsole.contains(e.target) &&
+            !hamburgerMenuToggle.contains(e.target)
+        ) {
+
+            hamburgerMenuToggle.classList.remove("open");
+            sidebarConsole.classList.remove("open");
+
+            /* Remove blur + restore scrolling */
+            document.body.classList.remove("mobile-menu-open");
+        }
+    });
+}
     // -------------------------------------------------------------
     // 4. SECTION-WISE SECTION ROUTER SWITCHER PANEL
     // -------------------------------------------------------------
@@ -565,23 +4174,78 @@
 
     navigationMenuItems.forEach(menuItem => {
         menuItem.addEventListener("click", () => {
+
             document.querySelector(".nav-segment-item.active")?.classList.remove("active");
             menuItem.classList.add("active");
 
             const targetSectionId = menuItem.getAttribute("data-target-section");
-            const structuralTargetSectionNode = document.getElementById(`section-${targetSectionId}`);
+            const structuralTargetSectionNode =
+                document.getElementById(`section-${targetSectionId}`);
 
             if (structuralTargetSectionNode) {
-                document.querySelector(".workspace-section-view.active-view")?.classList.remove("active-view");
+                document.querySelector(".workspace-section-view.active-view")
+                    ?.classList.remove("active-view");
+
                 structuralTargetSectionNode.classList.add("active-view");
             }
 
-            if (window.innerWidth <= 992 && sidebarConsole.classList.contains("open")) {
+            // ---------------------------------------------------------
+            // SAVE CURRENT SECTION
+            // This makes the section available for refresh restoration
+            // ---------------------------------------------------------
+            if (targetSectionId) {
+                sessionStorage.setItem(
+                    "stackly_active_dashboard_section",
+                    targetSectionId
+                );
+            }
+
+            if (
+                window.innerWidth <= 992 &&
+                sidebarConsole.classList.contains("open")
+            ) {
                 hamburgerMenuToggle.classList.remove("open");
                 sidebarConsole.classList.remove("open");
             }
         });
     });
+
+    // -------------------------------------------------------------
+    // 4A. RESTORE LAST ACTIVE SECTION AFTER PAGE REFRESH
+    // -------------------------------------------------------------
+    const savedDashboardSection = sessionStorage.getItem(
+        "stackly_active_dashboard_section"
+    );
+
+    if (savedDashboardSection) {
+
+        const savedNavigationItem = document.querySelector(
+            `.nav-segment-item[data-target-section="${savedDashboardSection}"]`
+        );
+
+        const savedSectionNode = document.getElementById(
+            `section-${savedDashboardSection}`
+        );
+
+        if (savedNavigationItem && savedSectionNode) {
+
+            // Remove default first-menu active state
+            navigationMenuItems.forEach(menuItem => {
+                menuItem.classList.remove("active");
+            });
+
+            // Activate previously selected sidebar item
+            savedNavigationItem.classList.add("active");
+
+            // Remove default first section
+            viewportSectionViews.forEach(sectionView => {
+                sectionView.classList.remove("active-view");
+            });
+
+            // Restore previously selected section
+            savedSectionNode.classList.add("active-view");
+        }
+    }
 
     // -------------------------------------------------------------
     // 5. TERMINAL LOGOUT ACTION INTERCEPT ROUTER
@@ -590,12 +4254,16 @@
 
     if (logoutActionTrigger) {
         logoutActionTrigger.addEventListener("click", () => {
+
             localStorage.removeItem("stackly_active_username");
-            window.location.href = "login.html"; // Routes back to login terminal
+
+            // Clear saved dashboard section on logout
+            sessionStorage.removeItem("stackly_active_dashboard_section");
+
+            window.location.href = "login.html";
         });
     }
 });
-
-   </script>
+</script>
 </body>
 </html>

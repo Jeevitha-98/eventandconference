@@ -41,8 +41,8 @@
             <div class="header-inner">
                 <!-- Brand Logo (Img tag references the page loop) -->
                 <a href="#" class="logo-link" onclick="window.location.reload(); return false;">
-                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="brand-img">
-                    <span class="brand-logo-text">Stackly</span>
+                    <img src="./assests/event and conference logo.webp" alt="Stackly Logo" class="brand-img">
+                  
                 </a>
 
                 <!-- Responsive Navigation Drawer -->
@@ -58,7 +58,9 @@
 
                 <!-- Auth Action Workspace -->
                 <div class="auth-wrapper">
-                    <button class="auth-btn">Register Pass</button>
+                      <a href="login.html" class="auth-navigation-link">
+    <button class="auth-btn">Register Pass</button>
+</a>
                     <!-- Mobile Hamburger Menu Button -->
                     <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Toggle navigation Menu">
                         <span class="bar bar-top"></span>
@@ -73,7 +75,7 @@
        
    
 
-    <script>
+   <script>
 document.addEventListener("DOMContentLoaded", () => {
 
     // =========================================================
@@ -226,11 +228,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             // Close mobile navigation
-            if (hamburgerToggle && navMenuContainer) {
+          if (hamburgerToggle && navMenuContainer) {
 
-                hamburgerToggle.classList.remove("open");
-                navMenuContainer.classList.remove("open");
-            }
+    hamburgerToggle.classList.remove("open");
+    navMenuContainer.classList.remove("open");
+    document.body.classList.remove("mobile-menu-open");
+
+}
 
         });
 
@@ -240,19 +244,28 @@ document.addEventListener("DOMContentLoaded", () => {
     // =========================================================
     // 6. Mobile Hamburger Toggle
     // =========================================================
-    if (hamburgerToggle && navMenuContainer) {
+ if (hamburgerToggle && navMenuContainer) {
 
-        hamburgerToggle.addEventListener("click", () => {
+    hamburgerToggle.addEventListener("click", () => {
 
-            hamburgerToggle.classList.toggle("open");
-            navMenuContainer.classList.toggle("open");
+        const isOpening = !navMenuContainer.classList.contains("open");
 
-        });
+        hamburgerToggle.classList.toggle("open", isOpening);
+        navMenuContainer.classList.toggle("open", isOpening);
 
-    }
+        /* Blur background + lock scrolling */
+        document.body.classList.toggle(
+            "mobile-menu-open",
+            isOpening
+        );
+
+    });
+
+}
 
 });
     </script>
+
 
 <section class="services-hero-section">
     <div class="services-hero-container">
@@ -276,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <!-- CTA Buttons Rise from the Bottom -->
             <div class="services-hero-cta" id="servicesHeroCta">
-                <a href="#packages" class="services-hero-btn btn-peach-filled">Explore Packages</a>
+                <a href="404.html" class="services-hero-btn btn-peach-filled">Explore Packages</a>
                 <a href="404.html" class="services-hero-btn btn-trans-outlined">Custom Request</a>
             </div>
         </div>
@@ -285,7 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="services-hero-visual" id="servicesVisualFrame">
             <div class="services-hero-glow-blob"></div>
             <div class="services-image-frame-box">
-                <img src="https://unsplash.com" alt="Stackly software development workspace systems analysis operations">
+                <img src="./assests/conference 7.webp" alt="Stackly software development workspace systems analysis operations">
             </div>
         </div>
 
@@ -514,7 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 @media (max-width: 576px) {
-    .services-hero-section { padding: 40px 20px 20px 20px; }
+    .services-hero-section { padding: 130px 20px 20px 20px; }
     .services-hero-title { font-size: 2.1rem; gap: 0 8px; }
     .services-image-frame-box { max-width: 280px; }
     .services-hero-cta { width: 100%; flex-direction: column; gap: 0.8rem; }
@@ -614,7 +627,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Service Block 1 -->
         <div class="service-mosaic-card reveal-card">
             <div class="mosaic-image-wrapper">
-                <img src="https://unsplash.com" alt="Immersive Stage Setup & Lighting">
+                <img src="./assests/conference 1.webp" alt="Immersive Stage Setup & Lighting">
                 <div class="mosaic-card-badge">STAGE ARCHITECTURE</div>
             </div>
             <div class="mosaic-info-wrapper">
@@ -627,7 +640,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Service Block 2 -->
         <div class="service-mosaic-card reveal-card">
             <div class="mosaic-image-wrapper">
-                <img src="https://unsplash.com" alt="Technical Workshop Labs">
+                <img src="./assests/conference 3.webp" alt="Technical Workshop Labs">
                 <div class="mosaic-card-badge">PRODUCTION RUNTIMES</div>
             </div>
             <div class="mosaic-info-wrapper">
@@ -640,7 +653,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Service Block 3 -->
         <div class="service-mosaic-card reveal-card">
             <div class="mosaic-image-wrapper">
-                <img src="https://unsplash.com" alt="Global Network Event Arena">
+                <img src="./assests/conference 5.webp" alt="Global Network Event Arena">
                 <div class="mosaic-card-badge">B2B ENGAGEMENT</div>
             </div>
             <div class="mosaic-info-wrapper">
@@ -909,7 +922,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Left Column: Portrait Showcase with Tech Speaker Profile Labeling -->
         <div class="openmic-visual-side">
             <div class="portrait-card-wrapper">
-                <img src="https://unsplash.com" alt="Tech Conference Keynote Speaker">
+                <img src="./assests/devon mill.webp" alt="Tech Conference Keynote Speaker">
                 
                 <!-- Floating Info Card matching the layout bottom labeling -->
                 <div class="portrait-profile-meta">
@@ -1853,7 +1866,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Mentor Profile 1 -->
         <div class="mentor-profile-card fly-left">
             <div class="avatar-canvas-wrapper theme-avatar-blue">
-                <img src="https://unsplash.com" alt="Sarah Jenkins - Lead Web Architect">
+                <img src="./assests/rose.webp" alt="Sarah Jenkins - Lead Web Architect">
             </div>
             <div class="mentor-meta-details">
                 <h3 class="mentor-name">Sarah Jenkins</h3>
@@ -1864,7 +1877,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Mentor Profile 2 -->
         <div class="mentor-profile-card fly-top">
             <div class="avatar-canvas-wrapper theme-avatar-mint">
-                <img src="https://unsplash.com" alt="Marcus Chen - DevOps Specialist">
+                <img src="./assests/aris.webp" alt="Marcus Chen - DevOps Specialist">
             </div>
             <div class="mentor-meta-details">
                 <h3 class="mentor-name">Marcus Chen</h3>
@@ -1875,10 +1888,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Mentor Profile 3 -->
         <div class="mentor-profile-card fly-right">
             <div class="avatar-canvas-wrapper theme-avatar-pink">
-                <img src="https://unsplash.com" alt="Elena Rostova - AI Researcher">
+                <img src="./assests/arjun.webp" alt="Elena Rostova - AI Researcher">
             </div>
             <div class="mentor-meta-details">
-                <h3 class="mentor-name">Elena Rostova</h3>
+                <h3 class="mentor-name">Arjun Rostova</h3>
                 <p class="mentor-role">AI Research Specialist</p>
             </div>
         </div>
@@ -1886,7 +1899,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Mentor Profile 4 -->
         <div class="mentor-profile-card fly-left">
             <div class="avatar-canvas-wrapper theme-avatar-gold">
-                <img src="https://unsplash.com" alt="David Vance - Systems Engineer">
+                <img src="./assests/devon mill.webp" alt="David Vance - Systems Engineer">
             </div>
             <div class="mentor-meta-details">
                 <h3 class="mentor-name">David Vance</h3>
@@ -1897,7 +1910,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Mentor Profile 5 -->
         <div class="mentor-profile-card fly-bottom">
             <div class="avatar-canvas-wrapper theme-avatar-purple">
-                <img src="https://unsplash.com" alt="Albert Fin - UI Token Architect">
+                <img src="./assests/test 2.webp" alt="Albert Fin - UI Token Architect">
             </div>
             <div class="mentor-meta-details">
                 <h3 class="mentor-name">Albert Fin</h3>
@@ -1908,10 +1921,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Mentor Profile 6 -->
         <div class="mentor-profile-card fly-right">
             <div class="avatar-canvas-wrapper theme-avatar-orange">
-                <img src="https://unsplash.com" alt="Robert Bale - Hydration Auditor">
+                <img src="./assests/test 1.webp" alt="Robert Bale - Hydration Auditor">
             </div>
             <div class="mentor-meta-details">
-                <h3 class="mentor-name">Robert Bale</h3>
+                <h3 class="mentor-name">Jenna Bale</h3>
                 <p class="mentor-role">Core Hydration Auditor</p>
             </div>
         </div>
@@ -2107,6 +2120,120 @@ document.addEventListener("DOMContentLoaded", () => {
     .mentor-profile-card.fly-bottom { transform: translateY(30px); }
 }
 
+/* =========================================================
+   LAST MENTOR CARD - RESPONSIVE ADD-ON
+   Jenna Bale / Core Hydration Auditor
+   ========================================================= */
+
+/* ---------- TABLET ---------- */
+@media (max-width: 992px) {
+    .mentors-grid .mentor-profile-card:last-child {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .avatar-canvas-wrapper {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .mentor-meta-details {
+        width: 100%;
+    }
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 650px) {
+    .mentors-grid .mentor-profile-card:last-child {
+        width: 100%;
+        max-width: 100%;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .avatar-canvas-wrapper {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 14px;
+        margin-bottom: 1rem;
+        overflow: hidden;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .avatar-canvas-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .mentor-meta-details {
+        width: 100%;
+        padding-left: 0.15rem;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .mentor-name {
+        font-size: 1.18rem;
+        line-height: 1.3;
+        margin-bottom: 0.25rem;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .mentor-role {
+        font-size: 0.84rem;
+        line-height: 1.45;
+    }
+
+    /* Keep the existing mobile entrance animation */
+    .mentors-grid .mentor-profile-card:last-child.fly-right {
+        transform: translateY(30px);
+    }
+
+    .mentors-grid .mentor-profile-card:last-child.animate-in {
+        transform: translateY(0);
+    }
+
+    /* Disable hover enlargement on touch screens */
+    .mentors-grid .mentor-profile-card:last-child:hover .avatar-canvas-wrapper {
+        transform: none;
+        border-color: rgba(255, 178, 148, .05);
+        box-shadow: -7px 9px 0 rgba(0, 0, 0, .25);
+    }
+
+    .mentors-grid .mentor-profile-card:last-child:hover .avatar-canvas-wrapper img {
+        transform: none;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child:hover .mentor-name {
+        color: #fff;
+        text-shadow: none;
+    }
+}
+
+/* ---------- SMALL MOBILE ---------- */
+@media (max-width: 400px) {
+    .mentors-grid .mentor-profile-card:last-child .avatar-canvas-wrapper {
+        border-radius: 12px;
+        margin-bottom: 0.85rem;
+        box-shadow: -6px 8px 0 rgba(0, 0, 0, .25);
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .mentor-name {
+        font-size: 1.08rem;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .mentor-role {
+        font-size: 0.78rem;
+    }
+}
+
+/* ---------- VERY SMALL MOBILE ---------- */
+@media (max-width: 340px) {
+    .mentors-grid .mentor-profile-card:last-child .mentor-name {
+        font-size: 1rem;
+    }
+
+    .mentors-grid .mentor-profile-card:last-child .mentor-role {
+        font-size: 0.74rem;
+    }
+}
 </style>
 
 <script>
@@ -2183,7 +2310,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="review-glow-layer"></div>
             <div class="review-header">
                 <div class="reviewer-avatar">
-                    <img src="https://unsplash.com" alt="Elena Rostova">
+                    <img src="./assests/rose.webp" alt="Elena Rostova">
                 </div>
                 <div class="reviewer-meta">
                     <h3 class="reviewer-name">Elena Rostova</h3>
@@ -2210,7 +2337,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="review-glow-layer"></div>
             <div class="review-header">
                 <div class="reviewer-avatar">
-                    <img src="https://unsplash.com" alt="Marcus Chen">
+                    <img src="./assests/aris.webp" alt="Marcus Chen">
                 </div>
                 <div class="reviewer-meta">
                     <h3 class="reviewer-name">Marcus Chen</h3>
@@ -2236,10 +2363,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="review-glow-layer"></div>
             <div class="review-header">
                 <div class="reviewer-avatar">
-                    <img src="https://unsplash.com" alt="Sarah Jenkins">
+                    <img src="./assests/devon mill.webp" alt="Sarah Jenkins">
                 </div>
                 <div class="reviewer-meta">
-                    <h3 class="reviewer-name">Sarah Jenkins</h3>
+                    <h3 class="reviewer-name">Arjun Jenkins</h3>
                     <p class="reviewer-org">VP Engineering at CloudFlow</p>
                 </div>
             </div>
@@ -2880,8 +3007,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Column 1: Brand Info & Social Media Links -->
         <div class="footer-column brand-summary-col">
             <a href="#" class="footer-logo-link" id="backToTopTrigger" aria-label="Back to Top">
-                <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Logo" class="footer-brand-img">
-                <span class="footer-brand-text">STACKLY</span>
+                <img src="./assests/event and conference logo.webp" alt="Stackly Logo" class="footer-brand-img">
+               
             </a>
             <p class="footer-description">
                 Engineering premier developer conventions and high-fidelity tech ecosystem environments designed to fuel open-source web frameworks.
@@ -2996,8 +3123,8 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 
 .footer-brand-img {
-    width: 30px;
-    height: 30px;
+    width: 130px;
+    height: 50px;
 }
 
 .footer-brand-text {
@@ -3218,3 +3345,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+

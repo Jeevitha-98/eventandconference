@@ -17,7 +17,6 @@
             <div class="sidebar-brand-wrapper">
                 <!-- Branding logo with localized view refresh function pass -->
                 <a href="#" class="sidebar-brand-link" id="dashboardRefreshTrigger" aria-label="Refresh Dashboard Matrix State">
-                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://w3.org' viewBox='0 0 24 24' fill='none' stroke='%23FFB294' stroke-width='2.5'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>" alt="Stackly Terminal Core Logo" class="brand-vector-logo">
                     <span class="brand-title-text">STACKLY</span>
                 </a>
             </div>
@@ -28,19 +27,12 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
                     <span>Overview metrics</span>
                 </button>
-                <button class="nav-segment-item" data-target-section="tracks">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
-                    </svg>
-                    <span>Manage track labs</span>
-                </button>
+                
                 <button class="nav-segment-item" data-target-section="registrations">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span>Attendee lists</span>
                 </button>
-                <button class="nav-segment-item" data-target-section="proposals">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                    <span>Talk abstract files</span>
-                </button>
+               
                 <button class="nav-segment-item" data-target-section="settings">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                     <span>System parameters</span>
@@ -77,14 +69,11 @@
                 <!-- Right Action Arrays (Bell, Notifications & Profile Avatar) -->
                 <div class="header-utilities-row">
                     <!-- Notification Bell Anchor trigger with glowing vector layer -->
-                    <button class="utility-bell-btn" id="notificationBellTrigger" aria-label="View Active Notification Streams">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                        <div class="notification-ping-dot"></div>
-                    </button>
+               <button class="utility-bell-btn" id="notificationBellTrigger" aria-label="View Active Notification Streams" onclick="window.location.href='404.html';" > <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"> <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/> <path d="M13.73 21a2 2 0 0 1-3.46 0"/> </svg> <div class="notification-ping-dot"></div> </button>
 
                     <!-- Interactive User Settings Thumbnail -->
                     <div class="utility-user-profile-avatar">
-                        <img src="https://unsplash.com" alt="Active Account Session Profile">
+                        <img src="./assests/aris.webp" alt="Active Account Session Profile">
                     </div>
                 </div>
             </header>
@@ -628,12 +617,502 @@
     .dashboard-custom-data-table th, .dashboard-custom-data-table td { padding: 0.85rem 0.5rem; font-size: 0.85rem; }
 }
 
-</style>
 
-                <!-- Section Frame 2: Manage Track Labs Panel -->
-                <div class="workspace-section-view" id="section-tracks">
-                    <div class="section-title-label">SECTION CONTENT VIEW: MANAGE TRACK LABS</div>
-                </div>
+</style>
+<style>
+/* =============================================================
+   ELABORATE OVERVIEW SECTION
+   RESPONSIVE ADD-ON ONLY
+   Desktop → Laptop → Tablet → Mobile
+   ============================================================= */
+
+/* -------------------------------------------------------------
+   LARGE LAPTOP / SMALL DESKTOP
+   ------------------------------------------------------------- */
+@media (max-width: 1400px) {
+
+    .overview-summary-ribbon {
+        padding-bottom: 1.35rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .ribbon-headline {
+        font-size: 1.35rem;
+    }
+
+    .elaborate-metric-cards-grid {
+        gap: 1.2rem;
+    }
+
+    .analytics-metric-card {
+        padding: 1.5rem;
+    }
+
+    .big-metric-counter {
+        font-size: 2rem;
+    }
+
+    .overview-asymmetric-split-row {
+        gap: 1.5rem;
+    }
+
+    .dashboard-data-table-panel,
+    .dashboard-actions-panel-box {
+        padding: 1.5rem;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   LAPTOP / COMPACT DESKTOP
+   ------------------------------------------------------------- */
+@media (max-width: 1200px) {
+
+    .overview-summary-ribbon {
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .elaborate-metric-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+    }
+
+    .analytics-metric-card {
+        min-width: 0;
+    }
+
+    .metric-title-label {
+        font-size: 0.78rem;
+        line-height: 1.4;
+    }
+
+    .big-metric-counter {
+        font-size: 2rem;
+    }
+
+    .overview-asymmetric-split-row {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-data-table-panel,
+    .dashboard-actions-panel-box {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   TABLET LANDSCAPE / TABLET PORTRAIT
+   ------------------------------------------------------------- */
+@media (max-width: 992px) {
+
+    .workspace-section-view.active-view {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .overview-summary-ribbon {
+        width: 100%;
+        box-sizing: border-box;
+        padding-bottom: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .ribbon-badge {
+        font-size: 0.65rem;
+    }
+
+    .ribbon-headline {
+        font-size: 1.25rem;
+        line-height: 1.3;
+    }
+
+    .live-status-pulse-chip {
+        padding: 0.45rem 0.9rem;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .status-label-text {
+        font-size: 0.65rem;
+        line-height: 1.3;
+    }
+
+    .elaborate-metric-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .analytics-metric-card {
+        padding: 1.35rem;
+        min-width: 0;
+    }
+
+    .card-header-meta {
+        margin-bottom: 1.25rem;
+    }
+
+    .icon-frame {
+        width: 34px;
+        height: 36px;
+        padding: 8px;
+    }
+
+    .trend-percentage-chip {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.6rem;
+    }
+
+    .metric-title-label {
+        font-size: 0.75rem;
+    }
+
+    .big-metric-counter {
+        font-size: 1.85rem;
+    }
+
+    .counter-max-cap {
+        font-size: 0.85rem;
+    }
+
+    .overview-asymmetric-split-row {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .dashboard-data-table-panel,
+    .dashboard-actions-panel-box {
+        width: 100%;
+        padding: 1.35rem;
+        box-sizing: border-box;
+    }
+
+    .panel-header-row h3,
+    .dashboard-actions-panel-box h3 {
+        font-size: 1.05rem;
+    }
+
+    .panel-header-action-link {
+        font-size: 0.78rem;
+    }
+
+    .panel-brief-text {
+        font-size: 0.84rem;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   SMALL TABLETS / LARGE MOBILE
+   ------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    .overview-summary-ribbon {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .ribbon-text-block {
+        width: 100%;
+    }
+
+    .live-status-pulse-chip {
+        width: fit-content;
+        max-width: 100%;
+    }
+
+    .elaborate-metric-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .analytics-metric-card {
+        width: 100%;
+        padding: 1.25rem;
+    }
+
+    .metric-title-label {
+        font-size: 0.78rem;
+    }
+
+    .big-metric-counter {
+        font-size: 1.9rem;
+    }
+
+    .overview-asymmetric-split-row {
+        gap: 1rem;
+    }
+
+    .dashboard-data-table-panel,
+    .dashboard-actions-panel-box {
+        padding: 1.2rem;
+        border-radius: 14px;
+    }
+
+    .panel-header-row {
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .panel-header-row h3 {
+        font-size: 1rem;
+        line-height: 1.35;
+    }
+
+    .panel-header-action-link {
+        white-space: nowrap;
+    }
+
+    .dashboard-custom-data-table {
+        min-width: 620px;
+    }
+
+    .table-scroll-mask {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .dashboard-custom-data-table th,
+    .dashboard-custom-data-table td {
+        padding: 0.8rem 0.7rem;
+    }
+
+    .quick-actions-buttons-stack {
+        gap: 0.7rem;
+    }
+
+    .action-trigger-link {
+        min-height: 44px;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------------- */
+@media (max-width: 576px) {
+
+    .workspace-section-view.active-view {
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .overview-summary-ribbon {
+        padding-bottom: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .ribbon-badge {
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
+    }
+
+    .ribbon-headline {
+        font-size: 1.1rem;
+        line-height: 1.35;
+    }
+
+    .live-status-pulse-chip {
+        width: 100%;
+        justify-content: center;
+        padding: 0.55rem 0.75rem;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+
+    .status-label-text {
+        font-size: 0.58rem;
+        text-align: center;
+    }
+
+    .elaborate-metric-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .analytics-metric-card {
+        padding: 1.1rem;
+        border-radius: 13px;
+    }
+
+    .card-header-meta {
+        margin-bottom: 1rem;
+    }
+
+    .icon-frame {
+        width: 32px;
+        height: 34px;
+        padding: 7px;
+    }
+
+    .trend-percentage-chip {
+        font-size: 0.6rem;
+        padding: 0.28rem 0.55rem;
+    }
+
+    .metric-title-label {
+        font-size: 0.7rem;
+        line-height: 1.4;
+        margin-bottom: 0.45rem;
+    }
+
+    .big-metric-counter {
+        font-size: 1.7rem;
+    }
+
+    .counter-max-cap {
+        font-size: 0.75rem;
+    }
+
+    .card-progress-bar-pipeline {
+        height: 3px;
+    }
+
+    .overview-asymmetric-split-row {
+        gap: 0.85rem;
+    }
+
+    .dashboard-data-table-panel,
+    .dashboard-actions-panel-box {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+
+    .panel-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.45rem;
+        margin-bottom: 1rem;
+    }
+
+    .panel-header-row h3,
+    .dashboard-actions-panel-box h3 {
+        font-size: 0.95rem;
+        line-height: 1.35;
+    }
+
+    .panel-header-action-link {
+        font-size: 0.72rem;
+    }
+
+    .dashboard-custom-data-table {
+        min-width: 600px;
+    }
+
+    .dashboard-custom-data-table th {
+        font-size: 0.65rem;
+        padding: 0.7rem 0.6rem;
+    }
+
+    .dashboard-custom-data-table td {
+        font-size: 0.78rem;
+        padding: 0.75rem 0.6rem;
+    }
+
+    .status-pill {
+        font-size: 0.6rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    .tabular-time {
+        font-size: 0.72rem;
+    }
+
+    .panel-brief-text {
+        font-size: 0.8rem;
+        line-height: 1.55;
+        margin-bottom: 1.35rem;
+    }
+
+    .action-trigger-link {
+        min-height: 44px;
+        padding: 0.75rem 1rem;
+        font-size: 0.82rem;
+        border-radius: 9px;
+    }
+
+    .action-trigger-link svg {
+        width: 14px;
+        height: 15px;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   VERY SMALL MOBILE
+   ------------------------------------------------------------- */
+@media (max-width: 400px) {
+
+    .ribbon-headline {
+        font-size: 1rem;
+    }
+
+    .status-label-text {
+        font-size: 0.52rem;
+    }
+
+    .analytics-metric-card {
+        padding: 0.95rem;
+    }
+
+    .big-metric-counter {
+        font-size: 1.55rem;
+    }
+
+    .metric-title-label {
+        font-size: 0.65rem;
+    }
+
+    .trend-percentage-chip {
+        font-size: 0.55rem;
+    }
+
+    .dashboard-data-table-panel,
+    .dashboard-actions-panel-box {
+        padding: 0.9rem;
+    }
+
+    .panel-header-row h3,
+    .dashboard-actions-panel-box h3 {
+        font-size: 0.88rem;
+    }
+
+    .action-trigger-link {
+        font-size: 0.76rem;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   TOUCH DEVICE OPTIMIZATION
+   ------------------------------------------------------------- */
+@media (hover: none) and (pointer: coarse) {
+
+    .action-trigger-link,
+    .panel-header-action-link {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .action-trigger-link {
+        min-height: 44px;
+    }
+
+    .table-scroll-mask {
+        scrollbar-width: thin;
+    }
+}
+</style>
+             
 
               <!-- Section Frame 3: Elaborate Attendee Lists Participant Console -->
 <div class="workspace-section-view" id="section-registrations">
@@ -691,7 +1170,7 @@
                     <tr>
                         <td>
                             <div class="attendee-profile-cell">
-                                <img src="https://unsplash.com" alt="Sarah Jenkins Avatar" class="table-user-avatar">
+                                <img src="./assests/rose.webp" alt="Sarah Jenkins Avatar" class="table-user-avatar">
                                 <div class="profile-cell-meta">
                                     <h4>Sarah Jenkins</h4>
                                     <p>sarah.j@framework.io</p>
@@ -706,7 +1185,7 @@
                     <tr>
                         <td>
                             <div class="attendee-profile-cell">
-                                <img src="https://unsplash.com" alt="Marcus Chen Avatar" class="table-user-avatar">
+                                <img src="./assests/aris.webp" alt="Marcus Chen Avatar" class="table-user-avatar">
                                 <div class="profile-cell-meta">
                                     <h4>Marcus Chen</h4>
                                     <p>marcus.devops@stack.com</p>
@@ -721,7 +1200,7 @@
                     <tr>
                         <td>
                             <div class="attendee-profile-cell">
-                                <img src="https://unsplash.com" alt="Elena Rostova Avatar" class="table-user-avatar">
+                                <img src="./assests/arjun.webp" alt="Elena Rostova Avatar" class="table-user-avatar">
                                 <div class="profile-cell-meta">
                                     <h4>Elena Rostova</h4>
                                     <p>elena.r@neural.net</p>
@@ -736,7 +1215,7 @@
                     <tr>
                         <td>
                             <div class="contact-profile-cell, attendee-profile-cell">
-                                <img src="https://unsplash.com" alt="David Vance Avatar" class="table-user-avatar">
+                                <img src="./assests/devon mill.webp" alt="David Vance Avatar" class="table-user-avatar">
                                 <div class="profile-cell-meta">
                                     <h4>David Vance</h4>
                                     <p>vance.architect@edge.com</p>
@@ -1014,6 +1493,522 @@
     .roster-data-table-panel { border-radius: 12px; }
 }
 
+</style>
+<style>
+/* =============================================================
+   ATTENDEE ROSTER MATRIX
+   RESPONSIVE ADD-ON
+   Desktop → Laptop → Tablet → Mobile
+   ============================================================= */
+
+
+/* -------------------------------------------------------------
+   LARGE DESKTOP / LAPTOP
+   ------------------------------------------------------------- */
+@media (max-width: 1400px) {
+
+    .attendee-summary-ribbon {
+        gap: 1.5rem;
+    }
+
+    .roster-quick-stats {
+        gap: 1.4rem;
+    }
+
+    .roster-data-table-panel {
+        width: 100%;
+    }
+
+    .roster-custom-data-table th {
+        padding: 1rem 1.2rem;
+        font-size: 0.7rem;
+    }
+
+    .roster-custom-data-table td {
+        padding: 0.95rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .profile-cell-meta h4 {
+        font-size: 0.92rem;
+    }
+
+    .profile-cell-meta p {
+        font-size: 0.76rem;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   COMPACT LAPTOP
+   ------------------------------------------------------------- */
+@media (max-width: 1200px) {
+
+    .attendee-summary-ribbon {
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+
+    .roster-quick-stats {
+        gap: 1.1rem;
+    }
+
+    .pill-number {
+        font-size: 1.25rem;
+    }
+
+    .pill-label {
+        font-size: 0.68rem;
+    }
+
+    .roster-filter-actions-row {
+        gap: 1rem;
+    }
+
+    .search-input-wrapper {
+        max-width: 420px;
+    }
+
+    .filter-util-btn {
+        padding: 0.7rem 1.1rem;
+        font-size: 0.82rem;
+    }
+
+    .roster-custom-data-table {
+        min-width: 950px;
+    }
+
+    .table-scroll-mask {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .roster-data-table-panel {
+        overflow: hidden;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   TABLET / SMALL LAPTOP
+   ------------------------------------------------------------- */
+@media (max-width: 992px) {
+
+    .attendee-summary-ribbon {
+        width: 100%;
+        box-sizing: border-box;
+        padding-bottom: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .ribbon-text-block {
+        min-width: 0;
+    }
+
+    .ribbon-headline {
+        font-size: 1.25rem;
+        line-height: 1.35;
+    }
+
+    .ribbon-badge {
+        font-size: 0.64rem;
+    }
+
+    .roster-quick-stats {
+        gap: 1rem;
+        flex-shrink: 0;
+    }
+
+    .pill-number {
+        font-size: 1.15rem;
+    }
+
+    .pill-label {
+        font-size: 0.64rem;
+        white-space: nowrap;
+    }
+
+    .roster-filter-actions-row {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .search-input-wrapper {
+        width: 100%;
+        max-width: none;
+    }
+
+    .search-input-wrapper input {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .filter-actions-buttons-stack {
+        width: 100%;
+        display: flex;
+    }
+
+    .filter-util-btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .roster-custom-data-table {
+        min-width: 900px;
+    }
+
+    .roster-custom-data-table th {
+        padding: 0.9rem 1rem;
+        font-size: 0.68rem;
+    }
+
+    .roster-custom-data-table td {
+        padding: 0.9rem 1rem;
+    }
+
+    .table-user-avatar {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   TABLET PORTRAIT
+   ------------------------------------------------------------- */
+@media (max-width: 768px) {
+
+    .attendee-summary-ribbon {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .roster-quick-stats {
+        width: 100%;
+        justify-content: flex-start;
+        gap: 1.5rem;
+    }
+
+    .stat-pill-box {
+        min-width: 100px;
+    }
+
+    .border-left-divider {
+        padding-left: 1.5rem;
+    }
+
+    .roster-filter-actions-row {
+        margin-bottom: 1.25rem;
+    }
+
+    .search-input-wrapper input {
+        min-height: 44px;
+        font-size: 0.88rem;
+    }
+
+    .filter-actions-buttons-stack {
+        gap: 0.7rem;
+    }
+
+    .filter-util-btn {
+        min-height: 44px;
+        padding: 0.7rem 0.9rem;
+    }
+
+    .roster-data-table-panel {
+        border-radius: 14px;
+        width: 100%;
+    }
+
+    .table-scroll-mask {
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .roster-custom-data-table {
+        min-width: 850px;
+    }
+
+    .roster-custom-data-table th,
+    .roster-custom-data-table td {
+        padding: 0.85rem 0.9rem;
+    }
+
+    .attendee-profile-cell {
+        gap: 10px;
+    }
+
+    .profile-cell-meta h4 {
+        font-size: 0.9rem;
+    }
+
+    .profile-cell-meta p {
+        font-size: 0.74rem;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   MOBILE
+   ------------------------------------------------------------- */
+@media (max-width: 600px) {
+
+    .attendee-summary-ribbon {
+        width: 100%;
+        padding-bottom: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .ribbon-badge {
+        font-size: 0.58rem;
+        letter-spacing: 0.08em;
+    }
+
+    .ribbon-headline {
+        font-size: 1.08rem;
+        line-height: 1.35;
+    }
+
+    .roster-quick-stats {
+        width: 100%;
+        gap: 0;
+        justify-content: flex-start;
+    }
+
+    .stat-pill-box {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .border-left-divider {
+        padding-left: 1rem;
+    }
+
+    .pill-number {
+        font-size: 1.05rem;
+    }
+
+    .pill-label {
+        font-size: 0.6rem;
+        white-space: normal;
+        line-height: 1.3;
+    }
+
+    .roster-filter-actions-row {
+        gap: 0.8rem;
+    }
+
+    .search-input-wrapper {
+        width: 100%;
+    }
+
+    .search-input-wrapper svg {
+        left: 0.9rem;
+        width: 15px;
+        height: 15px;
+    }
+
+    .search-input-wrapper input {
+        min-height: 44px;
+        padding: 0.75rem 0.8rem 0.75rem 2.5rem;
+        font-size: 0.8rem;
+        border-radius: 9px;
+    }
+
+    .search-input-wrapper input::placeholder {
+        font-size: 0.72rem;
+    }
+
+    .filter-actions-buttons-stack {
+        width: 100%;
+        gap: 0.6rem;
+    }
+
+    .filter-util-btn {
+        min-height: 44px;
+        padding: 0.65rem 0.7rem;
+        font-size: 0.76rem;
+        border-radius: 9px;
+    }
+
+    .filter-util-btn svg {
+        width: 13px;
+        height: 13px;
+    }
+
+    .roster-data-table-panel {
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    /*
+       Keep table readable instead of squeezing
+       five columns into a tiny mobile screen.
+    */
+    .roster-custom-data-table {
+        min-width: 820px;
+    }
+
+    .roster-custom-data-table th {
+        font-size: 0.62rem;
+        padding: 0.75rem 0.7rem;
+    }
+
+    .roster-custom-data-table td {
+        font-size: 0.78rem;
+        padding: 0.8rem 0.7rem;
+    }
+
+    .table-user-avatar {
+        width: 34px;
+        height: 34px;
+        flex-shrink: 0;
+    }
+
+    .attendee-profile-cell {
+        gap: 9px;
+    }
+
+    .profile-cell-meta h4 {
+        font-size: 0.82rem;
+    }
+
+    .profile-cell-meta p {
+        font-size: 0.68rem;
+    }
+
+    .tabular-mono-code {
+        font-size: 0.72rem;
+    }
+
+    .badge-level {
+        font-size: 0.58rem;
+        padding: 0.28rem 0.55rem;
+        white-space: nowrap;
+    }
+
+    .table-row-action-trigger {
+        font-size: 0.75rem;
+        white-space: nowrap;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   SMALL MOBILE
+   ------------------------------------------------------------- */
+@media (max-width: 450px) {
+
+    .ribbon-headline {
+        font-size: 1rem;
+    }
+
+    .roster-quick-stats {
+        gap: 0;
+    }
+
+    .pill-number {
+        font-size: 0.98rem;
+    }
+
+    .pill-label {
+        font-size: 0.56rem;
+    }
+
+    .border-left-divider {
+        padding-left: 0.75rem;
+    }
+
+    .search-input-wrapper input::placeholder {
+        font-size: 0.67rem;
+    }
+
+    .filter-util-btn {
+        font-size: 0.7rem;
+    }
+
+    .filter-util-btn svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .roster-custom-data-table {
+        min-width: 780px;
+    }
+
+    .roster-custom-data-table th,
+    .roster-custom-data-table td {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
+    .table-user-avatar {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   VERY SMALL PHONES
+   ------------------------------------------------------------- */
+@media (max-width: 360px) {
+
+    .attendee-summary-ribbon {
+        gap: 0.8rem;
+    }
+
+    .ribbon-headline {
+        font-size: 0.94rem;
+    }
+
+    .pill-number {
+        font-size: 0.9rem;
+    }
+
+    .pill-label {
+        font-size: 0.52rem;
+    }
+
+    .filter-util-btn {
+        padding-left: 0.55rem;
+        padding-right: 0.55rem;
+        font-size: 0.66rem;
+    }
+
+    .roster-custom-data-table {
+        min-width: 750px;
+    }
+}
+
+
+/* -------------------------------------------------------------
+   TOUCH DEVICE OPTIMIZATION
+   ------------------------------------------------------------- */
+@media (hover: none) and (pointer: coarse) {
+
+    .filter-util-btn,
+    .table-row-action-trigger {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .filter-util-btn {
+        min-height: 44px;
+    }
+
+    .table-scroll-mask {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+}
 </style>
 
 
@@ -1821,11 +2816,56 @@
     .header-utilities-row { gap: 1rem; }
 }
 
-    </style>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-    
+    </style>
+    <style>
+/* =============================================================
+   MOBILE SIDEBAR OPEN STATE
+   BACKGROUND BLUR + SCROLL LOCK
+   ============================================================= */
+
+@media (max-width: 992px) {
+
+    /* Keep the main dashboard content as the blur target */
+    body.mobile-menu-open .dashboard-main-canvas {
+        filter: blur(5px);
+        transform: scale(1.01);
+        transition: filter 0.3s ease, transform 0.3s ease;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    /* Keep sidebar completely clear and above blurred content */
+    body.mobile-menu-open .dashboard-sidebar-console {
+        filter: none;
+        pointer-events: auto;
+        z-index: 1000;
+    }
+
+    /* Keep hamburger clear while sidebar is open */
+    body.mobile-menu-open .hamburger-menu-toggle-btn {
+        filter: none;
+        z-index: 1100;
+    }
+
+    /* Prevent page/background scrolling */
+    body.mobile-menu-open,
+    body.mobile-menu-open .dashboard-root-body {
+        overflow: hidden;
+        height: 100vh;
+        touch-action: none;
+    }
+
+    /* Prevent horizontal movement as well */
+    body.mobile-menu-open {
+        overscroll-behavior: none;
+    }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
     // -------------------------------------------------------------
     // 1. DYNAMIC SESSION EMAIL PREFIX CALCULATOR
     // -------------------------------------------------------------
@@ -1847,11 +2887,28 @@
     // 2. DASHBOARD VIEWPORT REFRESH LOGIC ACTION
     // -------------------------------------------------------------
     const refreshTriggerLink = document.getElementById("dashboardRefreshTrigger");
-    
+
     if (refreshTriggerLink) {
         refreshTriggerLink.addEventListener("click", (e) => {
             e.preventDefault(); // Stop standard hashtag jumps
-            
+
+            // Save currently active sidebar section before refresh
+            const activeNavigationItem = document.querySelector(
+                ".nav-segment-item.active"
+            );
+
+            if (activeNavigationItem) {
+                const activeSectionTarget =
+                    activeNavigationItem.getAttribute("data-target-section");
+
+                if (activeSectionTarget) {
+                    sessionStorage.setItem(
+                        "stackly_partner_dashboard_section",
+                        activeSectionTarget
+                    );
+                }
+            }
+
             // Re-loads current active workspace window node context cleanly
             window.location.reload();
         });
@@ -1864,19 +2921,31 @@
     const sidebarConsole = document.getElementById("sidebarConsole");
 
     if (hamburgerMenuToggle && sidebarConsole) {
-        hamburgerMenuToggle.addEventListener("click", (e) => {
-            e.stopPropagation(); // Blocks event bubbling into root containers
-            hamburgerMenuToggle.classList.toggle("open");
-            sidebarConsole.classList.toggle("open");
-        });
+       hamburgerMenuToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    const isOpening = !sidebarConsole.classList.contains("open");
+
+    hamburgerMenuToggle.classList.toggle("open", isOpening);
+    sidebarConsole.classList.toggle("open", isOpening);
+
+    // Blur background + lock page scrolling
+    document.body.classList.toggle("mobile-menu-open", isOpening);
+});
 
         // Click wrapper interceptor pass: closes drawer if clicked outside bounds
-        document.addEventListener("click", (e) => {
-            if (!sidebarConsole.contains(e.target) && !hamburgerMenuToggle.contains(e.target)) {
-                hamburgerMenuToggle.classList.remove("open");
-                sidebarConsole.classList.remove("open");
-            }
-        });
+       document.addEventListener("click", (e) => {
+    if (
+        !sidebarConsole.contains(e.target) &&
+        !hamburgerMenuToggle.contains(e.target)
+    ) {
+        hamburgerMenuToggle.classList.remove("open");
+        sidebarConsole.classList.remove("open");
+
+        // Remove background blur + restore scrolling
+        document.body.classList.remove("mobile-menu-open");
+    }
+});
     }
 
     // -------------------------------------------------------------
@@ -1887,29 +2956,83 @@
 
     navigationMenuItems.forEach(menuItem => {
         menuItem.addEventListener("click", () => {
+
             // Wipe active formatting highlights from sibling buttons loop
             document.querySelector(".nav-segment-item.active")?.classList.remove("active");
             menuItem.classList.add("active");
 
             // Extract target index string metadata attribute rules
             const targetSectionId = menuItem.getAttribute("data-target-section");
-            const structuralTargetSectionNode = document.getElementById(`section-${targetSectionId}`);
+            const structuralTargetSectionNode =
+                document.getElementById(`section-${targetSectionId}`);
 
             if (structuralTargetSectionNode) {
                 // Collapse currently shown panel section row mapping
-                document.querySelector(".workspace-section-view.active-view")?.classList.remove("active-view");
-                
+                document.querySelector(".workspace-section-view.active-view")
+                    ?.classList.remove("active-view");
+
                 // Mount new targeted section framework view
                 structuralTargetSectionNode.classList.add("active-view");
             }
 
-            // Mobile configuration bypass fallback: auto close navigation drawer track on tab switch selections
-            if (window.innerWidth <= 992 && sidebarConsole.classList.contains("open")) {
+            // ---------------------------------------------------------
+            // SAVE CURRENT PARTNER DASHBOARD SECTION
+            // ---------------------------------------------------------
+            if (targetSectionId) {
+                sessionStorage.setItem(
+                    "stackly_partner_dashboard_section",
+                    targetSectionId
+                );
+            }
+
+            // Mobile configuration bypass fallback: auto close navigation
+            // drawer track on tab switch selections
+            if (
+                window.innerWidth <= 992 &&
+                sidebarConsole.classList.contains("open")
+            ) {
                 hamburgerMenuToggle.classList.remove("open");
                 sidebarConsole.classList.remove("open");
             }
         });
     });
+
+    // -------------------------------------------------------------
+    // 4A. RESTORE LAST ACTIVE SECTION AFTER PAGE REFRESH
+    // -------------------------------------------------------------
+    const savedPartnerDashboardSection = sessionStorage.getItem(
+        "stackly_partner_dashboard_section"
+    );
+
+    if (savedPartnerDashboardSection) {
+
+        const savedNavigationItem = document.querySelector(
+            `.nav-segment-item[data-target-section="${savedPartnerDashboardSection}"]`
+        );
+
+        const savedSectionNode = document.getElementById(
+            `section-${savedPartnerDashboardSection}`
+        );
+
+        if (savedNavigationItem && savedSectionNode) {
+
+            // Remove default first-menu active state
+            navigationMenuItems.forEach(menuItem => {
+                menuItem.classList.remove("active");
+            });
+
+            // Restore previously selected sidebar menu
+            savedNavigationItem.classList.add("active");
+
+            // Remove default first section
+            viewportSectionViews.forEach(sectionView => {
+                sectionView.classList.remove("active-view");
+            });
+
+            // Restore previously selected section
+            savedSectionNode.classList.add("active-view");
+        }
+    }
 
     // -------------------------------------------------------------
     // 5. TERMINAL LOGOUT ACTION INTERCEPT ROUTER
@@ -1918,15 +3041,18 @@
 
     if (logoutActionTrigger) {
         logoutActionTrigger.addEventListener("click", () => {
+
             // Optional parameter wipe security cleanup task loops
             localStorage.removeItem("stackly_active_username");
-            
+
+            // Clear saved Partner Dashboard section on logout
+            sessionStorage.removeItem("stackly_partner_dashboard_section");
+
             // Transmit navigation route right back to login webpage context terminal
             window.location.href = "login.html";
         });
     }
 });
-
-    </script>
+</script>
 </body>
 </html>
